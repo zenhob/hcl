@@ -14,11 +14,13 @@ feature is a simple view of today's timesheet. To try it out:
 
 ### Prerequisites
 
-This software depends on the Curb gem. To install:
-
- $ sudo gem install curb
+ * Ruby (tested with 1.8.7)
+ * RubyGems
+ * Curb curl library (gem install curb)
 
 ## Usage
+
+NOTE only the first command is implemented, and arguments are ignored.
 
     hcl [opts] show [date]
     hcl [opts] add <project> <task> <duration> [msg]
