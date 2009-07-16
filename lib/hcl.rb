@@ -6,7 +6,7 @@ require 'curb'
 require 'hcl/day_entry'
 
 class HCl
-  class UnknownCommand < RuntimeError; end
+  class UnknownCommand < StandardError; end
 
   def self.command *args
     command = args.shift
@@ -18,7 +18,7 @@ class HCl
     if hcl.respond_to? command
       hcl.send command
     else
-      raise UknownCommand, "unrecognized command `#{command}'"
+      raise UnknownCommand, "unrecognized command `#{command}'"
     end
   end
 
