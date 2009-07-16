@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.dirname(__FILE__) + '/../lib'
+$:.unshift File.dirname(__FILE__) + '/../ext/harvest/lib'
+
+require 'hcl'
+
+HCl.command *ARGV
+
