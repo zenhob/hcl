@@ -8,13 +8,17 @@ require 'hcl/day_entry'
 class HCl
   class UnknownCommand < StandardError; end
 
+  def self.conf_file= filename
+    @@conf_file = filename
+  end
+
   def self.command *args
     command = args.shift
     unless command
       help
       return
     end
-    hcl = new.process_args *args
+    hcl = new(@@conf_file).process_args *args
     if hcl.respond_to? command
       hcl.send command
     else
@@ -22,8 +26,8 @@ class HCl
     end
   end
 
-  def initialize
-    config = YAML::load(File.read('hcl_conf.yml'))
+  def initialize conf_file
+    config = YAML::load File.read(conf_file)
     TimesheetResource.configure config
   end
 
