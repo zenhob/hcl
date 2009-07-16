@@ -8,9 +8,9 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 NOTE This software is nowhere near complete. Currently the only implemented
 feature is a simple view of today's timesheet. To try it out:
 
- $ cp hcl_conf.yml.example hcl_conf.yml
- $ $EDITOR hcl_conf.yml
- $ ./bin/hcl show
+    $ cp hcl_conf.yml.example hcl_conf.yml
+    $ $EDITOR hcl_conf.yml
+    $ ./bin/hcl show
 
 ### Prerequisites
 
