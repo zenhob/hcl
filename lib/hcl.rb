@@ -14,15 +14,16 @@ class HCl
 
   def self.command *args
     command = args.shift
-    unless command
-      help
-      return
-    end
     hcl = new(@@conf_file).process_args *args
-    if hcl.respond_to? command
-      hcl.send command
+    if command
+      if hcl.respond_to? command
+        hcl.send command
+      else
+        raise UnknownCommand, "unrecognized command `#{command}'"
+      end
     else
-      raise UnknownCommand, "unrecognized command `#{command}'"
+      hcl.show
+      return
     end
   end
 
@@ -53,10 +54,11 @@ class HCl
     total_hours = 0.0
     DayEntry.all.each do |day|
       # TODO more information and formatting options
-      puts "#{day.task} / #{day.hours}"
+      puts "\t#{day.hours}\t#{day.project} (#{day.notes})"[0..78]
       total_hours = total_hours + day.hours.to_f
     end
-    puts "Total #{total_hours} hours"
+    puts "\t" + '-' * 13
+    puts "\t#{total_hours}\ttotal"
   end
 
   def not_implemented
