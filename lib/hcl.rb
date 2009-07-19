@@ -1,9 +1,13 @@
 require 'yaml'
+require 'rexml/document'
 
 require 'rubygems'
 require 'curb'
 require 'chronic'
 
+require 'hcl/timesheet_resource'
+require 'hcl/project'
+require 'hcl/task'
 require 'hcl/day_entry'
 
 class HCl
