@@ -31,7 +31,7 @@ NOTE only the show command is implemented
 
 ### Examples
 
-You express dates in a variety of ways. See the [Chronic documentation][3]
+Dates can be expressed in a variety of ways. See the [Chronic documentation][2]
 for more information about available date input formats. The following
 commands show the timesheet for the specified day:
 
@@ -52,9 +52,9 @@ commands show the timesheet for the specified day:
    - update a time sheet entry
  * command-line configuration
  * search ~/.hcl_config for configuration
- * integrate timesheet functionality into aiaio's [harvest gem][2]
+ * integrate timesheet functionality into aiaio's [harvest gem][3]
 
 [1]: http://www.getharvest.com/api/time_tracking
-[2]: http://github.com/aiaio/harvest/tree/master
-[3]: http://chronic.rubyforge.org/
+[2]: http://chronic.rubyforge.org/
+[3]: http://github.com/aiaio/harvest/tree/master
 
