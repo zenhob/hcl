@@ -6,11 +6,11 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 ## Quick Start
 
 NOTE This software is nowhere near complete. Currently the only implemented
-feature is a simple view of today's timesheet. To try it out:
+feature is a simple view of any daily timesheet. To try it out:
 
     $ cp hcl_conf.yml.example hcl_conf.yml
     $ $EDITOR hcl_conf.yml
-    $ ./bin/hcl show
+    $ ./bin/hcl show [date]
 
 ### Prerequisites
 
@@ -29,6 +29,17 @@ NOTE only the show command is implemented
     hcl start <project> <task> [msg]
     hcl stop [msg]
 
+### Examples
+
+You express dates in a variety of ways. See the [Chronic documentation][3]
+for more information about available date input formats. The following
+commands show the timesheet for the specified day:
+
+    $ hcl show yesterday
+    $ hcl show last friday
+    $ hcl show 2 days ago
+    $ hcl show 1 week ago
+
 ## TODO
 
  * Implement time-tracking API methods:
@@ -45,4 +56,5 @@ NOTE only the show command is implemented
 
 [1]: http://www.getharvest.com/api/time_tracking
 [2]: http://github.com/aiaio/harvest/tree/master
+[3]: http://chronic.rubyforge.org/
 

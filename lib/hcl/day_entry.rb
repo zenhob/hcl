@@ -51,6 +51,8 @@ class HCl
   end
   
   class DayEntry < TimesheetResource
+    # Get the time sheet entries for a given day. If no date is provided
+    # defaults to today.
     def self.all date = nil
       url = date.nil? ? 'daily' : "daily/#{date.strftime '%j/%Y'}"
       doc = REXML::Document.new perform url
