@@ -2,6 +2,7 @@ require 'yaml'
 
 require 'rubygems'
 require 'curb'
+require 'chronic'
 
 require 'hcl/day_entry'
 
@@ -17,7 +18,7 @@ class HCl
     hcl = new(@@conf_file).process_args *args
     if command
       if hcl.respond_to? command
-        hcl.send command
+        hcl.send command, *args
       else
         raise UnknownCommand, "unrecognized command `#{command}'"
       end
@@ -36,11 +37,17 @@ class HCl
     puts <<-EOM
     Usage:
 
-    hcl [opts] add <project> <task> <duration> [msg]
-    hcl [opts] rm [entry_id]
-    hcl [opts] start <project> <task> [msg]
-    hcl [opts] stop [msg]
-    hcl [opts] show [date]
+    hcl show [date]
+    hcl add <project> <task> <duration> [msg]
+    hcl rm [entry_id]
+    hcl start <project> <task> [msg]
+    hcl stop [msg]
+
+    Examples:
+
+    hcl show 2009-07-15
+    hcl show yesterday
+    hcl show last tuesday
     EOM
   end
   def help; self.class.help; end
@@ -50,11 +57,12 @@ class HCl
     self
   end
 
-  def show
+  def show *args
+    date = args.empty? ? nil : Chronic.parse(args.join(' '))
     total_hours = 0.0
-    DayEntry.all.each do |day|
+    DayEntry.all(date).each do |day|
       # TODO more information and formatting options
-      puts "\t#{day.hours}\t#{day.project} (#{day.notes})"[0..78]
+      puts "\t#{day.hours}\t#{day.project} #{day.notes}"[0..78]
       total_hours = total_hours + day.hours.to_f
     end
     puts "\t" + '-' * 13

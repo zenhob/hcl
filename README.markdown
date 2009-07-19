@@ -17,22 +17,23 @@ feature is a simple view of today's timesheet. To try it out:
  * Ruby (tested with 1.8.7)
  * RubyGems
  * Curb curl library (gem install curb)
+ * Chronic date-parsing library (gem install chronic)
 
 ## Usage
 
-NOTE only the first command is implemented, and arguments are ignored.
+NOTE only the show command is implemented
 
-    hcl [opts] show [date]
-    hcl [opts] add <project> <task> <duration> [msg]
-    hcl [opts] rm [entry_id]
-    hcl [opts] start <project> <task> [msg]
-    hcl [opts] stop [msg]
+    hcl show [date]
+    hcl add <project> <task> <duration> [msg]
+    hcl rm [entry_id]
+    hcl start <project> <task> [msg]
+    hcl stop [msg]
 
 ## TODO
 
  * Implement time-tracking API methods:
    - display today's time sheet (done)
-   - display any time sheet by date
+   - display any time sheet by date (done)
    - get time sheet entry
    - toggle a timer
    - post a time sheet entry

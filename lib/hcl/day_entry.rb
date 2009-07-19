@@ -51,8 +51,9 @@ class HCl
   end
   
   class DayEntry < TimesheetResource
-    def self.all
-      doc = REXML::Document.new perform('daily')
+    def self.all date = nil
+      url = date.nil? ? 'daily' : "daily/#{date.strftime '%j/%Y'}"
+      doc = REXML::Document.new perform url
       doc.root.elements.collect('day_entries/day_entry') do |day|
         new(
           day.elements.map { |e| e.name }.inject({}) do |a, f|
@@ -61,6 +62,11 @@ class HCl
           end
         )
       end
+    end
+
+    def initialize *args
+      super
+      # TODO cache client/project names and ids
     end
   end
 end
