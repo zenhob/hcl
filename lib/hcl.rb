@@ -38,9 +38,10 @@ class HCl
     Usage:
 
     hcl show [date]
-    hcl add <project> <task> <duration> [msg]
+    hcl tasks
+    hcl add <task> <duration> [msg]
     hcl rm [entry_id]
-    hcl start <project> <task> [msg]
+    hcl start <task> [msg]
     hcl stop [msg]
 
     Examples:
@@ -57,6 +58,19 @@ class HCl
     self
   end
 
+  def tasks
+    Task.all.each do |task|
+      # TODO more information and formatting options
+      puts "#{task.id}\t#{task}"
+    end
+  end
+
+  def start *args
+    task = Task.find args.shift
+    puts "Starting timer for #{task}"
+    puts task.start(*args)
+  end
+
   def show *args
     date = args.empty? ? nil : Chronic.parse(args.join(' '))
     total_hours = 0.0
@@ -69,12 +83,11 @@ class HCl
     puts "\t#{total_hours}\ttotal"
   end
 
-  def not_implemented
+  def not_implemented *args
     puts "not yet implemented"
   end
 
   # TODO implement the following commands
-  alias start not_implemented
   alias stop not_implemented
   alias add not_implemented
   alias rm not_implemented
