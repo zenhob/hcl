@@ -26,40 +26,30 @@ class HCl
       @data = params
     end
   
-    def self.perform action
-      client = session action
-      if client.http_get
-        client.body_str
+    def self.get action
+      https_do Net::HTTP::Get, action
+    end
+
+    def self.post action, data
+      https_do Net::HTTP::Post, action, data
+    end
+
+    def self.https_do method_class, action, data = nil
+      https   = Net::HTTP.new "#{subdomain}.harvestapp.com", 443
+      request = method_class.new "/#{action}"
+      https.use_ssl = true
+      request.basic_auth login, password
+      request.content_type = 'application/xml'
+      request['Accept']    = 'application/xml'
+      response = https.request request, data
+      return response.body
+      if response.kind_of? Net::HTTPSuccess
+        response.body
       else
-        raise "failed"
+        raise 'failure'
       end
     end
 
-    def self.send_data action, data
-      client = session action
-      client.multipart_form_post = true
-      data_field = Curl::PostField.file('data','data') { data }
-      if client.http_post data_field
-        client.body_str
-      else
-        raise "failed"
-      end
-    end
-
-    def self.session action
-      client = Curl::Easy.new("https://#{subdomain}.harvestapp.com/#{action}")
-      client.headers['Accept'] = 'application/xml'
-      client.headers['Content-Type'] = 'application/xml'
-      client.http_auth_types = Curl::CURLAUTH_BASIC
-      client.userpwd = "#{login}:#{password}"
-      client
-      #client = Patron::Session.new
-      #client.timeout = 10
-      #client.username = login
-      #client.password = password
-      #if client.get "https://#{subdomain}.harvestapp.com/#{action}"
-    end
-  
     def id
       @data[:id]
     end

@@ -27,7 +27,7 @@ class HCl
 
     def start *args
       notes = args.join ' '
-      Task.send_data "/daily/add", <<-EOT
+      day = DayEntry.from_xml Task.post("daily/add", <<-EOT)
       <request>
         <notes>#{notes}</notes>
         <hours></hours>
@@ -36,6 +36,7 @@ class HCl
         <spent_at type="date">#{Date.today}</spent_at>
       </request>
       EOT
+      return day
     end
   end
 end

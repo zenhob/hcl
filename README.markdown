@@ -5,18 +5,18 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 
 ## Quick Start
 
-NOTE This software is nowhere near complete. Currently the only implemented
-feature is a simple view of any daily timesheet. To try it out:
+NOTE This software is nowhere near complete. To try it out:
 
     $ cp hcl_conf.yml.example hcl_conf.yml
     $ $EDITOR hcl_conf.yml
     $ ./bin/hcl show [date]
+    $ ./bin/hcl tasks
+    $ ./bin/hcl start <task_id>
 
 ### Prerequisites
 
  * Ruby (tested with 1.8.7)
  * RubyGems
- * Curb curl library (gem install curb)
  * Chronic date-parsing library (gem install chronic)
 
 ## Usage

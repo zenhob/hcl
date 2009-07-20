@@ -1,8 +1,10 @@
 require 'yaml'
 require 'rexml/document'
+require 'net/http'
+require 'net/https'
 
 require 'rubygems'
-require 'curb'
+#require 'curb'
 require 'chronic'
 
 require 'hcl/timesheet_resource'
@@ -72,7 +74,8 @@ class HCl
   def start *args
     task = Task.find args.shift
     puts "Starting timer for #{task}"
-    puts task.start(*args)
+    day_entry = task.start(*args)
+    puts "Time is running on #{day_entry}"
   end
 
   def show *args
