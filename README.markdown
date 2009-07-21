@@ -20,7 +20,7 @@ NOTE This software is nowhere near complete. To try it out:
 
 ## Usage
 
-NOTE that /add/ and /rm/ are not yet implemented.
+NOTE that *add* and *rm* are not yet implemented.
 
     hcl show [date]
     hcl tasks
@@ -72,6 +72,12 @@ commands show the timesheet for the specified day:
     $ hcl show 2 days ago
     $ hcl show 1 week ago
 
+## Author
+
+[Zack Hobson][4], [OpenSourcery LLC][5]
+
+See LICENSE for copyright details.
+
 ## TODO
 
  * Implement time-tracking API methods:
@@ -90,4 +96,6 @@ commands show the timesheet for the specified day:
 [1]: http://www.getharvest.com/api/time_tracking
 [2]: http://chronic.rubyforge.org/
 [3]: http://github.com/aiaio/harvest/tree/master
+[4]: mailto:zack@opensourcery.com
+[5]: http://www.opensourcery.com/
 
