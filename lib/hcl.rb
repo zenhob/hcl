@@ -4,7 +4,6 @@ require 'net/http'
 require 'net/https'
 
 require 'rubygems'
-#require 'curb'
 require 'chronic'
 
 require 'hcl/timesheet_resource'
