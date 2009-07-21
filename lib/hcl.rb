@@ -5,6 +5,7 @@ require 'net/https'
 
 require 'rubygems'
 require 'chronic'
+require 'trollop'
 
 require 'hcl/timesheet_resource'
 require 'hcl/project'
@@ -12,6 +13,8 @@ require 'hcl/task'
 require 'hcl/day_entry'
 
 class HCl
+  VERSION = "0.1.0"
+
   class UnknownCommand < StandardError; end
 
   def self.conf_file= filename
@@ -19,17 +22,18 @@ class HCl
   end
 
   def self.command *args
-    command = args.shift
-    hcl = new(@@conf_file).process_args *args
-    if command
-      if hcl.respond_to? command
-        hcl.send command, *args
+    hcl = new(@@conf_file).process_args(*args).run
+  end
+
+  def run
+    if @command
+      if respond_to? @command
+        send @command, *@args
       else
-        raise UnknownCommand, "unrecognized command `#{command}'"
+        raise UnknownCommand, "unrecognized command `#{@command}'"
       end
     else
-      hcl.show
-      return
+      show
     end
   end
 
@@ -38,10 +42,13 @@ class HCl
     TimesheetResource.configure config
   end
 
-  def self.help
-    puts <<-EOM
-    Usage:
+  def process_args *args
+    Trollop::options(args) do
+      version "HCl #{VERSION}"
+      banner <<-EOM
+HCl is a command-line client for manipulating Harvest time sheets.
 
+Commands:
     hcl show [date]
     hcl tasks
     hcl add <task> <duration> [msg]
@@ -49,17 +56,18 @@ class HCl
     hcl start <task> [msg]
     hcl stop [msg]
 
-    Examples:
+Examples:
+    $ hcl tasks
+    $ hcl start 1234 this is my log message
+    $ hcl show yesterday
+    $ hcl show last tuesday
 
-    hcl show 2009-07-15
-    hcl show yesterday
-    hcl show last tuesday
-    EOM
-  end
-  def help; self.class.help; end
-
-  def process_args *args
-    # TODO process command-line args
+Options:
+EOM
+      stop_on %w[ show tasks add rm start stop ]
+    end
+    @command = args.shift
+    @args = args
     self
   end
 

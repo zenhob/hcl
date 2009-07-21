@@ -17,16 +17,18 @@ NOTE This software is nowhere near complete. To try it out:
 
  * Ruby (tested with 1.8.7)
  * RubyGems
+ * Trollop option-parsing library (gem install trollop)
  * Chronic date-parsing library (gem install chronic)
 
 ## Usage
 
-NOTE only the show command is implemented
+NOTE that the only currently implemented commands are show, tasks and start.
 
     hcl show [date]
-    hcl add <project> <task> <duration> [msg]
+    hcl tasks
+    hcl start <task_id> [msg]
+    hcl add <task_id> <duration> [msg]
     hcl rm [entry_id]
-    hcl start <project> <task> [msg]
     hcl stop [msg]
 
 ### Examples
