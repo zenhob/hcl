@@ -118,9 +118,8 @@ EOM
     else
       Task.find ident, args.shift
     end
-    puts "Starting timer for #{task}"
-    day_entry = task.start(*args)
-    puts "Time is running on #{day_entry}"
+    task.start(*args)
+    puts "Started timer for #{task}"
   end
 
   def show *args
