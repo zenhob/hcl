@@ -47,8 +47,8 @@ commands show the timesheet for the specified day:
  * Implement time-tracking API methods:
    - display today's time sheet (done)
    - display any time sheet by date (done)
-   - get time sheet entry
-   - toggle a timer
+   - start a timer (done)
+   - stop a timer
    - post a time sheet entry
    - delete a time sheet entry
    - update a time sheet entry
