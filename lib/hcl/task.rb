@@ -17,8 +17,8 @@ class HCl
       YAML.load File.read(File.join(ENV['HOME'],'.hcl_tasks'))
     end
 
-    def self.find id
-      all.detect {|t| t.id == id }
+    def self.find project_id, id
+      all.detect {|t| t.project.id == project_id && t.id == id }
     end
 
     def to_s
@@ -27,7 +27,7 @@ class HCl
 
     def start *args
       notes = args.join ' '
-      day = DayEntry.from_xml Task.post("daily/add", <<-EOT)
+      days = DayEntry.from_xml Task.post("daily/add", <<-EOT)
       <request>
         <notes>#{notes}</notes>
         <hours></hours>
@@ -36,7 +36,7 @@ class HCl
         <spent_at type="date">#{Date.today}</spent_at>
       </request>
       EOT
-      return day
+      days.first
     end
   end
 end

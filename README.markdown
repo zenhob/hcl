@@ -10,8 +10,6 @@ NOTE This software is nowhere near complete. To try it out:
     $ cp hcl_conf.yml.example hcl_conf.yml
     $ $EDITOR hcl_conf.yml
     $ ./bin/hcl show [date]
-    $ ./bin/hcl tasks
-    $ ./bin/hcl start <task_id>
 
 ### Prerequisites
 
@@ -22,16 +20,41 @@ NOTE This software is nowhere near complete. To try it out:
 
 ## Usage
 
-NOTE that the only currently implemented commands are show, tasks and start.
+NOTE that /add/, /rm/ and /stop/ are not yet implemented.
 
     hcl show [date]
     hcl tasks
-    hcl start <task_id> [msg]
-    hcl add <task_id> <duration> [msg]
+    hcl set <key> <value ...>
+    hcl unset <key>
+    hcl start (<task_alias> | <project_id> <task_id>) [msg]
+    hcl add (<task_alias> | <project_id> <task_id>) <duration> [msg]
     hcl rm [entry_id]
     hcl stop [msg]
 
-### Examples
+### Starting a Timer
+
+To start a new timer you need to identify the project and task. After you've
+used the show command you can use the tasks command to view a cached list of
+available tasks. The first two numbers in each row are the project and task
+IDs. You need both values to start a timer:
+
+    $ hcl show
+    -------------
+    0:00    total
+    $ hcl tasks
+    1234 5678   ClientX Software Development
+    1234 9876   ClientX Admin
+    $ hcl start 1234 5678 adding a new feature
+
+### Task Aliases
+
+Since it's not practical to enter two long numbers every time you want to
+identify a task, HCl supports task aliases:
+
+    $ hcl set task.xdev 1234 5678
+    $ hcl start xdev adding a new feature
+
+### Date Formats
 
 Dates can be expressed in a variety of ways. See the [Chronic documentation][2]
 for more information about available date input formats. The following
@@ -52,6 +75,7 @@ commands show the timesheet for the specified day:
    - post a time sheet entry
    - delete a time sheet entry
    - update a time sheet entry
+ * better UI for e.g. tasks aliases
  * command-line configuration
  * search ~/.hcl_config for configuration
  * integrate timesheet functionality into aiaio's [harvest gem][3]
