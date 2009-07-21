@@ -122,12 +122,23 @@ EOM
     puts "Started timer for #{task}"
   end
 
+  def stop
+    entry = DayEntry.with_timer
+    if entry
+      entry.toggle
+      puts "Stopped #{entry}"
+    else
+      puts "No running timers found."
+    end
+  end
+
   def show *args
     date = args.empty? ? nil : Chronic.parse(args.join(' '))
     total_hours = 0.0
     DayEntry.all(date).each do |day|
       # TODO more information and formatting options
-      puts "\t#{as_hours day.hours}\t#{day.project} #{day.notes}"[0..78]
+      running = day.running? ? '(running) ' : ''
+      puts "\t#{as_hours day.hours}\t#{running}#{day.project} #{day.notes}"[0..78]
       total_hours = total_hours + day.hours.to_f
     end
     puts "\t" + '-' * 13
@@ -145,7 +156,6 @@ EOM
   end
 
   # TODO implement the following commands
-  alias stop not_implemented
   alias add not_implemented
   alias rm not_implemented
 

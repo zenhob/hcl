@@ -38,6 +38,7 @@ class HCl
       EOT
       days.first
     end
+
   end
 end
 

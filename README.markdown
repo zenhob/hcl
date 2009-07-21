@@ -20,16 +20,16 @@ NOTE This software is nowhere near complete. To try it out:
 
 ## Usage
 
-NOTE that /add/, /rm/ and /stop/ are not yet implemented.
+NOTE that /add/ and /rm/ are not yet implemented.
 
     hcl show [date]
     hcl tasks
     hcl set <key> <value ...>
     hcl unset <key>
     hcl start (<task_alias> | <project_id> <task_id>) [msg]
+    hcl stop
     hcl add (<task_alias> | <project_id> <task_id>) <duration> [msg]
     hcl rm [entry_id]
-    hcl stop [msg]
 
 ### Starting a Timer
 
@@ -53,6 +53,13 @@ identify a task, HCl supports task aliases:
 
     $ hcl set task.xdev 1234 5678
     $ hcl start xdev adding a new feature
+
+### Stopping a Timer
+
+The following command will stop a running timer (currently only one timer at
+a time is supported):
+
+    $ hcl stop
 
 ### Date Formats
 

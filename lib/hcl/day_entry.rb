@@ -15,14 +15,27 @@ class HCl
     def self.from_xml xml
       doc = REXML::Document.new xml
       Task.cache_tasks doc
-      doc.root.elements.collect('day_entries/day_entry') do |day|
+      doc.root.elements.collect('*/day_entry') do |day|
         new xml_to_hash(day)
       end
+    end
+
+    def self.with_timer
+      all.detect {|t| t.running? }
+    end
+
+    def running?
+      !@data[:timer_started_at].nil? && !@data[:timer_started_at].empty?
     end
 
     def initialize *args
       super
       # TODO cache client/project names and ids
+    end
+
+    def toggle
+      DayEntry.get("daily/timer/#{id}")
+      self
     end
   end
 end
