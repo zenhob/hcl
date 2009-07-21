@@ -66,6 +66,7 @@ HCl is a command-line client for manipulating Harvest time sheets.
 Commands:
     hcl show [date]
     hcl tasks
+    hcl set <key> <value ...>
     hcl start <task> [msg]
     hcl stop [msg]
     hcl note <msg>
@@ -74,7 +75,9 @@ Commands:
 
 Examples:
     $ hcl tasks
-    $ hcl start 1234 this is my log message
+    $ hcl start 1234 4567 this is my log message
+    $ hcl set task.mytask 1234 4567
+    $ hcl start mytask this is my next log message
     $ hcl show yesterday
     $ hcl show last tuesday
 
