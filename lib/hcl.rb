@@ -83,11 +83,17 @@ class HCl
     total_hours = 0.0
     DayEntry.all(date).each do |day|
       # TODO more information and formatting options
-      puts "\t#{day.hours}\t#{day.project} #{day.notes}"[0..78]
+      puts "\t#{as_hours day.hours}\t#{day.project} #{day.notes}"[0..78]
       total_hours = total_hours + day.hours.to_f
     end
     puts "\t" + '-' * 13
-    puts "\t#{total_hours}\ttotal"
+    puts "\t#{as_hours total_hours}\ttotal"
+  end
+
+  # Convert from decimal to a string of the form HH:MM.
+  def as_hours hours
+    minutes = hours.to_f * 60.0
+    "#{(minutes / 60).to_i}:#{(minutes % 60).to_i}"
   end
 
   def not_implemented *args
