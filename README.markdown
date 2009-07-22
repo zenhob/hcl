@@ -1,7 +1,9 @@
 # hcl
 
 HCl is a command-line tool for interacting with Harvest time sheets using the
-[Harvest time tracking API][1].
+[Harvest time tracking API][htt].
+
+[htt]: http://www.getharvest.com/api/time_tracking
 
 ## Quick Start
 
@@ -63,7 +65,7 @@ a time is supported):
 
 ### Date Formats
 
-Dates can be expressed in a variety of ways. See the [Chronic documentation][2]
+Dates can be expressed in a variety of ways. See the [Chronic documentation][cd]
 for more information about available date input formats. The following
 commands show the timesheet for the specified day:
 
@@ -72,11 +74,16 @@ commands show the timesheet for the specified day:
     $ hcl show 2 days ago
     $ hcl show 1 week ago
 
+[cd]: http://chronic.rubyforge.org/
+
 ## Author
 
-[Zack Hobson][4], [OpenSourcery LLC][5]
+[Zack Hobson][zgh], [OpenSourcery LLC][os]
 
 See LICENSE for copyright details.
+
+[zgh]: mailto:zack@opensourcery.com
+[os]: http://www.opensourcery.com/
 
 ## TODO
 
@@ -91,11 +98,7 @@ See LICENSE for copyright details.
  * better UI for e.g. tasks aliases
  * command-line configuration
  * search ~/.hcl_config for configuration
- * integrate timesheet functionality into aiaio's [harvest gem][3]
+ * integrate timesheet functionality into aiaio's [harvest gem][hg]
 
-[1]: http://www.getharvest.com/api/time_tracking
-[2]: http://chronic.rubyforge.org/
-[3]: http://github.com/aiaio/harvest/tree/master
-[4]: mailto:zack@opensourcery.com
-[5]: http://www.opensourcery.com/
+[hg]: http://github.com/aiaio/harvest/tree/master
 
