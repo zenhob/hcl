@@ -16,6 +16,7 @@ NOTE This software is nowhere near complete. To try it out:
 ### Prerequisites
 
  * Ruby (tested with 1.8.7)
+ * Ruby OpenSSL support (in debian/ubuntu: apt-get install libopenssl-ruby)
  * RubyGems
  * Trollop option-parsing library (gem install trollop)
  * Chronic date-parsing library (gem install chronic)
