@@ -20,6 +20,18 @@ class HCl
       end
     end
 
+    # Append a string to the notes for this task.
+    def append_note new_notes
+      # If I don't include hours it gets reset.
+      # This doens't appear to be the case for task and project.
+      DayEntry.post("daily/update/#{id}", <<-EOD)
+      <request>
+        <notes>#{notes << " #{new_notes}"}</notes>
+        <hours>#{hours}</hours>
+      </request>
+      EOD
+    end
+
     def self.with_timer
       all.detect {|t| t.running? }
     end

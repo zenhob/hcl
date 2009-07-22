@@ -47,16 +47,18 @@ class HCl
   def process_args *args
     Trollop::options(args) do
       version "HCl #{VERSION}"
+      stop_on %w[ show tasks set unset note add rm start stop ]
       banner <<-EOM
 HCl is a command-line client for manipulating Harvest time sheets.
 
 Commands:
     hcl show [date]
     hcl tasks
-    hcl add <task> <duration> [msg]
-    hcl rm [entry_id]
     hcl start <task> [msg]
     hcl stop [msg]
+    hcl note <msg>
+    hcl add <task> <duration> [msg]
+    hcl rm [entry_id]
 
 Examples:
     $ hcl tasks
@@ -66,7 +68,6 @@ Examples:
 
 Options:
 EOM
-      stop_on %w[ show tasks set unset add rm start stop ]
     end
     @command = args.shift
     @args = args
@@ -129,6 +130,17 @@ EOM
     if entry
       entry.toggle
       puts "Stopped #{entry}"
+    else
+      puts "No running timers found."
+    end
+  end
+
+  def note *args
+    message = args.join ' '
+    entry = DayEntry.with_timer
+    if entry
+      entry.append_note message
+      puts "Added note '#{message}' to #{entry}."
     else
       puts "No running timers found."
     end

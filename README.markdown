@@ -57,6 +57,13 @@ identify a task, HCl supports task aliases:
     $ hcl set task.xdev 1234 5678
     $ hcl start xdev adding a new feature
 
+### Adding Notes to a Running Task
+
+While a task is running you can append strings to the note for that task:
+
+    $ hcl note Found a good time
+    $ hcl note or not, whatever...
+
 ### Stopping a Timer
 
 The following command will stop a running timer (currently only one timer at
