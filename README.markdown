@@ -29,9 +29,10 @@ NOTE that *add* and *rm* are not yet implemented.
     hcl tasks
     hcl set <key> <value ...>
     hcl unset <key>
-    hcl start (<task_alias> | <project_id> <task_id>) [msg]
+    hcl start (<task_alias> | <project_id> <task_id>) [msg ...]
+    hcl note <msg ...>
     hcl stop
-    hcl add (<task_alias> | <project_id> <task_id>) <duration> [msg]
+    hcl add (<task_alias> | <project_id> <task_id>) <duration> [msg ...]
     hcl rm [entry_id]
 
 ### Starting a Timer
