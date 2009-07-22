@@ -94,20 +94,3 @@ See LICENSE for copyright details.
 [zgh]: mailto:zack@opensourcery.com
 [os]: http://www.opensourcery.com/
 
-## TODO
-
- * Implement time-tracking API methods:
-   - display today's time sheet (done)
-   - display any time sheet by date (done)
-   - start a timer (done)
-   - stop a timer
-   - post a time sheet entry
-   - delete a time sheet entry
-   - update a time sheet entry
- * better UI for e.g. tasks aliases
- * command-line configuration
- * search ~/.hcl_config for configuration
- * integrate timesheet functionality into aiaio's [harvest gem][hg]
-
-[hg]: http://github.com/aiaio/harvest/tree/master
-
