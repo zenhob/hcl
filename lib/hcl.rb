@@ -84,6 +84,8 @@ EOM
     settings_file = "#{ENV['HOME']}/.hcl_settings"
     if File.exists? settings_file
       @settings = YAML.load(File.read(settings_file))
+    else
+      @settings = {}
     end
   end
 
