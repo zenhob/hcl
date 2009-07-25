@@ -5,6 +5,5 @@ $:.unshift File.dirname(__FILE__) + '/../ext/harvest/lib'
 
 require 'hcl'
 
-HCl.conf_file = File.dirname(__FILE__) + '/../hcl_conf.yml'
 HCl.command *ARGV
 

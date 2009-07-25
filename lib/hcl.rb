@@ -6,6 +6,7 @@ require 'net/https'
 require 'rubygems'
 require 'chronic'
 require 'trollop'
+require 'highline/import'
 
 require 'hcl/timesheet_resource'
 require 'hcl/project'
@@ -27,15 +28,12 @@ end
 class HCl
   VERSION = "0.1.0"
   SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
+  CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
 
   class UnknownCommand < StandardError; end
 
-  def self.conf_file= filename
-    @@conf_file = filename
-  end
-
   def self.command *args
-    hcl = new(@@conf_file).process_args(*args).run
+    hcl = new.process_args(*args).run
   end
 
   def run
@@ -50,9 +48,8 @@ class HCl
     end
   end
 
-  def initialize conf_file
-    config = YAML::load File.read(conf_file)
-    TimesheetResource.configure config
+  def initialize
+    read_config
     read_settings
   end
 
@@ -96,10 +93,35 @@ EOM
     end
   end
 
+  def read_config
+    if File.exists? CONFIG_FILE
+      config = YAML::load File.read(CONFIG_FILE)
+      TimesheetResource.configure config
+    elsif File.exists? old_conf = File.dirname(__FILE__) + "/../hcl_conf.yml"
+      config = YAML::load File.read(old_conf)
+      TimesheetResource.configure config
+      write_config config
+    else
+      config = {}
+      puts "Please specify your Harvest credentials.\n"
+      config['login'] = ask("Email Address: ")
+      config['password'] = ask("Password: ") { |q| q.echo = false }
+      config['subdomain'] = ask("Subdomain: ")
+      TimesheetResource.configure config
+      write_config config
+    end
+  end
+
+  def write_config config
+    puts "Writing configuration to #{CONFIG_FILE}."
+    File.open(CONFIG_FILE, 'w') do |f|
+     f.write config.to_yaml
+    end
+  end
+
   def read_settings
-    settings_file = "#{ENV['HOME']}/.hcl_settings"
-    if File.exists? settings_file
-      @settings = YAML.load(File.read(settings_file))
+    if File.exists? SETTINGS_FILE
+      @settings = YAML.load(File.read(SETTINGS_FILE))
     else
       @settings = {}
     end
