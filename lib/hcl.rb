@@ -3,7 +3,6 @@ require 'rexml/document'
 require 'net/http'
 require 'net/https'
 
-require 'rubygems'
 require 'chronic'
 require 'trollop'
 require 'highline/import'
@@ -26,7 +25,7 @@ class Net::HTTP
 end
 
 class HCl
-  VERSION = "0.1.0"
+  VERSION_FILE = File.dirname(__FILE__) + '/../VERSION.yml'
   SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
   CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
 
@@ -49,13 +48,19 @@ class HCl
   end
 
   def initialize
+    @version = YAML::load(File.read(VERSION_FILE))
     read_config
     read_settings
   end
 
+  def version
+    [:major, :minor, :patch].map { |v| @version[v] }.join('.')
+  end
+
   def process_args *args
+    version_string = version
     Trollop::options(args) do
-      version "HCl #{VERSION}"
+      version "HCl #{version_string}"
       stop_on %w[ show tasks set unset note add rm start stop ]
       banner <<-EOM
 HCl is a command-line client for manipulating Harvest time sheets.

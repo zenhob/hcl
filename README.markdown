@@ -7,11 +7,8 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 
 ## Quick Start
 
-NOTE This software is nowhere near complete. To try it out:
-
-    $ cp hcl_conf.yml.example hcl_conf.yml
-    $ $EDITOR hcl_conf.yml
-    $ ./bin/hcl show [date]
+    $ gem install zenhob-hcl --source=http://gems.github.com
+    $ hcl show [date]
 
 ### Prerequisites
 
