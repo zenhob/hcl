@@ -21,6 +21,7 @@ NOTE This software is nowhere near complete. To try it out:
  * Trollop option-parsing library (gem install trollop)
  * Chronic date-parsing library (gem install chronic)
  * HighLine console input library (gem install highline)
+ * Jeweler packaging tool (needed to build the gem)
 
 ## Usage
 
