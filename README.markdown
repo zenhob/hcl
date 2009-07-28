@@ -14,6 +14,7 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 
  * Ruby (tested with 1.8.7)
  * Ruby OpenSSL support (in debian/ubuntu: apt-get install libopenssl-ruby)
+ * Ruby extension building support (in debian/ubuntu: apt-get install ruby-dev)
  * RubyGems
  * Trollop option-parsing library (gem install trollop)
  * Chronic date-parsing library (gem install chronic)
