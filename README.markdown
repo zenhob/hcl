@@ -22,8 +22,6 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 
 ## Usage
 
-NOTE that *add* and *rm* are not yet implemented.
-
     hcl show [date]
     hcl tasks
     hcl set <key> <value ...>
@@ -31,8 +29,6 @@ NOTE that *add* and *rm* are not yet implemented.
     hcl start (<task_alias> | <project_id> <task_id>) [msg ...]
     hcl note <msg ...>
     hcl stop
-    hcl add (<task_alias> | <project_id> <task_id>) <duration> [msg ...]
-    hcl rm [entry_id]
 
 ### Starting a Timer
 

@@ -38,7 +38,14 @@ class HCl
   def run
     if @command
       if respond_to? @command
-        send @command, *@args
+        result = send @command, *@args
+        if not result.nil?
+          if result.respond_to? :to_a
+            puts result.to_a.join(', ')
+          elsif result.respond_to? :to_s
+            puts result
+          end
+        end
       else
         raise UnknownCommand, "unrecognized command `#{@command}'"
       end
@@ -68,12 +75,11 @@ HCl is a command-line client for manipulating Harvest time sheets.
 Commands:
     hcl show [date]
     hcl tasks
+    hcl aliases
     hcl set <key> <value ...>
     hcl start <task> [msg]
     hcl stop [msg]
     hcl note <msg>
-    hcl add <task> <duration> [msg]
-    hcl rm [entry_id]
 
 Examples:
     $ hcl tasks
@@ -92,10 +98,13 @@ EOM
   end
 
   def tasks
-    Task.all.each do |task|
-      # TODO more information and formatting options
-      puts "#{task.project.id} #{task.id}\t#{task}"
+    tasks = Task.all
+    if tasks.empty?
+      puts "No cached tasks. Run `hcl show' to populate the cache and try again."
+    else
+      tasks.each { |task| puts "#{task.project.id} #{task.id}\t#{task}" }
     end
+    nil
   end
 
   def read_config
@@ -136,6 +145,7 @@ EOM
     File.open(SETTINGS_FILE, 'w') do |f|
      f.write @settings.to_yaml
     end
+    nil
   end
 
   def set key = nil, *args
@@ -149,6 +159,7 @@ EOM
       @settings[key] = value
       write_settings
     end
+    nil
   end
 
   def unset key
@@ -156,22 +167,31 @@ EOM
     write_settings
   end
 
+  def aliases
+    @settings.keys.select { |s| s =~ /^task\./ }.map { |s| s.slice(5..-1) }
+  end
+
   def start *args
     ident = args.shift
-    task = if @settings["task.#{ident}"]
-      Task.find *@settings["task.#{ident}"].split(/\s+/)
-    else
-      Task.find ident, args.shift
+    task_ids = if @settings.key? "task.#{ident}"
+        @settings["task.#{ident}"].split(/\s+/)
+      else
+        [ident, args.shift]
+      end
+    task = Task.find *task_ids
+    if task.nil?
+      puts "Unknown project/task alias, try one of the following: #{aliases.join(', ')}."
+      exit 1
     end
     task.start(*args)
-    puts "Started timer for #{task}"
+    puts "Started timer for #{task}."
   end
 
   def stop
     entry = DayEntry.with_timer
     if entry
       entry.toggle
-      puts "Stopped #{entry}"
+      puts "Stopped #{entry}."
     else
       puts "No running timers found."
     end
@@ -206,14 +226,6 @@ EOM
     minutes = hours.to_f * 60.0
     sprintf "%d:%02d", (minutes / 60).to_i, (minutes % 60).to_i
   end
-
-  def not_implemented *args
-    puts "not yet implemented"
-  end
-
-  # TODO implement the following commands
-  alias add not_implemented
-  alias rm not_implemented
 
 end
 
