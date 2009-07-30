@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{hcl}
-  s.version = "0.1.3"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Zack Hobson"]
-  s.date = %q{2009-07-28}
+  s.date = %q{2009-07-30}
   s.default_executable = %q{hcl}
   s.description = %q{HCl is a command-line client for manipulating Harvest time sheets.}
   s.email = %q{zack@opensourcery.com}
@@ -29,7 +29,8 @@ Gem::Specification.new do |s|
      "lib/hcl/day_entry.rb",
      "lib/hcl/project.rb",
      "lib/hcl/task.rb",
-     "lib/hcl/timesheet_resource.rb"
+     "lib/hcl/timesheet_resource.rb",
+     "lib/hcl/utility.rb"
   ]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/zenhob/hcl}
