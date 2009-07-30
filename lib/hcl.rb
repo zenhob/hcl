@@ -212,7 +212,6 @@ EOM
     date = args.empty? ? nil : Chronic.parse(args.join(' '))
     total_hours = 0.0
     DayEntry.all(date).each do |day|
-      # TODO more information and formatting options
       running = day.running? ? '(running) ' : ''
       puts "\t#{as_hours day.hours}\t#{running}#{day.project} #{day.notes}"[0..78]
       total_hours = total_hours + day.hours.to_f

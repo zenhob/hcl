@@ -8,8 +8,10 @@ class HCl
           new xml_to_hash(task).merge(:project => project)
         end)
       end
-      File.open(File.join(ENV['HOME'],'.hcl_tasks'), 'w') do |f|
-        f.write tasks.uniq.to_yaml
+      unless tasks.empty?
+        File.open(File.join(ENV['HOME'],'.hcl_tasks'), 'w') do |f|
+          f.write tasks.uniq.to_yaml
+        end
       end
     end
 
@@ -18,7 +20,9 @@ class HCl
     end
 
     def self.find project_id, id
-      all.detect {|t| t.project.id == project_id && t.id == id }
+      all.detect do |t|
+        t.project.id.to_i == project_id.to_i && t.id.to_i == id.to_i
+      end
     end
 
     def to_s
