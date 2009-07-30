@@ -213,17 +213,11 @@ EOM
     total_hours = 0.0
     DayEntry.all(date).each do |day|
       running = day.running? ? '(running) ' : ''
-      puts "\t#{as_hours day.hours}\t#{running}#{day.project} #{day.notes}"[0..78]
+      puts "\t#{day.formatted_hours}\t#{running}#{day.project} #{day.notes}"[0..78]
       total_hours = total_hours + day.hours.to_f
     end
     puts "\t" + '-' * 13
-    puts "\t#{as_hours total_hours}\ttotal"
-  end
-
-  # Convert from decimal to a string of the form HH:MM.
-  def as_hours hours
-    minutes = hours.to_f * 60.0
-    sprintf "%d:%02d", (minutes / 60).to_i, (minutes % 60).to_i
+    puts "\t#{HCl::DayEntry.as_hours total_hours}\ttotal"
   end
 
 end

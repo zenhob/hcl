@@ -9,7 +9,7 @@ class HCl
     end
 
     def to_s
-      "#{client} #{project} #{task} (#{hours})"
+      "#{client} #{project} #{task} (#{formatted_hours})"
     end
 
     def self.from_xml xml
@@ -48,6 +48,17 @@ class HCl
     def toggle
       DayEntry.get("daily/timer/#{id}")
       self
+    end
+
+    # Returns the hours formatted as "HH:MM"
+    def formatted_hours
+      self.class.as_hours hours
+    end
+
+    # Convert from decimal to a string of the form HH:MM.
+    def self.as_hours hours
+      minutes = hours.to_f * 60.0
+      sprintf "%d:%02d", (minutes / 60).to_i, (minutes % 60).to_i
     end
   end
 end
