@@ -7,6 +7,7 @@ require 'chronic'
 require 'trollop'
 require 'highline/import'
 
+require 'hcl/utility'
 require 'hcl/timesheet_resource'
 require 'hcl/project'
 require 'hcl/task'
@@ -25,6 +26,8 @@ class Net::HTTP
 end
 
 class HCl
+  include Utility
+
   VERSION_FILE = File.dirname(__FILE__) + '/../VERSION.yml'
   SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
   CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
@@ -172,6 +175,11 @@ EOM
   end
 
   def start *args
+    starting_time = args.detect {|x| x =~ /^\+\d*(\.|:)\d+$/ }
+    if starting_time
+      args.delete(starting_time)
+      starting_time = time2float starting_time
+    end
     ident = args.shift
     task_ids = if @settings.key? "task.#{ident}"
         @settings["task.#{ident}"].split(/\s+/)
@@ -183,8 +191,8 @@ EOM
       puts "Unknown project/task alias, try one of the following: #{aliases.join(', ')}."
       exit 1
     end
-    task.start(*args)
-    puts "Started timer for #{task}."
+    timer = task.start(:starting_time => starting_time, :note => args.join(' '))
+    puts "Started timer for #{timer}."
   end
 
   def stop
@@ -217,7 +225,7 @@ EOM
       total_hours = total_hours + day.hours.to_f
     end
     puts "\t" + '-' * 13
-    puts "\t#{HCl::DayEntry.as_hours total_hours}\ttotal"
+    puts "\t#{as_hours total_hours}\ttotal"
   end
 
 end

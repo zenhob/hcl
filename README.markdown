@@ -27,7 +27,7 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
     hcl tasks
     hcl set <key> <value ...>
     hcl unset <key>
-    hcl start (<task_alias> | <project_id> <task_id>) [msg ...]
+    hcl start (<task_alias> | <project_id> <task_id>) [+time] [msg ...]
     hcl note <msg ...>
     hcl stop
 
@@ -53,6 +53,15 @@ identify a task, HCl supports task aliases:
 
     $ hcl set task.xdev 1234 5678
     $ hcl start xdev adding a new feature
+
+### Starting a Timer with Initial Time
+
+You can also provide an initial time when starting a new timer.
+This can be expressed in floating-point or HH:MM. The following two
+commands are identical:
+
+    $ hcl start xdev +0:15 adding a new feature
+    $ hcl start +.25 xdev adding a new feature
 
 ### Adding Notes to a Running Task
 

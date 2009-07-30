@@ -29,18 +29,24 @@ class HCl
       "#{project.name} #{name}"
     end
 
-    def start *args
-      notes = args.join ' '
+    def add opts
+      notes = opts[:note]
+      starting_time = opts[:starting_time] || 0
       days = DayEntry.from_xml Task.post("daily/add", <<-EOT)
       <request>
         <notes>#{notes}</notes>
-        <hours></hours>
+        <hours>#{starting_time}</hours>
         <project_id type="integer">#{project.id}</project_id>
         <task_id type="integer">#{id}</task_id>
         <spent_at type="date">#{Date.today}</spent_at>
       </request>
       EOT
       days.first
+    end
+
+    def start opts
+      day = add opts
+      DayEntry.from_xml(Task.get("daily/timer/#{day.id}")).first
     end
 
   end

@@ -1,6 +1,7 @@
 
 class HCl 
   class DayEntry < TimesheetResource
+    include Utility
     # Get the time sheet entries for a given day. If no date is provided
     # defaults to today.
     def self.all date = nil
@@ -15,7 +16,7 @@ class HCl
     def self.from_xml xml
       doc = REXML::Document.new xml
       Task.cache_tasks doc
-      doc.root.elements.collect('*/day_entry') do |day|
+      doc.root.elements.collect('//day_entry') do |day|
         new xml_to_hash(day)
       end
     end
@@ -52,13 +53,8 @@ class HCl
 
     # Returns the hours formatted as "HH:MM"
     def formatted_hours
-      self.class.as_hours hours
+      as_hours hours
     end
 
-    # Convert from decimal to a string of the form HH:MM.
-    def self.as_hours hours
-      minutes = hours.to_f * 60.0
-      sprintf "%d:%02d", (minutes / 60).to_i, (minutes % 60).to_i
-    end
   end
 end
