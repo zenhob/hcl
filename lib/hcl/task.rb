@@ -46,7 +46,11 @@ class HCl
 
     def start opts
       day = add opts
-      DayEntry.from_xml(Task.get("daily/timer/#{day.id}")).first
+      if day.running?
+        day
+      else
+        DayEntry.from_xml(Task.get("daily/timer/#{day.id}")).first
+      end
     end
 
   end
