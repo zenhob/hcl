@@ -39,21 +39,26 @@ class HCl
   end
 
   def run
-    if @command
-      if respond_to? @command
-        result = send @command, *@args
-        if not result.nil?
-          if result.respond_to? :to_a
-            puts result.to_a.join(', ')
-          elsif result.respond_to? :to_s
-            puts result
+    begin
+      if @command
+        if respond_to? @command
+          result = send @command, *@args
+          if not result.nil?
+            if result.respond_to? :to_a
+              puts result.to_a.join(', ')
+            elsif result.respond_to? :to_s
+              puts result
+            end
           end
+        else
+          raise UnknownCommand, "unrecognized command `#{@command}'"
         end
       else
-        raise UnknownCommand, "unrecognized command `#{@command}'"
+        show
       end
-    else
-      show
+    rescue TimesheetResource::Failure => e
+      puts "Internal failure. #{e}"
+      exit 1
     end
   end
 

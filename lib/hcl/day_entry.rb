@@ -2,6 +2,7 @@
 class HCl 
   class DayEntry < TimesheetResource
     include Utility
+
     # Get the time sheet entries for a given day. If no date is provided
     # defaults to today.
     def self.all date = nil
@@ -15,6 +16,7 @@ class HCl
 
     def self.from_xml xml
       doc = REXML::Document.new xml
+      raise Failure, "No root node in XML document: #{xml}" if doc.root.nil?
       Task.cache_tasks doc
       doc.root.elements.collect('//day_entry') do |day|
         new xml_to_hash(day)

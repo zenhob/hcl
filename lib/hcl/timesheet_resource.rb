@@ -1,5 +1,7 @@
 class HCl
   class TimesheetResource
+    class Failure < Exception; end
+
     def self.configure opts = nil
       if opts
         self.login = opts['login']
