@@ -1,2 +1,5 @@
 *.sw[nop]
 pkg
+tags
+doc
+.yardoc
