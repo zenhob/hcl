@@ -1,4 +1,4 @@
-class HCl
+module HCl
   class Task < TimesheetResource
     def self.cache_tasks doc
       tasks = []

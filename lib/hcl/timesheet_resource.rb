@@ -1,4 +1,4 @@
-class HCl
+module HCl
   class TimesheetResource
     class Failure < Exception; end
 

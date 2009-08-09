@@ -1,5 +1,5 @@
 
-class HCl 
+module HCl 
   class DayEntry < TimesheetResource
     include Utility
 

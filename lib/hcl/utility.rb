@@ -1,4 +1,4 @@
-class HCl
+module HCl
   module Utility
     # Convert from decimal to a string of the form HH:MM.
     def as_hours hours

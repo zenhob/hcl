@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'hcl'
+require 'hcl/app'
 
-HCl.command *ARGV
+HCl::App.command *ARGV
 
