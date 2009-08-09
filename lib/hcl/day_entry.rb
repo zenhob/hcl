@@ -27,9 +27,14 @@ module HCl
     def append_note new_notes
       # If I don't include hours it gets reset.
       # This doens't appear to be the case for task and project.
+      if notes.nil?
+        notes = new_notes
+      else
+        notes << " #{new_notes}"
+      end
       DayEntry.post("daily/update/#{id}", <<-EOD)
       <request>
-        <notes>#{notes << " #{new_notes}"}</notes>
+        <notes>#{notes}</notes>
         <hours>#{hours}</hours>
       </request>
       EOD
