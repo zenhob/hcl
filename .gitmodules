@@ -1,3 +1,0 @@
-[submodule "ext/harvest"]
-	path = ext/harvest
-	url = git://github.com/aiaio/harvest.git
