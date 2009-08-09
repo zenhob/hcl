@@ -1,4 +1,4 @@
-# hcl
+# HCl
 
 HCl is a command-line tool for interacting with Harvest time sheets using the
 [Harvest time tracking API][htt].
