@@ -11,6 +11,7 @@ require 'highline/import'
 
 ## app dependencies
 require 'hcl/utility'
+require 'hcl/commands'
 require 'hcl/timesheet_resource'
 require 'hcl/project'
 require 'hcl/task'
@@ -30,50 +31,61 @@ end
 
 module HCl
   class App
-  include HCl::Utility
+    include HCl::Utility
+    include HCl::Commands
+  
+    SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
+    CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
+  
+    class UnknownCommand < StandardError; end
+  
+    def initialize
+      read_config
+      read_settings
+    end
 
-  SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
-  CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
+    # Run the given command and arguments.
+    def self.command *args
+      hcl = new.process_args(*args).run
+    end
 
-  class UnknownCommand < StandardError; end
-
-  def self.command *args
-    hcl = new.process_args(*args).run
-  end
-
-  def run
-    begin
-      if @command
-        if respond_to? @command
-          result = send @command, *@args
-          if not result.nil?
-            if result.respond_to? :to_a
-              puts result.to_a.join(', ')
-            elsif result.respond_to? :to_s
-              puts result
+    # Return true if the string is a known command, false otherwise.
+    #
+    # @param [#to_s] command name of command
+    # @return [true, false]
+    def command? command
+      Commands.instance_methods.include? command.to_s
+    end
+  
+    # Start the application.
+    def run
+      begin
+        if @command
+          if command? @command
+            result = send @command, *@args
+            if not result.nil?
+              if result.respond_to? :to_a
+                puts result.to_a.join(', ')
+              elsif result.respond_to? :to_s
+                puts result
+              end
             end
+          else
+            raise UnknownCommand, "unrecognized command `#{@command}'"
           end
         else
-          raise UnknownCommand, "unrecognized command `#{@command}'"
+          show
         end
-      else
-        show
+      rescue TimesheetResource::Failure => e
+        puts "Internal failure. #{e}"
+        exit 1
       end
-    rescue TimesheetResource::Failure => e
-      puts "Internal failure. #{e}"
-      exit 1
     end
-  end
-
-  def initialize
-    read_config
-    read_settings
-  end
-
-  def process_args *args
-    Trollop::options(args) do
-      stop_on %w[ show tasks set unset note add rm start stop ]
-      banner <<-EOM
+  
+    def process_args *args
+      Trollop::options(args) do
+        stop_on Commands.instance_methods
+        banner <<-EOM
 HCl is a command-line client for manipulating Harvest time sheets.
 
 Commands:
@@ -81,6 +93,7 @@ Commands:
     hcl tasks
     hcl aliases
     hcl set <key> <value ...>
+    hcl unset <key>
     hcl start <task> [msg]
     hcl stop [msg]
     hcl note <msg>
@@ -95,140 +108,54 @@ Examples:
 
 Options:
 EOM
-    end
-    @command = args.shift
-    @args = args
-    self
-  end
-
-  def tasks
-    tasks = Task.all
-    if tasks.empty?
-      puts "No cached tasks. Run `hcl show' to populate the cache and try again."
-    else
-      tasks.each { |task| puts "#{task.project.id} #{task.id}\t#{task}" }
-    end
-    nil
-  end
-
-  def read_config
-    if File.exists? CONFIG_FILE
-      config = YAML::load File.read(CONFIG_FILE)
-      TimesheetResource.configure config
-    elsif File.exists? old_conf = File.dirname(__FILE__) + "/../hcl_conf.yml"
-      config = YAML::load File.read(old_conf)
-      TimesheetResource.configure config
-      write_config config
-    else
-      config = {}
-      puts "Please specify your Harvest credentials.\n"
-      config['login'] = ask("Email Address: ")
-      config['password'] = ask("Password: ") { |q| q.echo = false }
-      config['subdomain'] = ask("Subdomain: ")
-      TimesheetResource.configure config
-      write_config config
-    end
-  end
-
-  def write_config config
-    puts "Writing configuration to #{CONFIG_FILE}."
-    File.open(CONFIG_FILE, 'w') do |f|
-     f.write config.to_yaml
-    end
-  end
-
-  def read_settings
-    if File.exists? SETTINGS_FILE
-      @settings = YAML.load(File.read(SETTINGS_FILE))
-    else
-      @settings = {}
-    end
-  end
-
-  def write_settings
-    File.open(SETTINGS_FILE, 'w') do |f|
-     f.write @settings.to_yaml
-    end
-    nil
-  end
-
-  def set key = nil, *args
-    if key.nil?
-      @settings.each do |k, v|
-        puts "#{k}: #{v}"
       end
-    else
-      value = args.join(' ')
-      @settings ||= {}
-      @settings[key] = value
-      write_settings
+      @command = args.shift
+      @args = args
+      self
     end
-    nil
-  end
 
-  def unset key
-    @settings.delete key
-    write_settings
-  end
-
-  def aliases
-    @settings.keys.select { |s| s =~ /^task\./ }.map { |s| s.slice(5..-1) }
-  end
-
-  def start *args
-    starting_time = args.detect {|x| x =~ /^\+\d*(\.|:)\d+$/ }
-    if starting_time
-      args.delete(starting_time)
-      starting_time = time2float starting_time
-    end
-    ident = args.shift
-    task_ids = if @settings.key? "task.#{ident}"
-        @settings["task.#{ident}"].split(/\s+/)
+    protected
+  
+    def read_config
+      if File.exists? CONFIG_FILE
+        config = YAML::load File.read(CONFIG_FILE)
+        TimesheetResource.configure config
+      elsif File.exists? old_conf = File.dirname(__FILE__) + "/../hcl_conf.yml"
+        config = YAML::load File.read(old_conf)
+        TimesheetResource.configure config
+        write_config config
       else
-        [ident, args.shift]
+        config = {}
+        puts "Please specify your Harvest credentials.\n"
+        config['login'] = ask("Email Address: ")
+        config['password'] = ask("Password: ") { |q| q.echo = false }
+        config['subdomain'] = ask("Subdomain: ")
+        TimesheetResource.configure config
+        write_config config
       end
-    task = Task.find *task_ids
-    if task.nil?
-      puts "Unknown project/task alias, try one of the following: #{aliases.join(', ')}."
-      exit 1
     end
-    timer = task.start(:starting_time => starting_time, :note => args.join(' '))
-    puts "Started timer for #{timer}."
-  end
-
-  def stop
-    entry = DayEntry.with_timer
-    if entry
-      entry.toggle
-      puts "Stopped #{entry}."
-    else
-      puts "No running timers found."
+  
+    def write_config config
+      puts "Writing configuration to #{CONFIG_FILE}."
+      File.open(CONFIG_FILE, 'w') do |f|
+       f.write config.to_yaml
+      end
     end
-  end
-
-  def note *args
-    message = args.join ' '
-    entry = DayEntry.with_timer
-    if entry
-      entry.append_note message
-      puts "Added note '#{message}' to #{entry}."
-    else
-      puts "No running timers found."
+  
+    def read_settings
+      if File.exists? SETTINGS_FILE
+        @settings = YAML.load(File.read(SETTINGS_FILE))
+      else
+        @settings = {}
+      end
     end
-  end
-
-  def show *args
-    date = args.empty? ? nil : Chronic.parse(args.join(' '))
-    total_hours = 0.0
-    DayEntry.all(date).each do |day|
-      running = day.running? ? '(running) ' : ''
-      puts "\t#{day.formatted_hours}\t#{running}#{day.project} #{day.notes}"[0..78]
-      total_hours = total_hours + day.hours.to_f
+  
+    def write_settings
+      File.open(SETTINGS_FILE, 'w') do |f|
+       f.write @settings.to_yaml
+      end
+      nil
     end
-    puts "\t" + '-' * 13
-    puts "\t#{as_hours total_hours}\ttotal"
-  end
-
   end
 end
 
