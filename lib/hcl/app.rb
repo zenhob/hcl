@@ -30,6 +30,8 @@ class Net::HTTP
 end
 
 module HCl
+  VERSION = "0.2.2"
+
   class App
     include HCl::Utility
     include HCl::Commands
@@ -85,6 +87,7 @@ module HCl
     def process_args *args
       Trollop::options(args) do
         stop_on Commands.instance_methods
+        version "HCl version #{VERSION}"
         banner <<-EOM
 HCl is a command-line client for manipulating Harvest time sheets.
 

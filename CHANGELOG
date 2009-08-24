@@ -1,5 +1,8 @@
 = Recent Changes in HCl
 
+* Reverted: Adding note fails when task is started without notes, reopens #26.
+* Reinstate the --version option
+
 == v0.2.2 Sun Aug 9 11:16:34 2009 -0700
 
 * Support installation via rip, closes #27.
