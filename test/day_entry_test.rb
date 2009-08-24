@@ -33,4 +33,17 @@ class DayEntryTest < Test::Unit::TestCase
     end
   end
 
+  should "append to an existing note" do
+    entry = HCl::DayEntry.new(:id => '1', :notes => 'yourmom.', :hours => '1.0')
+    HCl::DayEntry.stubs(:post)
+    entry.append_note('hi world')
+    assert_equal 'yourmom. hi world', entry.notes
+  end
+
+  should "append to an undefined note" do
+    entry = HCl::DayEntry.new(:id => '1', :notes => nil, :hours => '1.0')
+    HCl::DayEntry.stubs(:post)
+    entry.append_note('hi world')
+    assert_equal ' hi world', entry.notes
+  end
 end

@@ -23,6 +23,10 @@ module HCl
       end
     end
 
+    def notes
+      super || @data[:notes] = ''
+    end
+
     # Append a string to the notes for this task.
     def append_note new_notes
       # If I don't include hours it gets reset.
