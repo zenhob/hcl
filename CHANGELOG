@@ -1,5 +1,7 @@
 = Recent Changes in HCl
 
+== v0.2.3 Sun Aug 23 21:39:34 2009 -0700
+
 * Allow decimal time offset without a dot, closes #29.
 * Reverted and re-fixed: Adding note fails when task is started without notes, #26.
 * Reinstate the --version option
