@@ -34,7 +34,7 @@ module HCl
     end
   
     def start *args
-      starting_time = args.detect {|x| x =~ /^\+\d*(\.|:)\d+$/ }
+      starting_time = args.detect {|x| x =~ /^\+\d*(\.|:)?\d+$/ }
       if starting_time
         args.delete(starting_time)
         starting_time = time2float starting_time

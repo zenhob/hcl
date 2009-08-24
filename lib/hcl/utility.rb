@@ -17,7 +17,7 @@ module HCl
       if time_string =~ /:/
         hours, minutes = time_string.split(':')
         hours.to_f + (minutes.to_f / 60.0)
-      elsif time_string =~ /./
+      else
         time_string.to_f
       end
     end
