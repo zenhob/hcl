@@ -18,7 +18,10 @@ begin
     gem.add_dependency "trollop", ">= 1.10.2"
     gem.add_dependency "chronic", ">= 0.2.3"
     gem.add_dependency "highline", ">= 1.5.1"
+    gem.add_development_dependency "shoulda"
+    gem.add_development_dependency "mocha"
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler not available. Install it with: sudo gem install jeweler"
 end

@@ -7,7 +7,9 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 
 ## Quick Start
 
-    $ gem install zenhob-hcl --source=http://gems.github.com
+You can install hcl from Gemcutter:
+
+    $ gem install hcl
     $ hcl show [date]
 
 ### Prerequisites
@@ -15,7 +17,8 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
  * Ruby (tested with 1.8.7)
  * Ruby OpenSSL support (in debian/ubuntu: apt-get install libopenssl-ruby)
  * Ruby extension building support (in debian/ubuntu: apt-get install ruby-dev)
- * RubyGems
+ * RubyGems 1.3.3
+ * Gemcutter (gem install gemcutter; gem tumble)
  * Trollop option-parsing library (gem install trollop)
  * Chronic date-parsing library (gem install chronic)
  * HighLine console input library (gem install highline)
