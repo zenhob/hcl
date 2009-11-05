@@ -9,14 +9,18 @@ module HCl
         end)
       end
       unless tasks.empty?
-        File.open(File.join(ENV['HOME'],'.hcl_tasks'), 'w') do |f|
+        File.open(cache_file, 'w') do |f|
           f.write tasks.uniq.to_yaml
         end
       end
     end
+    
+    def self.cache_file
+      File.join(ENV['HOME'],'.hcl_tasks')
+    end
 
     def self.all
-      YAML.load File.read(File.join(ENV['HOME'],'.hcl_tasks'))
+      File.exists?(cache_file) ? YAML.load(File.read(cache_file)) : []
     end
 
     def self.find project_id, id
@@ -26,7 +30,7 @@ module HCl
     end
 
     def to_s
-      "#{project.name} #{name}"
+      "#{project.client} - #{project.name} - #{name}"
     end
 
     def add opts

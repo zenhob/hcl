@@ -11,7 +11,7 @@ module HCl
     end
 
     def to_s
-      "#{client} #{project} #{task} (#{formatted_hours})"
+      "#{client} - #{project} - #{task} (#{formatted_hours})"
     end
 
     def self.from_xml xml
