@@ -51,14 +51,14 @@ module HCl
         exit 1
       end
       timer = task.start(:starting_time => starting_time, :note => args.join(' '))
-      puts "Started timer for #{timer}."
+      puts "Started timer for #{timer} (at #{current_time})"
     end
-  
+    
     def stop
       entry = DayEntry.with_timer
       if entry
         entry.toggle
-        puts "Stopped #{entry}."
+        puts "Stopped #{entry} (at #{current_time})"
       else
         puts "No running timers found."
       end
@@ -84,7 +84,12 @@ module HCl
         total_hours = total_hours + day.hours.to_f
       end
       puts "\t" + '-' * 13
-      puts "\t#{as_hours total_hours}\ttotal"
+      puts "\t#{as_hours total_hours}\ttotal (as of #{current_time})"
+    end
+    
+  private
+    def current_time
+      Time.now.strftime('%I:%M %p').downcase
     end
   end
 end
