@@ -133,6 +133,7 @@ EOM
         config['login'] = ask("Email Address: ")
         config['password'] = ask("Password: ") { |q| q.echo = false }
         config['subdomain'] = ask("Subdomain: ")
+        config['ssl'] = %w(y yes).include?(ask("Use SSL? (y/n): ").downcase)
         TimesheetResource.configure config
         write_config config
       end
