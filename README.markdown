@@ -95,10 +95,12 @@ commands show the timesheet for the specified day:
 
 ## Author
 
-[Zack Hobson][zgh], [OpenSourcery LLC][os]
+HCl was designed and implemented by [Zack Hobson][zgh].
+
+Non-SSL support was contributed by [Michael Bleigh][mbleigh].
 
 See LICENSE for copyright details.
 
-[zgh]: mailto:zack@opensourcery.com
-[os]: http://www.opensourcery.com/
+[zgh]: http://zackhobson.com/
+[mbleigh]: http://github.com/mbleigh
 
