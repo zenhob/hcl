@@ -4,7 +4,7 @@ layout: main
 # HCl
 
 HCl is a command-line tool for interacting with Harvest time sheets using the
-[Harvest time tracking API][htt].
+[Harvest time tracking API][htt]. It supports both free and non-free accounts.
 
 See [github.com/zenhob/hcl][hcl] for details.
 
@@ -13,7 +13,7 @@ See [github.com/zenhob/hcl][hcl] for details.
 
 ## Quick Start
 
-    $ gem install zenhob-hcl --source=http://gems.github.com
+    $ gem install hcl
     $ hcl show [date]
 
 ### Prerequisites
@@ -105,8 +105,10 @@ If you find a bug in HCl please file it using the [issue tracker][it].
 
 ## Author
 
-[Zack Hobson][zgh], [OpenSourcery LLC][os]
+HCl was designed and implemented by [Zack Hobson][zgh].
+
+Non-SSL support was contributed by [Michael Bleigh][mbleigh].
 
 [zgh]: mailto:zack@opensourcery.com
-[os]: http://www.opensourcery.com/
+[mbleigh]: http://github.com/mbleigh
 
