@@ -87,6 +87,16 @@ module HCl
       puts "\t#{as_hours total_hours}\ttotal (as of #{current_time})"
     end
     
+    def resume
+      entry = DayEntry.last
+      if entry
+        puts "Resumed #{entry} (at #{current_time})"
+        entry.toggle
+      else
+        puts "No timers found"
+      end
+    end
+    
   private
     def current_time
       Time.now.strftime('%I:%M %p').downcase

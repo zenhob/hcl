@@ -5,6 +5,7 @@ require 'net/http'
 require 'net/https'
 
 ## gem dependencies
+require 'rubygems'
 require 'chronic'
 require 'trollop'
 require 'highline/import'
@@ -99,6 +100,7 @@ Commands:
     hcl unset <key>
     hcl start <task> [msg]
     hcl stop [msg]
+    hcl resume
     hcl note <msg>
 
 Examples:

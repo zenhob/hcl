@@ -42,6 +42,10 @@ module HCl
     def self.with_timer
       all.detect {|t| t.running? }
     end
+    
+    def self.last
+      all.sort {|a,b| a.updated_at<=>b.updated_at}[-1]
+    end
 
     def running?
       !@data[:timer_started_at].nil? && !@data[:timer_started_at].empty?
