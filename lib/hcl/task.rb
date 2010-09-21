@@ -20,7 +20,14 @@ module HCl
     end
 
     def self.all
-      File.exists?(cache_file) ? YAML.load(File.read(cache_file)) : []
+      tasks = File.exists?(cache_file) ? YAML.load(File.read(cache_file)) : []
+      tasks = tasks.sort do |a,b|
+        r = a.project.client <=> b.project.client
+        r = a.project.name <=> b.project.name if r == 0
+        r = a.name <=> b.name if r == 0
+        r
+      end
+      tasks
     end
 
     def self.find project_id, id
