@@ -105,6 +105,6 @@ See LICENSE for copyright details.
 
 [zgh]: http://github.com/zenhob
 [mbleigh]: http://github.com/mbleigh
-[bricooke] http://github.com/bricooke
-[scharfie] http://github.com/scharfie
+[bricooke]: http://github.com/bricooke
+[scharfie]: http://github.com/scharfie
 
