@@ -5,7 +5,6 @@ require 'net/http'
 require 'net/https'
 
 ## gem dependencies
-require 'rubygems'
 require 'chronic'
 require 'trollop'
 require 'highline/import'
@@ -79,6 +78,9 @@ module HCl
         else
           show
         end
+      rescue RuntimeError => e
+        puts "Error: #{e}"
+        exit 1
       rescue TimesheetResource::Failure => e
         puts "Internal failure. #{e}"
         exit 1

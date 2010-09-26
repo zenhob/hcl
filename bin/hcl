@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-$:.unshift(File.join(File.dirname(__FILE__), "../lib"))
 
 require 'hcl/app'
 HCl::App.command *ARGV
