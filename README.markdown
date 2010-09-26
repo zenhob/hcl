@@ -97,10 +97,14 @@ commands show the timesheet for the specified day:
 
 HCl was designed and implemented by [Zack Hobson][zgh].
 
-Non-SSL support was contributed by [Michael Bleigh][mbleigh].
+* Non-SSL support by [Michael Bleigh][mbleigh].
+* Resume command by [Brian Cooke][bricooke].
+* UI improvements by [Chris Scharf][scharfie].
 
 See LICENSE for copyright details.
 
-[zgh]: http://zackhobson.com/
+[zgh]: http://github.com/zenhob
 [mbleigh]: http://github.com/mbleigh
+[bricooke] http://github.com/bricooke
+[scharfie] http://github.com/scharfie
 
