@@ -1,6 +1,6 @@
 module HCl
   class TimesheetResource
-    class Failure < Exception; end
+    class Failure < StandardError; end
 
     def self.configure opts = nil
       if opts
@@ -48,9 +48,9 @@ module HCl
       if response.kind_of? Net::HTTPSuccess
         response.body
       elsif response.kind_of? Net::HTTPFound
-        raise "Redirected in the request. Perhaps your ssl configuration variable is set incorrectly?"
+        raise Failure, "Redirected in the request. Perhaps your ssl configuration variable is set incorrectly?"
       else
-        raise 'failure'
+        raise Failure, "Unexpected response from the upstream API"
       end
     end
     

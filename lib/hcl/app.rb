@@ -80,8 +80,11 @@ module HCl
       rescue RuntimeError => e
         STDERR.puts "Error: #{e}"
         exit 1
+      rescue SocketError => e
+        STDERR.puts "Connection failed. (#{e.message})"
+        exit 1
       rescue TimesheetResource::Failure => e
-        STDERR.puts "Internal failure. #{e}"
+        STDERR.puts "API failure: #{e}"
         exit 1
       end
     end
