@@ -30,7 +30,7 @@ class Net::HTTP
 end
 
 module HCl
-  VERSION = "0.2.3"
+  VERSION = "0.3.1"
 
   class App
     include HCl::Utility
