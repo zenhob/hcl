@@ -4,24 +4,28 @@ layout: main
 # HCl
 
 HCl is a command-line tool for interacting with Harvest time sheets using the
-[Harvest time tracking API][htt]. It supports both free and non-free accounts.
-
-See [github.com/zenhob/hcl][hcl] for details.
+[Harvest time tracking API][htt].
 
 [htt]: http://www.getharvest.com/api/time_tracking
-[hcl]: http://github.com/zenhob/hcl
 
 ## Quick Start
 
+You can install hcl directly from rubygems.org:
+
     $ gem install hcl
     $ hcl show [date]
+
+or you can install from source using jeweler:
+
+    $ gem install jeweler
+    $ rake install
 
 ### Prerequisites
 
  * Ruby (tested with 1.8.7)
  * Ruby OpenSSL support (in debian/ubuntu: apt-get install libopenssl-ruby)
  * Ruby extension building support (in debian/ubuntu: apt-get install ruby-dev)
- * RubyGems
+ * RubyGems 1.3.3
  * Trollop option-parsing library (gem install trollop)
  * Chronic date-parsing library (gem install chronic)
  * HighLine console input library (gem install highline)
@@ -35,7 +39,9 @@ See [github.com/zenhob/hcl][hcl] for details.
     hcl unset <key>
     hcl start (<task_alias> | <project_id> <task_id>) [+time] [msg ...]
     hcl note <msg ...>
-    hcl stop
+    hcl aliases
+    hcl stop [msg]
+    hcl resume
 
 ### Starting a Timer
 
@@ -96,19 +102,18 @@ commands show the timesheet for the specified day:
 
 [cd]: http://chronic.rubyforge.org/
 
-## Reporting Bugs
-
-HCl is still very early in development and probably has some bugs.
-If you find a bug in HCl please file it using the [issue tracker][it].
-
-[it]: http://github.com/zenhob/hcl/issues
-
 ## Author
 
 HCl was designed and implemented by [Zack Hobson][zgh].
 
-Non-SSL support was contributed by [Michael Bleigh][mbleigh].
+* Non-SSL support by [Michael Bleigh][mbleigh].
+* Resume command by [Brian Cooke][bricooke].
+* UI improvements by [Chris Scharf][scharfie].
 
-[zgh]: mailto:zack@opensourcery.com
+See LICENSE for copyright details.
+
+[zgh]: http://github.com/zenhob
 [mbleigh]: http://github.com/mbleigh
+[bricooke]: http://github.com/bricooke
+[scharfie]: http://github.com/scharfie
 
