@@ -39,8 +39,6 @@ module HCl
     SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
     CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
   
-    class UnknownCommand < StandardError; end
-  
     def initialize
       read_config
       read_settings
@@ -73,16 +71,17 @@ module HCl
               end
             end
           else
-            raise UnknownCommand, "unrecognized command `#{@command}'"
+            STDERR.puts "unrecognized command `#{@command}'"
+            exit 1
           end
         else
           show
         end
       rescue RuntimeError => e
-        puts "Error: #{e}"
+        STDERR.puts "Error: #{e}"
         exit 1
       rescue TimesheetResource::Failure => e
-        puts "Internal failure. #{e}"
+        STDERR.puts "Internal failure. #{e}"
         exit 1
       end
     end
