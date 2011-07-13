@@ -7,10 +7,15 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 
 ## Quick Start
 
-You can install hcl from Gemcutter:
+You can install hcl directly from rubygems.org:
 
     $ gem install hcl
     $ hcl show [date]
+
+or you can install from source using jeweler:
+
+    $ gem install jeweler
+    $ rake install
 
 ### Prerequisites
 
@@ -18,7 +23,6 @@ You can install hcl from Gemcutter:
  * Ruby OpenSSL support (in debian/ubuntu: apt-get install libopenssl-ruby)
  * Ruby extension building support (in debian/ubuntu: apt-get install ruby-dev)
  * RubyGems 1.3.3
- * Gemcutter (gem install gemcutter; gem tumble)
  * Trollop option-parsing library (gem install trollop)
  * Chronic date-parsing library (gem install chronic)
  * HighLine console input library (gem install highline)
@@ -32,7 +36,9 @@ You can install hcl from Gemcutter:
     hcl unset <key>
     hcl start (<task_alias> | <project_id> <task_id>) [+time] [msg ...]
     hcl note <msg ...>
-    hcl stop
+    hcl aliases
+    hcl stop [msg]
+    hcl resume
 
 ### Starting a Timer
 
