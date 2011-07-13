@@ -1,8 +1,16 @@
 = Recent Changes in HCl
 
-== v0.2.4
+== v0.3.1
 
 * use STDERR instead of STDOUT for error reporting
+* sort tasks before viewing tasks (brian@madebyrocket.com)
+* resume command to resume the most recently active timer (brian@madebyrocket.com)
+* show current time when on 'start', 'stop', and 'show' commands (scharfie@gmail.com)
+* include client name in tasks list (scharfie@gmail.com)
+
+== v0.3.0 Fri Apr 2 10:42:20 2010 -0700
+
+* added support for free accounts
 
 == v0.2.3 Sun Aug 23 21:39:34 2009 -0700
 
