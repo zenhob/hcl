@@ -54,9 +54,10 @@ module HCl
       puts "Started timer for #{timer} (at #{current_time})"
     end
     
-    def stop
+    def stop *args
       entry = DayEntry.with_timer
       if entry
+        entry.append_note(*args.join(' ')) if args.any?
         entry.toggle
         puts "Stopped #{entry} (at #{current_time})"
       else

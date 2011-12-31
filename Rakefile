@@ -14,7 +14,6 @@ begin
     gem.email = "zack@opensourcery.com"
     gem.homepage = "http://github.com/zenhob/hcl"
     gem.authors = ["Zack Hobson"]
-    gem.add_dependency "termios"
     gem.add_dependency "trollop", ">= 1.10.2"
     gem.add_dependency "chronic", ">= 0.2.3"
     gem.add_dependency "highline", ">= 1.5.1"

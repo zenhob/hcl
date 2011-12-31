@@ -54,7 +54,7 @@ module HCl
     # @param [#to_s] command name of command
     # @return [true, false]
     def command? command
-      Commands.instance_methods.include? command.to_s
+      Commands.method_defined? command
     end
   
     # Start the application.
@@ -64,8 +64,8 @@ module HCl
           if command? @command
             result = send @command, *@args
             if not result.nil?
-              if result.respond_to? :to_a
-                puts result.to_a.join(', ')
+              if result.respond_to? :join
+                puts result.join(', ')
               elsif result.respond_to? :to_s
                 puts result
               end
@@ -136,9 +136,9 @@ EOM
       else
         config = {}
         puts "Please specify your Harvest credentials.\n"
-        config['login'] = ask("Email Address: ")
-        config['password'] = ask("Password: ") { |q| q.echo = false }
-        config['subdomain'] = ask("Subdomain: ")
+        config['login'] = ask("Email Address: ").to_s
+        config['password'] = ask("Password: ") { |q| q.echo = false }.to_s
+        config['subdomain'] = ask("Subdomain: ").to_s
         config['ssl'] = %w(y yes).include?(ask("Use SSL? (y/n): ").downcase)
         TimesheetResource.configure config
         write_config config

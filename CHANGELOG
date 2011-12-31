@@ -1,5 +1,10 @@
 = Recent Changes in HCl
 
+== v0.3.2
+
+* fixed support for modern Rubies
+* it's now possible to provide a message with the stop command
+
 == v0.3.1
 
 * use STDERR instead of STDOUT for error reporting
