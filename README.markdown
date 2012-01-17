@@ -58,7 +58,7 @@ IDs. You need both values to start a timer:
 ### Task Aliases
 
 Since it's not practical to enter two long numbers every time you want to
-identify a task, HCl supports task aliases:
+identify a task, HCl supports task aliases. The task alias must start with 'task.', followed by your alias.
 
     $ hcl set task.xdev 1234 5678
     $ hcl start xdev adding a new feature
