@@ -14,7 +14,7 @@ module HCl
         end
       end
     end
-    
+
     def self.cache_file
       File.join(ENV['HOME'],'.hcl_tasks')
     end
@@ -63,7 +63,6 @@ module HCl
         DayEntry.from_xml(Task.get("daily/timer/#{day.id}")).first
       end
     end
-
   end
 end
 
