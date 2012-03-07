@@ -12,7 +12,7 @@ module HCl
         yield self
       end
     end
-  
+
     # configuration accessors
     %w[ login password subdomain ssl ].each do |config_var|
       class_eval <<-EOC
@@ -24,11 +24,11 @@ module HCl
         end
       EOC
     end
-  
+
     def initialize params
       @data = params
     end
-  
+
     def self.get action
       http_do Net::HTTP::Get, action
     end
@@ -53,7 +53,7 @@ module HCl
         raise Failure, "Unexpected response from the upstream API"
       end
     end
-    
+
     def id
       @data[:id]
     end

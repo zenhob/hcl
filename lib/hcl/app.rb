@@ -35,10 +35,10 @@ module HCl
   class App
     include HCl::Utility
     include HCl::Commands
-  
+
     SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
     CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
-  
+
     def initialize
       read_config
       read_settings
@@ -56,7 +56,7 @@ module HCl
     def command? command
       Commands.method_defined? command
     end
-  
+
     # Start the application.
     def run
       begin
@@ -88,7 +88,7 @@ module HCl
         exit 1
       end
     end
-  
+
     def process_args *args
       Trollop::options(args) do
         stop_on Commands.instance_methods
@@ -124,7 +124,7 @@ EOM
     end
 
     protected
-  
+
     def read_config
       if File.exists? CONFIG_FILE
         config = YAML::load File.read(CONFIG_FILE)
@@ -144,14 +144,14 @@ EOM
         write_config config
       end
     end
-  
+
     def write_config config
       puts "Writing configuration to #{CONFIG_FILE}."
       File.open(CONFIG_FILE, 'w') do |f|
        f.write config.to_yaml
       end
     end
-  
+
     def read_settings
       if File.exists? SETTINGS_FILE
         @settings = YAML.load(File.read(SETTINGS_FILE))
@@ -159,7 +159,7 @@ EOM
         @settings = {}
       end
     end
-  
+
     def write_settings
       File.open(SETTINGS_FILE, 'w') do |f|
        f.write @settings.to_yaml
