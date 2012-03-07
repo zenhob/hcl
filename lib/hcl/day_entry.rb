@@ -42,7 +42,7 @@ module HCl
     def self.with_timer
       all.detect {|t| t.running? }
     end
-    
+
     def self.last
       all.sort {|a,b| a.updated_at<=>b.updated_at}[-1]
     end
@@ -65,6 +65,5 @@ module HCl
     def formatted_hours
       as_hours hours
     end
-
   end
 end

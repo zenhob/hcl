@@ -9,7 +9,7 @@ module HCl
       end
       nil
     end
-  
+
     def set key = nil, *args
       if key.nil?
         @settings.each do |k, v|
@@ -23,16 +23,16 @@ module HCl
       end
       nil
     end
-  
+
     def unset key
       @settings.delete key
       write_settings
     end
-  
+
     def aliases
       @settings.keys.select { |s| s =~ /^task\./ }.map { |s| s.slice(5..-1) }
     end
-  
+
     def start *args
       starting_time = args.detect {|x| x =~ /^\+\d*(\.|:)?\d+$/ }
       if starting_time
@@ -53,7 +53,7 @@ module HCl
       timer = task.start(:starting_time => starting_time, :note => args.join(' '))
       puts "Started timer for #{timer} (at #{current_time})"
     end
-    
+
     def stop *args
       entry = DayEntry.with_timer
       if entry
@@ -64,7 +64,7 @@ module HCl
         puts "No running timers found."
       end
     end
-  
+
     def note *args
       message = args.join ' '
       entry = DayEntry.with_timer
@@ -75,7 +75,7 @@ module HCl
         puts "No running timers found."
       end
     end
-  
+
     def show *args
       date = args.empty? ? nil : Chronic.parse(args.join(' '))
       total_hours = 0.0
@@ -87,7 +87,7 @@ module HCl
       puts "\t" + '-' * 13
       puts "\t#{as_hours total_hours}\ttotal (as of #{current_time})"
     end
-    
+
     def resume
       entry = DayEntry.last
       if entry
@@ -97,7 +97,7 @@ module HCl
         puts "No timers found"
       end
     end
-    
+
   private
     def current_time
       Time.now.strftime('%I:%M %p').downcase
