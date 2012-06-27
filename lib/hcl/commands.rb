@@ -98,6 +98,15 @@ module HCl
       end
     end
 
+    def append notes = nil
+      entry = DayEntry.last
+      if entry && entry.running?
+        entry.append_note "\n\n#{notes}" unless notes.nil?
+      else
+        puts "No timer currently running."
+      end
+    end
+
   private
     def current_time
       Time.now.strftime('%I:%M %p').downcase
