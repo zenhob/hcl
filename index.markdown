@@ -35,59 +35,61 @@ or you can install from source using jeweler:
 
     hcl show [date]
     hcl tasks
-    hcl set <key> <value ...>
-    hcl unset <key>
-    hcl start (<task_alias> | <project_id> <task_id>) [+time] [msg ...]
+    hcl alias <task_alias> <ids ...>
+    hcl start (@<task_alias> | <project_id> <task_id>) [+time] [msg ...]
     hcl note <msg ...>
     hcl aliases
+    hcl unalias <task_alias>
     hcl stop [msg]
     hcl resume
 
-### Starting a Timer
+### Available Projects and Tasks
 
 To start a new timer you need to identify the project and task. After you've
 used the show command you can use the tasks command to view a cached list of
-available tasks. The first two numbers in each row are the project and task
-IDs. You need both values to start a timer:
+available tasks.
 
-    $ hcl show
-    -------------
-    0:00    total
     $ hcl tasks
-    1234 5678   ClientX Software Development
-    1234 9876   ClientX Admin
-    $ hcl start 1234 5678 adding a new feature
 
-### Task Aliases
+### Starting a Timer
 
 Since it's not practical to enter two long numbers every time you want to
 identify a task, HCl supports task aliases:
 
-    $ hcl set task.xdev 1234 5678
-    $ hcl start xdev adding a new feature
+    $ hcl alias xdev 1234 5678
+    $ hcl @xdev Adding a new feature!
 
 ### Starting a Timer with Initial Time
 
 You can also provide an initial time when starting a new timer.
 This can be expressed in floating-point or HH:MM. The following two
-commands are identical:
+commands are equivalent:
 
-    $ hcl start xdev +0:15 adding a new feature
-    $ hcl start +.25 xdev adding a new feature
+    $ hcl @xdev +0:15 Adding a new feature!
+    $ hcl +.25 @xdev Adding a new feature!
 
 ### Adding Notes to a Running Task
 
-While a task is running you can append strings to the note for that task:
+While a task is running you can append lines to the task notes.
+Providing the note command is optional, just the bare message will work.
+These two commands are equivalent:
 
-    $ hcl note Found a good time
-    $ hcl note or not, whatever...
+    $ hcl Found a good time!
+    $ hcl note Found a good time!
 
 ### Stopping a Timer
 
 The following command will stop a running timer (currently only one timer at
-a time is supported):
+a time is supported). You can provide a message when stopping a timer as
+well:
 
-    $ hcl stop
+    $ hcl stop All done!
+
+### Resuming a Timer
+
+You can easily resume the last stopped timer:
+
+    $ hcl resume
 
 ### Date Formats
 
@@ -109,8 +111,6 @@ HCl was designed and implemented by [Zack Hobson][zgh].
 * Non-SSL support by [Michael Bleigh][mbleigh].
 * Resume command by [Brian Cooke][bricooke].
 * UI improvements by [Chris Scharf][scharfie].
-
-See LICENSE for copyright details.
 
 [zgh]: http://github.com/zenhob
 [mbleigh]: http://github.com/mbleigh
