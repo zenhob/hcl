@@ -3,6 +3,7 @@ require 'yaml'
 require 'rexml/document'
 require 'net/http'
 require 'net/https'
+require 'fileutils'
 
 ## gem dependencies
 require 'chronic'
@@ -36,10 +37,13 @@ module HCl
     include HCl::Utility
     include HCl::Commands
 
-    SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
-    CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
+    SETTINGS_FILE = "#{ENV['HOME']}/.hcl/settings.yml"
+    CONFIG_FILE = "#{ENV['HOME']}/.hcl/config.yml"
+    OLD_SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
+    OLD_CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
 
     def initialize
+      FileUtils.mkdir_p(File.join(ENV['HOME'], ".hcl"))
       read_config
       read_settings
     end
@@ -57,6 +61,14 @@ module HCl
       Commands.method_defined? command
     end
 
+    def start_or_note *args
+      if DayEntry.with_timer
+        note *args
+      else
+        start *args
+      end
+    end
+
     # Start the application.
     def run
       begin
@@ -71,8 +83,7 @@ module HCl
               end
             end
           else
-            STDERR.puts "unrecognized command `#{@command}'"
-            exit 1
+            start_or_note @command, *@args
           end
         else
           show
@@ -97,23 +108,38 @@ module HCl
 HCl is a command-line client for manipulating Harvest time sheets.
 
 Commands:
-    hcl show [date]
+    # show all available tasks
     hcl tasks
+
+    # set a task alias
+    hcl alias <task> <project_id> <task_id>
+
+    # list task aliases
     hcl aliases
-    hcl set <key> <value ...>
-    hcl unset <key>
-    hcl start <task> [msg]
-    hcl stop [msg]
+
+    # start a task using an alias
+    hcl @<task> [+time] [message]
+
+    # display the daily timesheet
+    hcl show [date]
+
+    # stop a running timer
+    hcl stop [message]
+
+    # resume the last stopped timer
     hcl resume
-    hcl note <msg>
+
+    # add a line to your running timer
+    hcl note <message>
 
 Examples:
-    $ hcl tasks
-    $ hcl start 1234 4567 this is my log message
-    $ hcl set task.mytask 1234 4567
-    $ hcl start mytask this is my next log message
-    $ hcl show yesterday
-    $ hcl show last tuesday
+    hcl alias mytask 1234 4567
+    hcl @mytask +:15 Doing a thing that I started 15 minutes ago.
+    hcl Adding a note to my running task.
+    hcl stop That's enough for now.
+    hcl resume
+    hcl show yesterday
+    hcl show last tuesday
 
 Options:
 EOM
@@ -129,8 +155,8 @@ EOM
       if File.exists? CONFIG_FILE
         config = YAML::load File.read(CONFIG_FILE)
         TimesheetResource.configure config
-      elsif File.exists? old_conf = File.dirname(__FILE__) + "/../hcl_conf.yml"
-        config = YAML::load File.read(old_conf)
+      elsif File.exists? OLD_CONFIG_FILE
+        config = YAML::load File.read(OLD_CONFIG_FILE)
         TimesheetResource.configure config
         write_config config
       else
@@ -150,11 +176,15 @@ EOM
       File.open(CONFIG_FILE, 'w') do |f|
        f.write config.to_yaml
       end
+      FileUtils.chmod 0400, CONFIG_FILE
     end
 
     def read_settings
       if File.exists? SETTINGS_FILE
         @settings = YAML.load(File.read(SETTINGS_FILE))
+      elsif File.exists? OLD_SETTINGS_FILE
+        @settings = YAML.load(File.read(OLD_SETTINGS_FILE))
+        write_settings
       else
         @settings = {}
       end

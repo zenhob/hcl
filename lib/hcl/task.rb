@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module HCl
   class Task < TimesheetResource
     def self.cache_tasks doc
@@ -9,6 +11,7 @@ module HCl
         end)
       end
       unless tasks.empty?
+        FileUtils.mkdir_p(cache_dir)
         File.open(cache_file, 'w') do |f|
           f.write tasks.uniq.to_yaml
         end
@@ -16,7 +19,11 @@ module HCl
     end
 
     def self.cache_file
-      File.join(ENV['HOME'],'.hcl_tasks')
+      File.join(cache_dir, 'tasks.yml')
+    end
+
+    def self.cache_dir
+      File.join(ENV['HOME'],'.hcl/cache')
     end
 
     def self.all

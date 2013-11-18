@@ -29,8 +29,23 @@ module HCl
       write_settings
     end
 
+    def unalias task
+      unset "task.#{task}"
+        puts "Removed task alias @#{task}."
+    end
+
+    def alias task_name, *value
+      task = Task.find *value
+      if task
+        set "task.#{task_name}", *value
+        puts "Added alias @#{task_name} for #{task}."
+      else
+        puts "Unrecognized project and task ID: #{value.inspect}"
+      end
+    end
+
     def aliases
-      @settings.keys.select { |s| s =~ /^task\./ }.map { |s| s.slice(5..-1) }
+      @settings.keys.select { |s| s =~ /^task\./ }.map { |s| "@"+s.slice(5..-1) }
     end
 
     def start *args
@@ -39,19 +54,33 @@ module HCl
         args.delete(starting_time)
         starting_time = time2float starting_time
       end
-      ident = args.shift
-      task_ids = if @settings.key? "task.#{ident}"
-          @settings["task.#{ident}"].split(/\s+/)
-        else
-          [ident, args.shift]
+      ident = args.detect {|a| a[0] == '@' }
+      if ident
+        args.delete(ident)
+        ident = ident.slice(1..-1)
+      else
+        ident = args.shift
+      end
+      if ident
+        task_ids = if @settings.key? "task.#{ident}"
+            @settings["task.#{ident}"].split(/\s+/)
+          else
+            [ident, args.shift]
+          end
+        task = Task.find *task_ids
+        if task.nil?
+          puts "Unknown task alias, try one of the following: ", aliases.join(', ')
+          exit 1
         end
-      task = Task.find *task_ids
-      if task.nil?
-        puts "Unknown project/task alias, try one of the following: #{aliases.join(', ')}."
+        timer = task.start(
+          :starting_time => starting_time,
+          :note => args.join(' ')
+        )
+        puts "Started timer for #{timer} (at #{current_time})"
+      else
+        puts "You must provide a task alias to start a timer:", aliases.join(', ')
         exit 1
       end
-      timer = task.start(:starting_time => starting_time, :note => args.join(' '))
-      puts "Started timer for #{timer} (at #{current_time})"
     end
 
     def stop *args
@@ -70,7 +99,7 @@ module HCl
       entry = DayEntry.with_timer
       if entry
         entry.append_note message
-        puts "Added note '#{message}' to #{entry}."
+        puts "Added note to #{entry}."
       else
         puts "No running timers found."
       end
@@ -81,7 +110,8 @@ module HCl
       total_hours = 0.0
       DayEntry.all(date).each do |day|
         running = day.running? ? '(running) ' : ''
-        puts "\t#{day.formatted_hours}\t#{running}#{day.project} #{day.notes}"[0..78]
+        columns = HighLine::SystemExtensions.terminal_size[0]
+        puts "\t#{day.formatted_hours}\t#{running}#{day.project}: #{day.notes.lines.last}"[0..columns-1]
         total_hours = total_hours + day.hours.to_f
       end
       puts "\t" + '-' * 13

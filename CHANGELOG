@@ -1,5 +1,11 @@
 = Recent Changes in HCl
 
+== v0.4.0
+
+* start a timer or add a note without having to specify the sub-command
+* aliases can be specified with "@" anywhere on the command line
+* added alias and unalias to simplify setting task aliases
+
 == v0.3.2
 
 * fixed support for modern Rubies

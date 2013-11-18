@@ -31,12 +31,9 @@ module HCl
     def append_note new_notes
       # If I don't include hours it gets reset.
       # This doens't appear to be the case for task and project.
-      DayEntry.post("daily/update/#{id}", <<-EOD)
-      <request>
-        <notes>#{notes << " #{new_notes}"}</notes>
-        <hours>#{hours}</hours>
-      </request>
-      EOD
+      (self.notes << "\n#{new_notes}").lstrip!
+      DayEntry.post "daily/update/#{id}",
+        %{<request><notes>#{notes}</notes><hours>#{hours}</hours></request>}
     end
 
     def self.with_timer

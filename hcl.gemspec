@@ -5,14 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{hcl}
-  s.version = "0.3.1"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Zack Hobson"]
-  s.date = %q{2011-07-13}
+  s.date = %q{2013-11-18}
   s.default_executable = %q{hcl}
   s.description = %q{HCl is a command-line client for manipulating Harvest time sheets.}
-  s.email = %q{zack@opensourcery.com}
+  s.email = %q{zack@zackhobson.com}
   s.executables = ["hcl"]
   s.extra_rdoc_files = [
     "LICENSE",
