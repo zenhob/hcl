@@ -1,5 +1,9 @@
 = Recent Changes in HCl
 
+== v0.4.1
+
+* update dependencies
+
 == v0.4.0
 
 * start a timer or add a note without having to specify the sub-command
