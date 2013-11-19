@@ -72,7 +72,7 @@ module HCl
 
     def self.xml_to_hash elem
       elem.elements.map { |e| e.name }.inject({}) do |a, f|
-        a[f.to_sym] = elem.elements[f].text if elem.elements[f]
+        a[f.to_sym] = CGI.unescape_html(elem.elements[f].text || '') if elem.elements[f]
         a
       end
     end
