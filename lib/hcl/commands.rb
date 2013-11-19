@@ -79,6 +79,11 @@ module HCl
       puts "Started timer for #{timer} (at #{current_time})"
     end
 
+    def log *args
+      start *args
+      stop
+    end
+
     def stop *args
       entry = DayEntry.with_timer || DayEntry.with_timer(DateTime.yesterday)
       if entry

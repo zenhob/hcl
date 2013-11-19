@@ -23,6 +23,7 @@ or you can install from source using jeweler:
     hcl note <message>
     hcl stop [message]
     hcl resume [@<task_alias>]
+    hcl log (@<task_alias> | <project_id> <task_id>) [+<time>] [<message>]
     hcl show [date]
     hcl tasks
     hcl alias <task_alias> <project_id> <task_id>
@@ -85,6 +86,15 @@ it:
 
 This will delete the running timer, or the last-updated timer if one isn't
 running. You can also use `nvm` or `oops` instead of `cancel`.
+
+### Logging without Starting a Timer
+
+You can log time and notes without leaving a timer running. It takes
+the same arguments as start:
+
+    $ hcl log @xdev +1 Worked for an hour.
+
+The above starts and immediately stops a one-hour timer with the given note.
 
 ### Date Formats
 
