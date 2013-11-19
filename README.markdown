@@ -30,15 +30,14 @@ or you can install from source using jeweler:
 
 ## Usage
 
+    hcl (@<task_alias> | <project_id> <task_id>) [+time] [message]
+    hcl note <message>
+    hcl stop [message]
+    hcl resume [@<task_alias>]
     hcl show [date]
     hcl tasks
-    hcl set <key> <value ...>
-    hcl unset <key>
-    hcl start (<task_alias> | <project_id> <task_id>) [+time] [msg ...]
-    hcl note <msg ...>
+    hcl alias <task_alias> <project_id> <task_id>
     hcl aliases
-    hcl stop [msg]
-    hcl resume
 
 ### Available Projects and Tasks
 
@@ -67,11 +66,8 @@ commands are equivalent:
 
 ### Adding Notes to a Running Task
 
-While a task is running you can append lines to the task notes.
-Providing the note command is optional, just the bare message will work.
-These two commands are equivalent:
+While a task is running you can append lines to the task notes:
 
-    $ hcl Found a good time!
     $ hcl note Found a good time!
 
 ### Stopping a Timer
@@ -84,9 +80,11 @@ well:
 
 ### Resuming a Timer
 
-You can easily resume the last stopped timer:
+You can resume a stopped timer. Specify a task to resume the last timer
+for that task:
 
     $ hcl resume
+    $ hcl resume @xdev
 
 ### Date Formats
 

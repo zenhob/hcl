@@ -41,6 +41,7 @@ module HCl
         puts "Added alias @#{task_name} for #{task}."
       else
         puts "Unrecognized project and task ID: #{value.inspect}"
+        exit 1
       end
     end
 
@@ -49,48 +50,27 @@ module HCl
     end
 
     def start *args
-      starting_time = args.detect {|x| x =~ /^\+\d*(\.|:)?\d+$/ }
-      if starting_time
-        args.delete(starting_time)
-        starting_time = time2float starting_time
-      end
-      ident = args.detect {|a| a[0] == '@' }
-      if ident
-        args.delete(ident)
-        ident = ident.slice(1..-1)
-      else
-        ident = args.shift
-      end
-      if ident
-        task_ids = if @settings.key? "task.#{ident}"
-            @settings["task.#{ident}"].split(/\s+/)
-          else
-            [ident, args.shift]
-          end
-        task = Task.find *task_ids
-        if task.nil?
-          puts "Unknown task alias, try one of the following: ", aliases.join(', ')
-          exit 1
-        end
-        timer = task.start(
-          :starting_time => starting_time,
-          :note => args.join(' ')
-        )
-        puts "Started timer for #{timer} (at #{current_time})"
-      else
-        puts "You must provide a task alias to start a timer:", aliases.join(', ')
+      starting_time = get_starting_time args
+      task = get_task args
+      if task.nil?
+        puts "Unknown task alias, try one of the following: ", aliases.join(', ')
         exit 1
       end
+      timer = task.start \
+        :starting_time => starting_time,
+        :note => args.join(' ')
+      puts "Started timer for #{timer} (at #{current_time})"
     end
 
     def stop *args
       entry = DayEntry.with_timer
       if entry
-        entry.append_note(*args.join(' ')) if args.any?
+        entry.append_note(args.join(' ')) if args.any?
         entry.toggle
         puts "Stopped #{entry} (at #{current_time})"
       else
         puts "No running timers found."
+        exit 1
       end
     end
 
@@ -102,6 +82,7 @@ module HCl
         puts "Added note to #{entry}."
       else
         puts "No running timers found."
+        exit 1
       end
     end
 
@@ -118,19 +99,21 @@ module HCl
       puts "\t#{as_hours total_hours}\ttotal (as of #{current_time})"
     end
 
-    def resume
-      entry = DayEntry.last
+    def resume *args
+      ident = get_ident args
+      entry = if ident
+          task_ids = get_task_ids ident
+          DayEntry.last_by_task *task_ids
+        else
+          DayEntry.last
+        end
       if entry
-        puts "Resumed #{entry} (at #{current_time})"
         entry.toggle
       else
-        puts "No timers found"
+        puts "No matching timer found."
+        exit 1
       end
     end
 
-  private
-    def current_time
-      Time.now.strftime('%I:%M %p').downcase
-    end
   end
 end

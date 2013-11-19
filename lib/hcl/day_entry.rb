@@ -40,6 +40,11 @@ module HCl
       all.detect {|t| t.running? }
     end
 
+    def self.last_by_task project_id, task_id
+      all.sort {|a,b| b.updated_at<=>a.updated_at}.
+        detect {|t| t.project_id == project_id && t.task_id == task_id }
+    end
+
     def self.last
       all.sort {|a,b| a.updated_at<=>b.updated_at}[-1]
     end

@@ -61,14 +61,6 @@ module HCl
       Commands.method_defined? command
     end
 
-    def start_or_note *args
-      if DayEntry.with_timer
-        note *args
-      else
-        start *args
-      end
-    end
-
     # Start the application.
     def run
       begin
@@ -83,7 +75,7 @@ module HCl
               end
             end
           else
-            start_or_note @command, *@args
+            start @command, *@args
           end
         else
           show

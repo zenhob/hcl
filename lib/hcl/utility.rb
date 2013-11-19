@@ -1,5 +1,39 @@
 module HCl
   module Utility
+    def get_task_ids ident
+      if @settings.key? "task.#{ident}"
+        @settings["task.#{ident}"].split(/\s+/)
+      else
+        [ident, args.shift]
+      end
+    end
+
+    def get_ident args
+      ident = args.detect {|a| a[0] == '@' }
+      if ident
+        args.delete(ident)
+        ident.slice(1..-1)
+      else
+        args.shift
+      end
+    end
+
+    def get_task args
+      Task.find *get_task_ids(get_ident(args))
+    end
+
+    def get_starting_time args
+      starting_time = args.detect {|x| x =~ /^\+\d*(\.|:)?\d+$/ }
+      if starting_time
+        args.delete(starting_time)
+        time2float starting_time
+      end
+    end
+
+    def current_time
+      Time.now.strftime('%I:%M %p').downcase
+    end
+
     # Convert from decimal to a string of the form HH:MM.
     #
     # @param [#to_f] hours number of hours in decimal
