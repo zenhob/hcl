@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Hcl by zenhob</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Hcl</h1>
+        <p>Command-line tool for manipulating Harvest timesheets</p>
+
+        <p class="view"><a href="https://github.com/zenhob/hcl">View the Project on GitHub <small>zenhob/hcl</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/zenhob/hcl/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/zenhob/hcl/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/zenhob/hcl">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="hcl" class="anchor" href="#hcl"><span class="octicon octicon-link"></span></a>HCl</h1>
+
+<p>HCl is a command-line tool for interacting with Harvest time sheets using the
+<a href="http://www.getharvest.com/api/time_tracking">Harvest time tracking API</a>.</p>
+
+<h2>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
+
+<p>You can install hcl directly from rubygems.org:</p>
+
+<pre><code>$ gem install hcl
+$ hcl show [date]
+</code></pre>
+
+<p>or you can install from source using jeweler:</p>
+
+<pre><code>$ gem install jeweler
+$ rake install
+</code></pre>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<pre><code>hcl [start] (@&lt;task_alias&gt; | &lt;project_id&gt; &lt;task_id&gt;) [+&lt;time&gt;] [&lt;message&gt;]
+hcl note &lt;message&gt;
+hcl stop [message]
+hcl resume [@&lt;task_alias&gt;]
+hcl log (@&lt;task_alias&gt; | &lt;project_id&gt; &lt;task_id&gt;) [+&lt;time&gt;] [&lt;message&gt;]
+hcl show [date]
+hcl tasks
+hcl alias &lt;task_alias&gt; &lt;project_id&gt; &lt;task_id&gt;
+hcl aliases
+hcl (cancel | nvm | oops)
+</code></pre>
+
+<h3>
+<a name="available-projects-and-tasks" class="anchor" href="#available-projects-and-tasks"><span class="octicon octicon-link"></span></a>Available Projects and Tasks</h3>
+
+<p>To start a new timer you need to identify the project and task. After you've
+used the show command you can use the tasks command to view a cached list of
+available tasks.</p>
+
+<pre><code>$ hcl tasks
+</code></pre>
+
+<h3>
+<a name="starting-a-timer" class="anchor" href="#starting-a-timer"><span class="octicon octicon-link"></span></a>Starting a Timer</h3>
+
+<p>Since it's not practical to enter two long numbers every time you want to
+identify a task, HCl supports task aliases:</p>
+
+<pre><code>$ hcl alias tacodev 1234 5678
+$ hcl @tacodev Adding a new feature
+</code></pre>
+
+<h3>
+<a name="starting-a-timer-with-initial-time" class="anchor" href="#starting-a-timer-with-initial-time"><span class="octicon octicon-link"></span></a>Starting a Timer with Initial Time</h3>
+
+<p>You can also provide an initial time when starting a new timer.
+This can be expressed in floating-point or HH:MM. The following two
+commands are equivalent:</p>
+
+<pre><code>$ hcl @tacodev +0:15 Doing some stuff
+$ hcl +.25 @tacodev Doing some stuff
+</code></pre>
+
+<h3>
+<a name="adding-notes-to-a-running-task" class="anchor" href="#adding-notes-to-a-running-task"><span class="octicon octicon-link"></span></a>Adding Notes to a Running Task</h3>
+
+<p>While a task is running you can append lines to the task notes:</p>
+
+<pre><code>$ hcl note Then I did something else
+</code></pre>
+
+<h3>
+<a name="stopping-a-timer" class="anchor" href="#stopping-a-timer"><span class="octicon octicon-link"></span></a>Stopping a Timer</h3>
+
+<p>The following command will stop a running timer (currently only one timer at
+a time is supported). You can provide a message when stopping a timer as
+well:</p>
+
+<pre><code>$ hcl stop All done doing things
+</code></pre>
+
+<h3>
+<a name="resuming-a-timer" class="anchor" href="#resuming-a-timer"><span class="octicon octicon-link"></span></a>Resuming a Timer</h3>
+
+<p>You can resume a stopped timer. Specify a task to resume the last timer
+for that task:</p>
+
+<pre><code>$ hcl resume
+$ hcl resume @xdev
+</code></pre>
+
+<h3>
+<a name="canceling-a-timer" class="anchor" href="#canceling-a-timer"><span class="octicon octicon-link"></span></a>Canceling a Timer</h3>
+
+<p>If you accidentally started a timer that you didn't mean to, you can cancel
+it:</p>
+
+<pre><code>$ hcl cancel
+</code></pre>
+
+<p>This will delete the running timer, or the last-updated timer if one isn't
+running. You can also use <code>nvm</code> or <code>oops</code> instead of <code>cancel</code>.</p>
+
+<h3>
+<a name="logging-without-starting-a-timer" class="anchor" href="#logging-without-starting-a-timer"><span class="octicon octicon-link"></span></a>Logging without Starting a Timer</h3>
+
+<p>You can log time and notes without leaving a timer running. It takes
+the same arguments as start:</p>
+
+<pre><code>$ hcl log @xdev +1 Worked for an hour.
+</code></pre>
+
+<p>The above starts and immediately stops a one-hour timer with the given note.</p>
+
+<h3>
+<a name="date-formats" class="anchor" href="#date-formats"><span class="octicon octicon-link"></span></a>Date Formats</h3>
+
+<p>Dates can be expressed in a variety of ways. See the <a href="http://chronic.rubyforge.org/">Chronic documentation</a>
+for more information about available date input formats. The following
+commands show the timesheet for the specified day:</p>
+
+<pre><code>$ hcl show yesterday
+$ hcl show last friday
+$ hcl show 2 days ago
+$ hcl show 1 week ago
+</code></pre>
+
+<h2>
+<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p>HCl was designed and implemented by <a href="http://github.com/zenhob">Zack Hobson</a>.</p>
+
+<ul>
+<li>Non-SSL support by <a href="http://github.com/mbleigh">Michael Bleigh</a>.</li>
+<li>Resume command by <a href="http://github.com/bricooke">Brian Cooke</a>.</li>
+<li>UI improvements by <a href="http://github.com/scharfie">Chris Scharf</a>.</li>
+</ul><p>See LICENSE for copyright details.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/zenhob">zenhob</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
