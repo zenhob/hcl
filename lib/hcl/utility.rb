@@ -1,6 +1,6 @@
 module HCl
   module Utility
-    def get_task_ids ident
+    def get_task_ids ident, args
       if @settings.key? "task.#{ident}"
         @settings["task.#{ident}"].split(/\s+/)
       else
@@ -19,7 +19,7 @@ module HCl
     end
 
     def get_task args
-      Task.find *get_task_ids(get_ident(args))
+      Task.find *get_task_ids(get_ident(args), args)
     end
 
     def get_starting_time args

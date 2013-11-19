@@ -102,7 +102,7 @@ module HCl
     def resume *args
       ident = get_ident args
       entry = if ident
-          task_ids = get_task_ids ident
+          task_ids = get_task_ids ident, args
           DayEntry.last_by_task *task_ids
         else
           DayEntry.last
