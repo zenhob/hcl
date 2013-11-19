@@ -5,6 +5,7 @@
 * added cancel command to delete the last running timer, closes #13
 * properly unescape string from Harvest API, closes #24
 * stop command now checks for running timers from yesterday, closes #35
+* added log command to log time/notes without leaving a timer running, closes #30
 
 == v0.4.2
 
