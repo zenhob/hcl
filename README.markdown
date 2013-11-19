@@ -30,7 +30,7 @@ or you can install from source using jeweler:
 
 ## Usage
 
-    hcl (@<task_alias> | <project_id> <task_id>) [+time] [message]
+    hcl [start] (@<task_alias> | <project_id> <task_id>) [+<time>] [<message>]
     hcl note <message>
     hcl stop [message]
     hcl resume [@<task_alias>]
@@ -38,6 +38,7 @@ or you can install from source using jeweler:
     hcl tasks
     hcl alias <task_alias> <project_id> <task_id>
     hcl aliases
+    hcl (cancel | nvm | oops)
 
 ### Available Projects and Tasks
 
@@ -52,8 +53,8 @@ available tasks.
 Since it's not practical to enter two long numbers every time you want to
 identify a task, HCl supports task aliases:
 
-    $ hcl alias xdev 1234 5678
-    $ hcl @xdev Adding a new feature!
+    $ hcl alias tacodev 1234 5678
+    $ hcl @tacodev Adding a new feature
 
 ### Starting a Timer with Initial Time
 
@@ -61,14 +62,14 @@ You can also provide an initial time when starting a new timer.
 This can be expressed in floating-point or HH:MM. The following two
 commands are equivalent:
 
-    $ hcl @xdev +0:15 Adding a new feature!
-    $ hcl +.25 @xdev Adding a new feature!
+    $ hcl @tacodev +0:15 Doing some stuff
+    $ hcl +.25 @tacodev Doing some stuff
 
 ### Adding Notes to a Running Task
 
 While a task is running you can append lines to the task notes:
 
-    $ hcl note Found a good time!
+    $ hcl note Then I did something else
 
 ### Stopping a Timer
 
@@ -76,7 +77,7 @@ The following command will stop a running timer (currently only one timer at
 a time is supported). You can provide a message when stopping a timer as
 well:
 
-    $ hcl stop All done!
+    $ hcl stop All done doing things
 
 ### Resuming a Timer
 
@@ -85,6 +86,16 @@ for that task:
 
     $ hcl resume
     $ hcl resume @xdev
+
+### Canceling a Timer
+
+If you accidentally started a timer that you didn't mean to, you can cancel
+it:
+
+    $ hcl cancel
+
+This will delete the running timer, or the last-updated timer if one isn't
+running. You can also use `nvm` or `oops` instead of `cancel`.
 
 ### Date Formats
 
@@ -113,4 +124,6 @@ See LICENSE for copyright details.
 [mbleigh]: http://github.com/mbleigh
 [bricooke]: http://github.com/bricooke
 [scharfie]: http://github.com/scharfie
+
+
 

@@ -31,7 +31,7 @@ class Net::HTTP
 end
 
 module HCl
-  VERSION = "0.4.2"
+  VERSION = "0.4.3"
 
   class App
     include HCl::Utility
@@ -103,31 +103,34 @@ Commands:
     # show all available tasks
     hcl tasks
 
-    # set a task alias
-    hcl alias <task> <project_id> <task_id>
+    # create a task alias
+    hcl alias <task_alias> <project_id> <task_id>
 
     # list task aliases
     hcl aliases
 
     # start a task using an alias
-    hcl @<task> [+time] [message]
-
-    # display the daily timesheet
-    hcl show [date]
-
-    # stop a running timer
-    hcl stop [message]
-
-    # resume the last stopped timer
-    hcl resume
+    hcl [start] @<task_alias> [+<time>] [<message>]
 
     # add a line to your running timer
     hcl note <message>
 
+    # stop a running timer
+    hcl stop [<message>]
+
+    # resume the last stopped timer or a specific task
+    hcl resume [@<task_alias>]
+
+    # delete the current or last running timer
+    hcl (cancel | oops | nvm)
+
+    # display the daily timesheet
+    hcl [show [<date>]]
+
 Examples:
     hcl alias mytask 1234 4567
     hcl @mytask +:15 Doing a thing that I started 15 minutes ago.
-    hcl Adding a note to my running task.
+    hcl note Adding a note to my running task.
     hcl stop That's enough for now.
     hcl resume
     hcl show yesterday
