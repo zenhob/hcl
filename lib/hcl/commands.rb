@@ -63,7 +63,7 @@ module HCl
     end
 
     def stop *args
-      entry = DayEntry.with_timer
+      entry = DayEntry.with_timer || DayEntry.with_timer(DateTime.yesterday)
       if entry
         entry.append_note(args.join(' ')) if args.any?
         entry.toggle

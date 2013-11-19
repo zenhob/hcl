@@ -36,8 +36,8 @@ module HCl
         %{<request><notes>#{notes}</notes><hours>#{hours}</hours></request>}
     end
 
-    def self.with_timer
-      all.detect {|t| t.running? }
+    def self.with_timer date=nil
+      all(date).detect {|t| t.running? }
     end
 
     def self.last_by_task project_id, task_id
