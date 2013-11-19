@@ -17,17 +17,6 @@ or you can install from source using jeweler:
     $ gem install jeweler
     $ rake install
 
-### Prerequisites
-
- * Ruby (tested with 1.8.7)
- * Ruby OpenSSL support (in debian/ubuntu: apt-get install libopenssl-ruby)
- * Ruby extension building support (in debian/ubuntu: apt-get install ruby-dev)
- * RubyGems 1.3.3
- * Trollop option-parsing library (gem install trollop)
- * Chronic date-parsing library (gem install chronic)
- * HighLine console input library (gem install highline)
- * Jeweler packaging tool (needed to build the gem)
-
 ## Usage
 
     hcl [start] (@<task_alias> | <project_id> <task_id>) [+<time>] [<message>]
