@@ -37,6 +37,10 @@ module HCl
       http_do Net::HTTP::Post, action, data
     end
 
+    def self.delete action
+      http_do Net::HTTP::Delete, action
+    end
+
     def self.http_do method_class, action, data = nil
       https   = Net::HTTP.new "#{subdomain}.harvestapp.com", (ssl ? 443 : 80)
       request = method_class.new "/#{action}"

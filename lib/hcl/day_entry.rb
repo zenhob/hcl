@@ -23,6 +23,15 @@ module HCl
       end
     end
 
+    def cancel
+      begin
+        DayEntry.delete("daily/delete/#{id}")
+      rescue TimesheetResource::Failure
+        return false
+      end
+      true
+    end
+
     def notes
       super || @data[:notes] = ''
     end

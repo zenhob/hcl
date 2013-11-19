@@ -24,6 +24,23 @@ module HCl
       nil
     end
 
+    def cancel
+      entry = DayEntry.with_timer || DayEntry.last
+      if entry
+        if entry.cancel
+          puts "Deleted entry #{entry}."
+        else
+          puts "Failed to delete #{entry}!"
+          exit 1
+        end
+      else
+        puts 'Nothing to cancel.'
+        exit 1
+      end
+    end
+    alias_method :oops, :cancel
+    alias_method :nvm, :cancel
+
     def unset key
       @settings.delete key
       write_settings
