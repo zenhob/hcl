@@ -1,5 +1,15 @@
 = Recent Changes in HCl
 
+== v0.4.3
+
+* added cancel command to delete the last running timer, closes #13
+* properly unescape string from Harvest API, closes #24
+* stop command now checks for running timers from yesterday, closes #35
+
+== v0.4.2
+
+* resume command now accepts an optional task
+
 == v0.4.1
 
 * update dependencies
