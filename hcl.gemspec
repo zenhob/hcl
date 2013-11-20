@@ -20,5 +20,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'highline'
   s.add_development_dependency 'shoulda'
   s.add_development_dependency 'mocha'
+  s.add_development_dependency 'yard'
 end
 

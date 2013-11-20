@@ -12,3 +12,8 @@ task :install do
   system "gem install hcl-#{HCl::VERSION}.gem"
 end
 
+require 'yard'
+YARD::Rake::YardocTask.new do |t|
+  t.options = %w[--files CHANGELOG]
+end
+
