@@ -24,10 +24,10 @@ Harvest credentials:
 
     hcl [start] @<task_alias> [+<time>] [<message>]
     hcl note <message>
-    hcl stop [message]
+    hcl stop [<message>]
     hcl resume [@<task_alias>]
     hcl log @<task_alias> [+<time>] [<message>]
-    hcl show [date]
+    hcl show [<date>]
     hcl tasks
     hcl alias <task_alias> <project_id> <task_id>
     hcl aliases
