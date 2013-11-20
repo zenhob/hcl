@@ -6,12 +6,12 @@ Gem::Specification.new do |s|
   s.version = HCl::VERSION
 
   s.authors = ["Zack Hobson"]
-  s.description = "HCl is a command-line client for manipulating Harvest time sheets."
   s.email = "zack@zackhobson.com"
+  s.description = "HCl is a command-line client for manipulating Harvest time sheets."
   s.executables = ["hcl"]
   s.files = %w[CHANGELOG LICENSE Rakefile] + Dir['*.markdown'] +
     Dir['bin/*'] + Dir['lib/**/*.rb'] + Dir['test/**/*.rb']
-  s.homepage = "http://github.com/zenhob/hcl"
+  s.homepage = "http://zackhobson.com/hcl/"
   s.licenses = ["MIT"]
   s.summary = "Harvest timesheets from the command-line"
 
