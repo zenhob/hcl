@@ -1,3 +1,4 @@
+require 'rexml/document'
 
 module HCl 
   class DayEntry < TimesheetResource

@@ -1,3 +1,6 @@
+require 'chronic'
+require 'highline'
+
 module HCl
   module Commands
     def tasks
