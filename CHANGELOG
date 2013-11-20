@@ -1,5 +1,9 @@
 = Recent Changes in HCl
 
+== v0.4.4
+
+* added completion command to output a Bash completion script
+
 == v0.4.3
 
 * added cancel command to delete the last running timer, closes #13

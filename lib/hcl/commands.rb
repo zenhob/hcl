@@ -62,6 +62,10 @@ module HCl
       end
     end
 
+    def completion
+      %[complete -W "#{aliases.join ' '}" hcl]
+    end
+
     def aliases
       @settings.keys.select { |s| s =~ /^task\./ }.map { |s| "@"+s.slice(5..-1) }
     end

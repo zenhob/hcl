@@ -96,6 +96,12 @@ the same arguments as start:
 
 The above starts and immediately stops a one-hour timer with the given note.
 
+### Bash Auto-completion of Task Aliases
+
+You can enable auto-completion of task aliases by adding this to your bashrc:
+
+    eval `hcl completion`
+
 ### Date Formats
 
 Dates can be expressed in a variety of ways. See the [Chronic documentation][cd]
