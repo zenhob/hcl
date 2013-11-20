@@ -6,7 +6,6 @@ Gem::Specification.new do |s|
   s.version = HCl::VERSION
 
   s.authors = ["Zack Hobson"]
-  s.date = "2013-11-19"
   s.description = "HCl is a command-line client for manipulating Harvest time sheets."
   s.email = "zack@zackhobson.com"
   s.executables = ["hcl"]
