@@ -3,6 +3,7 @@
 == v0.4.4
 
 * added completion command to output a Bash auto-complete script, closes #34
+* removed jeweler dependency
 
 == v0.4.3
 
