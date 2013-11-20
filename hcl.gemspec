@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.summary = "Harvest timesheets from the command-line"
 
-  s.add_runtime_dependency(%q<trollop>, [">= 0"])
-  s.add_runtime_dependency(%q<chronic>, [">= 0"])
-  s.add_runtime_dependency(%q<highline>, [">= 0"])
-  s.add_development_dependency(%q<shoulda>, [">= 0"])
-  s.add_development_dependency(%q<mocha>, [">= 0"])
+  s.add_runtime_dependency 'trollop'
+  s.add_runtime_dependency 'chronic'
+  s.add_runtime_dependency 'highline'
+  s.add_development_dependency 'shoulda'
+  s.add_development_dependency 'mocha'
 end
 
