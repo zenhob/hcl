@@ -10,14 +10,6 @@ require 'chronic'
 require 'trollop'
 require 'highline/import'
 
-## app dependencies
-require 'hcl/utility'
-require 'hcl/commands'
-require 'hcl/timesheet_resource'
-require 'hcl/project'
-require 'hcl/task'
-require 'hcl/day_entry'
-
 # Workaround for annoying SSL warning:
 #  >> warning: peer certificate won't be verified in this SSL session
 # http://www.5dollarwhitebox.org/drupal/node/64
@@ -31,8 +23,6 @@ class Net::HTTP
 end
 
 module HCl
-  VERSION = "0.4.3"
-
   class App
     include HCl::Utility
     include HCl::Commands

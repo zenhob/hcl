@@ -2,7 +2,7 @@
 
 == v0.4.4
 
-* added completion command to output a Bash completion script
+* added completion command to output a Bash auto-complete script, closes #34
 
 == v0.4.3
 

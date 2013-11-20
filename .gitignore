@@ -5,3 +5,4 @@ doc
 .yardoc
 .rvmrc
 .rvmrc.*
+*.gem

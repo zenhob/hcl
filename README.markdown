@@ -10,20 +10,23 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 You can install hcl directly from rubygems.org:
 
     $ gem install hcl
-    $ hcl show [date]
 
-or you can install from source using jeweler:
+or you can install from source:
 
-    $ gem install jeweler
     $ rake install
+
+If you're using HCl for the first time, the show command sets up your
+Harvest credentials:
+
+    $ hcl show
 
 ## Usage
 
-    hcl [start] (@<task_alias> | <project_id> <task_id>) [+<time>] [<message>]
+    hcl [start] @<task_alias> [+<time>] [<message>]
     hcl note <message>
     hcl stop [message]
     hcl resume [@<task_alias>]
-    hcl log (@<task_alias> | <project_id> <task_id>) [+<time>] [<message>]
+    hcl log @<task_alias> [+<time>] [<message>]
     hcl show [date]
     hcl tasks
     hcl alias <task_alias> <project_id> <task_id>
