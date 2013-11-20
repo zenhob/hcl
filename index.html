@@ -29,7 +29,7 @@
       </header>
       <section>
         <h1>
-<a name="hcl" class="anchor" href="#hcl"><span class="octicon octicon-link"></span></a>HCl</h1>
+<a name="harvest-command-line" class="anchor" href="#harvest-command-line"><span class="octicon octicon-link"></span></a>Harvest Command Line</h1>
 
 <p>HCl is a command-line tool for interacting with Harvest time sheets using the
 <a href="http://www.getharvest.com/api/time_tracking">Harvest time tracking API</a>.</p>
@@ -40,23 +40,27 @@
 <p>You can install hcl directly from rubygems.org:</p>
 
 <pre><code>$ gem install hcl
-$ hcl show [date]
 </code></pre>
 
-<p>or you can install from source using jeweler:</p>
+<p>or you can install from source:</p>
 
-<pre><code>$ gem install jeweler
-$ rake install
+<pre><code>$ rake install
+</code></pre>
+
+<p>If you're using HCl for the first time, the show command sets up your
+Harvest credentials:</p>
+
+<pre><code>$ hcl show
 </code></pre>
 
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<pre><code>hcl [start] (@&lt;task_alias&gt; | &lt;project_id&gt; &lt;task_id&gt;) [+&lt;time&gt;] [&lt;message&gt;]
+<pre><code>hcl [start] @&lt;task_alias&gt; [+&lt;time&gt;] [&lt;message&gt;]
 hcl note &lt;message&gt;
 hcl stop [message]
 hcl resume [@&lt;task_alias&gt;]
-hcl log (@&lt;task_alias&gt; | &lt;project_id&gt; &lt;task_id&gt;) [+&lt;time&gt;] [&lt;message&gt;]
+hcl log @&lt;task_alias&gt; [+&lt;time&gt;] [&lt;message&gt;]
 hcl show [date]
 hcl tasks
 hcl alias &lt;task_alias&gt; &lt;project_id&gt; &lt;task_id&gt;
@@ -145,6 +149,14 @@ the same arguments as start:</p>
 </code></pre>
 
 <p>The above starts and immediately stops a one-hour timer with the given note.</p>
+
+<h3>
+<a name="bash-auto-completion-of-task-aliases" class="anchor" href="#bash-auto-completion-of-task-aliases"><span class="octicon octicon-link"></span></a>Bash Auto-completion of Task Aliases</h3>
+
+<p>You can enable auto-completion of task aliases by adding this to your bashrc:</p>
+
+<pre><code>eval `hcl completion`
+</code></pre>
 
 <h3>
 <a name="date-formats" class="anchor" href="#date-formats"><span class="octicon octicon-link"></span></a>Date Formats</h3>
