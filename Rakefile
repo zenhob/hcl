@@ -1,11 +1,5 @@
-$:.unshift(File.dirname(__FILE__) + '/lib')
-require 'hcl'
-
-desc 'install the hcl command'
-task :install do
-  system 'gem build hcl.gemspec'
-  system "gem install hcl-#{HCl::VERSION}.gem"
-end
+require 'rubygems/tasks'
+Gem::Tasks.new
 
 require 'rake/testtask'
 Rake::TestTask.new do |t|
