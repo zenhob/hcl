@@ -7,6 +7,7 @@ PATH
       trollop
 
 GEM
+  remote: https://rubygems.org/
   specs:
     chronic (0.9.1)
     highline (1.6.19)
