@@ -6,3 +6,4 @@ doc
 .rvmrc
 .rvmrc.*
 *.gem
+coverage

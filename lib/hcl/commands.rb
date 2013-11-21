@@ -5,7 +5,10 @@ module HCl
   module Commands
     def tasks project_code=nil
       tasks = Task.all
-      DayEntry.all if tasks.empty? # cache tasks
+      if tasks.empty? # cache tasks
+        DayEntry.all
+        tasks = Task.all
+      end
       tasks.select! {|t| t.project.code == project_code } if project_code
       if tasks.empty?
         puts "No matching tasks."
@@ -52,14 +55,14 @@ module HCl
 
     def unalias task
       unset "task.#{task}"
-        puts "Removed task alias @#{task}."
+      "Removed task alias @#{task}."
     end
 
     def alias task_name, *value
       task = Task.find *value
       if task
         set "task.#{task_name}", *value
-        puts "Added alias @#{task_name} for #{task}."
+        "Added alias @#{task_name} for #{task}."
       else
         puts "Unrecognized project and task ID: #{value.inspect}"
         exit 1
@@ -84,7 +87,7 @@ module HCl
       timer = task.start \
         :starting_time => starting_time,
         :note => args.join(' ')
-      puts "Started timer for #{timer} (at #{current_time})"
+      "Started timer for #{timer} (at #{current_time})"
     end
 
     def log *args
@@ -119,14 +122,15 @@ module HCl
     def show *args
       date = args.empty? ? nil : Chronic.parse(args.join(' '))
       total_hours = 0.0
+      result = ''
       DayEntry.all(date).each do |day|
         running = day.running? ? '(running) ' : ''
         columns = HighLine::SystemExtensions.terminal_size[0]
-        puts "\t#{day.formatted_hours}\t#{running}#{day.project}: #{day.notes.lines.last}"[0..columns-1]
+        result << "\t#{day.formatted_hours}\t#{running}#{day.project}: #{day.notes.lines.last}\n"[0..columns-1]
         total_hours = total_hours + day.hours.to_f
       end
-      puts "\t" + '-' * 13
-      puts "\t#{as_hours total_hours}\ttotal (as of #{current_time})"
+      result << ("\t" + '-' * 13) << "\n"
+      result << "\t#{as_hours total_hours}\ttotal (as of #{current_time})\n"
     end
 
     def resume *args

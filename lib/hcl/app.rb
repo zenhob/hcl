@@ -9,20 +9,23 @@ module HCl
     include HCl::Utility
     include HCl::Commands
 
-    SETTINGS_FILE = "#{ENV['HOME']}/.hcl/settings.yml"
-    CONFIG_FILE = "#{ENV['HOME']}/.hcl/config.yml"
+
+    HCL_DIR = ENV['HCL_DIR'] || "#{ENV['HOME']}/.hcl"
+    SETTINGS_FILE = "#{HCL_DIR}/settings.yml"
+    CONFIG_FILE = "#{HCL_DIR}/config.yml"
     OLD_SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
     OLD_CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
 
-    def initialize
+    def configure
       FileUtils.mkdir_p(File.join(ENV['HOME'], ".hcl"))
       read_config
       read_settings
+      self
     end
 
     # Run the given command and arguments.
     def self.command *args
-      hcl = new.process_args(*args).run
+      new.configure.process_args(*args).run
     end
 
     # Return true if the string is a known command, false otherwise.
@@ -47,10 +50,10 @@ module HCl
               end
             end
           else
-            start @command, *@args
+            puts start(@command, *@args)
           end
         else
-          show
+          puts show
         end
       rescue RuntimeError => e
         STDERR.puts "Error: #{e}"

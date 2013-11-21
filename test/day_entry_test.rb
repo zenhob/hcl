@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class DayEntryTest < Test::Unit::TestCase
-  should "read DayEntry xml" do
+  def test_from_xml
     entries = HCl::DayEntry.from_xml(<<-EOD)
 <daily>
   <for_day type="date">Wed, 18 Oct 2006</for_day>
@@ -33,14 +33,14 @@ class DayEntryTest < Test::Unit::TestCase
     end
   end
 
-  should "append to an existing note" do
+  def test_append_note
     entry = HCl::DayEntry.new(:id => '1', :notes => 'yourmom.', :hours => '1.0')
     HCl::DayEntry.stubs(:post)
     entry.append_note('hi world')
     assert_equal "yourmom.\nhi world", entry.notes
   end
 
-  should "append to an undefined note" do
+  def test_append_note_to_empty
     entry = HCl::DayEntry.new(:id => '1', :notes => nil, :hours => '1.0')
     HCl::DayEntry.stubs(:post)
     entry.append_note('hi world')

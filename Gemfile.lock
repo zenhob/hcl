@@ -1,0 +1,33 @@
+PATH
+  remote: .
+  specs:
+    hcl (0.4.4)
+      chronic
+      highline
+      trollop
+
+GEM
+  specs:
+    chronic (0.9.1)
+    highline (1.6.19)
+    metaclass (0.0.1)
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
+    multi_json (1.8.2)
+    rubygems-tasks (0.2.4)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
+    trollop (2.0)
+    yard (0.8.7.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  hcl!
+  mocha
+  rubygems-tasks
+  simplecov
+  yard

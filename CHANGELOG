@@ -1,5 +1,10 @@
 = Recent Changes in HCl
 
+== v0.4.5
+
+* allow filtering of tasks by project code
+* eliminate shoulda from development dependencies
+
 == v0.4.4
 
 * added completion command to output a Bash auto-complete script, closes #34
