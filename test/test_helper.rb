@@ -9,12 +9,12 @@ end
 
 require 'test/unit'
 require 'mocha/setup'
+require 'fileutils'
 
 # override the default hcl dir
 FileUtils.mkdir_p __dir__+"/dot_hcl"
 ENV['HCL_DIR'] = __dir__+"/dot_hcl"
 
-$:.unshift(__dir__ + '/../lib')
 require 'hcl'
 
 
