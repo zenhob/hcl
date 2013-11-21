@@ -67,4 +67,33 @@ class CommandTest < Test::Unit::TestCase
     start *%w[ 456 123 do stuff ]
   end
 
+  def test_stop
+    entry = stub
+    HCl::DayEntry.expects(:with_timer).returns(entry)
+    entry.expects(:append_note).with('all done')
+    entry.expects(:toggle)
+    stop 'all done'
+  end
+
+  def test_resume
+    entry = stub
+    HCl::DayEntry.expects(:last).returns(entry)
+    entry.expects(:toggle)
+    resume
+  end
+
+  def test_cancel
+    entry = stub
+    HCl::DayEntry.expects(:with_timer).returns(entry)
+    entry.expects(:cancel).returns(true)
+    cancel
+  end
+
+  def test_note
+    entry = stub
+    HCl::DayEntry.expects(:with_timer).returns(entry)
+    entry.expects(:append_note).with('hi world')
+    note 'hi world'
+  end
+
 end

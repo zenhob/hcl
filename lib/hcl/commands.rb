@@ -35,7 +35,7 @@ module HCl
       entry = DayEntry.with_timer || DayEntry.last
       if entry
         if entry.cancel
-          puts "Deleted entry #{entry}."
+          "Deleted entry #{entry}."
         else
           puts "Failed to delete #{entry}!"
           exit 1
@@ -100,7 +100,7 @@ module HCl
       if entry
         entry.append_note(args.join(' ')) if args.any?
         entry.toggle
-        puts "Stopped #{entry} (at #{current_time})"
+        "Stopped #{entry} (at #{current_time})"
       else
         puts "No running timers found."
         exit 1
@@ -112,7 +112,7 @@ module HCl
       entry = DayEntry.with_timer
       if entry
         entry.append_note message
-        puts "Added note to #{entry}."
+        "Added note to #{entry}."
       else
         puts "No running timers found."
         exit 1

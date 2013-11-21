@@ -7,3 +7,4 @@ doc
 .rvmrc.*
 *.gem
 coverage
+test/dot_hcl
