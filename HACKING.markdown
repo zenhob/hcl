@@ -14,3 +14,9 @@ To run HCl in place (e.g. for testing out local changes) you can use bundle exec
 
     bundle exec bin/hcl
 
+## Generating API documentation
+
+To generate and view the API documentation:
+
+    rake doc
+    open doc/index.html

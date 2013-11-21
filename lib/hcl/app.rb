@@ -87,11 +87,14 @@ Commands:
     # start a task using an alias
     hcl [start] @<task_alias> [+<time>] [<message>]
 
-    # add a line to your running timer
+    # add a line to a running timer
     hcl note <message>
 
     # stop a running timer
     hcl stop [<message>]
+
+    # log a task and time without leaving a timer running
+    hcl log @<task_alias> [+<time>] [<message>]
 
     # resume the last stopped timer or a specific task
     hcl resume [@<task_alias>]

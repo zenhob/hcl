@@ -9,7 +9,6 @@ end
 task :default => :test
 
 require 'yard'
-YARD::Rake::YardocTask.new do |t|
-  t.options = %w[--files CHANGELOG]
-end
+YARD::Rake::YardocTask.new
+task :doc => :yard
 
