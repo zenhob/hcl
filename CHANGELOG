@@ -1,5 +1,10 @@
 = Recent Changes in HCl
 
+== v0.4.6
+
+* automatically request credentials on auth-failure
+* fix user-entered credentials
+
 == v0.4.5
 
 * allow filtering of tasks by project code
