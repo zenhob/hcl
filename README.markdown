@@ -30,9 +30,9 @@ or you can install from source:
 
 ### Available Projects and Tasks
 
-To start a new timer you need to identify the project and task. After you've
-used the show command you can use the tasks command to view a cached list of
-available tasks.
+To start a new timer you need to identify the project and task.
+The tasks command displays a list of available tasks with their
+project and task IDs.
 
     $ hcl tasks
 
