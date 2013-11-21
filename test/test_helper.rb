@@ -13,6 +13,8 @@ require 'fileutils'
 
 # override the default hcl dir
 FileUtils.mkdir_p __dir__+"/dot_hcl"
+FileUtils.touch __dir__+"/dot_hcl/config.yml"
+FileUtils.touch __dir__+"/dot_hcl/settings.yml"
 ENV['HCL_DIR'] = __dir__+"/dot_hcl"
 
 require 'hcl'

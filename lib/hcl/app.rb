@@ -15,8 +15,8 @@ module HCl
     OLD_SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
     OLD_CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
 
-    def configure
-      FileUtils.mkdir_p(File.join(ENV['HOME'], ".hcl"))
+    def initialize
+      FileUtils.mkdir_p(HCL_DIR)
       read_config
       read_settings
       self
@@ -24,7 +24,7 @@ module HCl
 
     # Run the given command and arguments.
     def self.command *args
-      new.configure.process_args(*args).run
+      new.process_args(*args).run
     end
 
     # Return true if the string is a known command, false otherwise.
@@ -37,6 +37,7 @@ module HCl
 
     # Start the application.
     def run
+      request_config if @options[:reauth]
       begin
         if @command
           if command? @command
@@ -71,7 +72,7 @@ module HCl
     end
 
     def process_args *args
-      Trollop::options(args) do
+      @options = Trollop::options(args) do
         stop_on Commands.instance_methods
         version "HCl version #{VERSION}"
         banner <<-EOM
@@ -119,6 +120,7 @@ Examples:
 
 Options:
 EOM
+        opt :reauth, "Force refresh of auth details"
       end
       @command = args.shift
       @args = args

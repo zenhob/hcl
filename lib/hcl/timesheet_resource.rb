@@ -24,8 +24,6 @@ module HCl
         self.password = opts['password']
         self.subdomain = opts['subdomain']
         self.ssl = opts['ssl']
-      else
-        yield self
       end
     end
 
