@@ -1,21 +1,16 @@
 # Hacking HCl
 
-## Rubygems
+## Running the tests
 
-They're useful so we use them to install our gems. However there's no need to
-explicitly include rubygems in the app. That's up the system to decide. Don't
-require rubygems in the code.
+Use Bundler to install dependencies before you run the tests:
 
-We require rubygems in the test as a developer convenience.
+    gem install bundler
+    bundle
+    rake test
 
-## Running HCl in place
+## Running HCl during development
 
-This is common and supported:
+To run HCl in place (e.g. for testing out local changes) you can use bundle exec:
 
-  ruby -rubygems -Ilib bin/hcl
+    bundle exec bin/hcl
 
-Don't add dir(__FILE__)/lib to the load path in the binary. Bad manners.
-
-## That's it
-
-That's it. I mostly wrote this to explain why I rolled back certain changes.
