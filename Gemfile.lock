@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hcl (0.4.4)
+    hcl (0.4.5)
       chronic
       highline
       trollop

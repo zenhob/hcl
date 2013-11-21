@@ -2,13 +2,12 @@ require 'yaml'
 require 'fileutils'
 
 require 'trollop'
-require 'highline'
+require 'highline/import'
 
 module HCl
   class App
     include HCl::Utility
     include HCl::Commands
-
 
     HCL_DIR = ENV['HCL_DIR'] || "#{ENV['HOME']}/.hcl"
     SETTINGS_FILE = "#{HCL_DIR}/settings.yml"
@@ -61,6 +60,10 @@ module HCl
       rescue SocketError => e
         STDERR.puts "Connection failed. (#{e.message})"
         exit 1
+      rescue TimesheetResource::AuthFailure => e
+        STDERR.puts "Unable to authenticate: #{e}"
+        request_config
+        run
       rescue TimesheetResource::Failure => e
         STDERR.puts "API failure: #{e}"
         exit 1
@@ -122,9 +125,9 @@ EOM
       self
     end
 
-    protected
+    private
 
-    def read_config
+    def read_config force=false
       if File.exists? CONFIG_FILE
         config = YAML::load File.read(CONFIG_FILE)
         TimesheetResource.configure config
@@ -133,15 +136,19 @@ EOM
         TimesheetResource.configure config
         write_config config
       else
-        config = {}
-        puts "Please specify your Harvest credentials.\n"
-        config['login'] = ask("Email Address: ").to_s
-        config['password'] = ask("Password: ") { |q| q.echo = false }.to_s
-        config['subdomain'] = ask("Subdomain: ").to_s
-        config['ssl'] = %w(y yes).include?(ask("Use SSL? (y/n): ").downcase)
-        TimesheetResource.configure config
-        write_config config
+        request_config
       end
+    end
+
+    def request_config
+      config = {}
+      puts "Please specify your Harvest credentials.\n"
+      config['login'] = ask("Email Address: ").to_s
+      config['password'] = ask("Password: ") { |q| q.echo = false }.to_s
+      config['subdomain'] = ask("Subdomain: ").to_s
+      config['ssl'] = %w(y yes).include?(ask("Use SSL? (y/n): ").downcase)
+      TimesheetResource.configure config
+      write_config config
     end
 
     def write_config config
