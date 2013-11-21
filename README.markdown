@@ -15,11 +15,6 @@ or you can install from source:
 
     $ rake install
 
-If you're using HCl for the first time, the show command sets up your
-Harvest credentials:
-
-    $ hcl show
-
 ## Usage
 
     hcl [start] @<task_alias> [+<time>] [<message>]
@@ -28,7 +23,7 @@ Harvest credentials:
     hcl resume [@<task_alias>]
     hcl log @<task_alias> [+<time>] [<message>]
     hcl show [<date>]
-    hcl tasks
+    hcl tasks [<project_code>]
     hcl alias <task_alias> <project_id> <task_id>
     hcl aliases
     hcl (cancel | nvm | oops)
@@ -40,6 +35,9 @@ used the show command you can use the tasks command to view a cached list of
 available tasks.
 
     $ hcl tasks
+
+You can also pass a project code (this is the short optional code associated
+with each project) to list only the tasks for that project.
 
 ### Starting a Timer
 

@@ -3,14 +3,15 @@ require 'highline'
 
 module HCl
   module Commands
-    def tasks
+    def tasks project_code=nil
       tasks = Task.all
+      DayEntry.all if tasks.empty? # cache tasks
+      tasks.select! {|t| t.project.code == project_code } if project_code
       if tasks.empty?
-        puts "No cached tasks. Run `hcl show' to populate the cache and try again."
-      else
-        tasks.each { |task| puts "#{task.project.id} #{task.id}\t#{task}" }
+        puts "No matching tasks."
+        exit 1
       end
-      nil
+      tasks.map { |task| "#{task.project.id} #{task.id}\t#{task}" }.join("\n")
     end
 
     def set key = nil, *args

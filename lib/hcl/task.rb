@@ -45,7 +45,11 @@ module HCl
     end
 
     def to_s
-      "#{project.client} - #{project.name} - #{name}"
+      if project.code.empty?
+        "#{project.client} - #{project.name} - #{name}"
+      else
+        "#{project.client} - [#{project.code}] #{project.name} - #{name}"
+      end
     end
 
     def add opts
