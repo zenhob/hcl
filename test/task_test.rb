@@ -1,5 +1,9 @@
 
 class Task < Test::Unit::TestCase
+  def test_cache_file
+    assert_equal "#{HCl::App::HCL_DIR}/cache/tasks.yml", HCl::Task.cache_file
+  end
+
   def test_cache_tasks
     HCl::Task.cache_tasks(REXML::Document.new(<<-EOD))
 <daily>

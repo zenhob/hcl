@@ -24,11 +24,7 @@ module HCl
     end
 
     def self.cache_dir
-      if ENV['HCL_DIR']
-        File.join(ENV['HCL_DIR'],'cache')
-      else
-        File.join(ENV['HOME'],'.hcl/cache')
-      end
+      File.join(HCl::App::HCL_DIR, 'cache')
     end
 
     def self.all
