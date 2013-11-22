@@ -10,6 +10,7 @@ end
 require 'test/unit'
 require 'mocha/setup'
 require 'fileutils'
+require 'fakeweb'
 
 # override the default hcl dir
 FileUtils.mkdir_p __dir__+"/dot_hcl"

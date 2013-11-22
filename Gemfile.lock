@@ -10,6 +10,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     chronic (0.9.1)
+    fakeweb (1.3.0)
     highline (1.6.19)
     metaclass (0.0.1)
     mocha (0.14.0)
@@ -27,6 +28,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  fakeweb
   hcl!
   mocha
   rubygems-tasks

@@ -82,6 +82,14 @@ class CommandTest < Test::Unit::TestCase
     resume
   end
 
+  def test_resume_with_task_alias
+    entry = stub
+    expects(:get_task_ids).with('mytask',[]).returns(%w[ 456 789 ])
+    HCl::DayEntry.expects(:last_by_task).with('456', '789').returns(entry)
+    entry.expects(:toggle)
+    resume 'mytask'
+  end
+
   def test_cancel
     entry = stub
     HCl::DayEntry.expects(:with_timer).returns(entry)
@@ -94,6 +102,12 @@ class CommandTest < Test::Unit::TestCase
     HCl::DayEntry.expects(:with_timer).returns(entry)
     entry.expects(:append_note).with('hi world')
     note 'hi world'
+  end
+
+  def test_note_display
+    entry = stub(notes:"your face")
+    HCl::DayEntry.expects(:with_timer).returns(entry)
+    assert_equal "your face", note
   end
 
 end
