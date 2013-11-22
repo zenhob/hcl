@@ -59,7 +59,7 @@ module HCl
     def add opts
       notes = opts[:note]
       starting_time = opts[:starting_time] || 0
-      days = DayEntry.from_xml post("daily/add", <<-EOT)
+      days = DayEntry.from_xml Task.post("daily/add", <<-EOT)
       <request>
         <notes>#{notes}</notes>
         <hours>#{starting_time}</hours>
@@ -76,7 +76,7 @@ module HCl
       if day.running?
         day
       else
-        DayEntry.from_xml(get("daily/timer/#{day.id}")).first
+        DayEntry.from_xml(Task.get("daily/timer/#{day.id}")).first
       end
     end
   end

@@ -26,7 +26,7 @@ module HCl
 
     def cancel
       begin
-        delete("daily/delete/#{id}")
+        DayEntry.delete("daily/delete/#{id}")
       rescue TimesheetResource::Failure
         return false
       end
@@ -42,7 +42,7 @@ module HCl
       # If I don't include hours it gets reset.
       # This doens't appear to be the case for task and project.
       (self.notes << "\n#{new_notes}").lstrip!
-      post "daily/update/#{id}",
+      DayEntry.post "daily/update/#{id}",
         %{<request><notes>#{notes}</notes><hours>#{hours}</hours></request>}
     end
 
@@ -69,7 +69,7 @@ module HCl
     end
 
     def toggle
-      get("daily/timer/#{id}")
+      DayEntry.get("daily/timer/#{id}")
       self
     end
 
