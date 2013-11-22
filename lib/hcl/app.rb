@@ -61,6 +61,10 @@ module HCl
       rescue SocketError => e
         STDERR.puts "Connection failed. (#{e.message})"
         exit 1
+      rescue TimesheetResource::ThrottleFailure => e
+        STDERR.puts "Too many requests, retrying in #{e.retry_after+5} seconds..."
+        sleep e.retry_after+5
+        run
       rescue TimesheetResource::AuthFailure => e
         STDERR.puts "Unable to authenticate: #{e}"
         request_config

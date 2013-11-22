@@ -17,6 +17,13 @@ module HCl
   class TimesheetResource
     class Failure < StandardError; end
     class AuthFailure < StandardError; end
+    class ThrottleFailure < StandardError
+      attr_reader :retry_after
+      def initialize response
+        @retry_after = response.headers['Retry-After'].to_i
+        super "Too many requests! Try again in #{@retry_after} seconds."
+      end
+    end
 
     def self.configure opts = nil
       if opts
@@ -68,6 +75,8 @@ module HCl
         response.body
       when Net::HTTPFound
         raise Failure, "Redirected! Perhaps your ssl configuration variable is set incorrectly?"
+      when Net::HTTPServiceUnavailable
+        raise ThrottleFailure, response
       when Net::HTTPUnauthorized
         raise AuthFailure, "Login failed."
       else
