@@ -108,11 +108,14 @@ module HCl
     end
 
     def note *args
-      message = args.join ' '
       entry = DayEntry.with_timer
       if entry
-        entry.append_note message
-        "Added note to #{entry}."
+        if args.empty?
+          return entry.notes
+        else
+          entry.append_note args.join(' ')
+          "Added note to #{entry}."
+        end
       else
         puts "No running timers found."
         exit 1

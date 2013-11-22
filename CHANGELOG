@@ -4,6 +4,7 @@
 
 * added --reauth option to refresh credentials
 * added support for retrying on API throttle
+* note command without args now displays all notes for a running timer
 
 == v0.4.6 2013-11-21
 

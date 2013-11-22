@@ -62,6 +62,12 @@ While a task is running you can append lines to the task notes:
 
     $ hcl note Then I did something else
 
+**Note** that `show` only displays the last line of the timer notes.
+You can list all the notes for a running timer by issuing the note
+command without any arguments:
+
+    $ hcl note
+
 ### Stopping a Timer
 
 The following command will stop a running timer (currently only one timer at
