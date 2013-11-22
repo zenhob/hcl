@@ -3,6 +3,7 @@
 == next
 
 * added --reauth option to refresh credentials
+* added support for retrying on API throttle
 
 == v0.4.6 2013-11-21
 
