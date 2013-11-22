@@ -1,5 +1,9 @@
 = Recent Changes in HCl
 
+== next
+
+* added --reauth option to refresh credentials
+
 == v0.4.6
 
 * automatically request credentials on auth-failure
