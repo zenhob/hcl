@@ -1,6 +1,11 @@
 require 'rubygems/tasks'
 Gem::Tasks.new
 
+require 'fileutils'
+task :clean do
+  FileUtils.rm_rf %w[ pkg coverage doc ]
+end
+
 require 'rake/testtask'
 Rake::TestTask.new do |t|
   t.libs << 'test'
