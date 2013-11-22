@@ -58,6 +58,10 @@ module HCl
       http_do Net::HTTP::Post, action, data
     end
 
+    def self.put action, data
+      http_do Net::HTTP::Put, action, data
+    end
+
     def self.delete action
       http_do Net::HTTP::Delete, action
     end
@@ -84,6 +88,13 @@ module HCl
       end
     end
 
+    def self.xml_to_hash elem
+      elem.elements.map { |e| e.name }.inject({}) do |a, f|
+        a[f.to_sym] = CGI.unescape_html(elem.elements[f].text || '') if elem.elements[f]
+        a
+      end
+    end
+
     def id
       @data[:id]
     end
@@ -96,11 +107,23 @@ module HCl
       end
     end
 
-    def self.xml_to_hash elem
-      elem.elements.map { |e| e.name }.inject({}) do |a, f|
-        a[f.to_sym] = CGI.unescape_html(elem.elements[f].text || '') if elem.elements[f]
-        a
-      end
+    protected
+
+    def xml_to_hash elem
+      self.class.xml_to_hash elem
     end
+    def get *args
+      self.class.get *args
+    end
+    def post *args
+      self.class.post *args
+    end
+    def put *args
+      self.class.put *args
+    end
+    def delete *args
+      self.class.delete *args
+    end
+
   end
 end
