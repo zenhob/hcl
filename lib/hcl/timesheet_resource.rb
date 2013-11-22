@@ -1,18 +1,6 @@
 require 'net/http'
 require 'net/https'
 
-# Workaround for annoying SSL warning:
-#  >> warning: peer certificate won't be verified in this SSL session
-# http://www.5dollarwhitebox.org/drupal/node/64
-class Net::HTTP
-  alias_method :old_initialize, :initialize
-  def initialize(*args)
-    old_initialize(*args)
-    @ssl_context = OpenSSL::SSL::SSLContext.new
-    @ssl_context.verify_mode = OpenSSL::SSL::VERIFY_NONE
-  end
-end
-
 module HCl
   class TimesheetResource
     class Failure < StandardError; end
@@ -62,10 +50,16 @@ module HCl
       http_do Net::HTTP::Delete, action
     end
 
+    def self.connect
+      Net::HTTP.new("#{subdomain}.harvestapp.com", (ssl ? 443 : 80)).tap do |https|
+        https.use_ssl = ssl
+        https.verify_mode = OpenSSL::SSL::VERIFY_NONE if ssl
+      end
+    end
+
     def self.http_do method_class, action, data = nil
-      https   = Net::HTTP.new "#{subdomain}.harvestapp.com", (ssl ? 443 : 80)
+      https = connect
       request = method_class.new "/#{action}"
-      https.use_ssl = ssl
       request.basic_auth login, password
       request.content_type = 'application/xml'
       request['Accept']    = 'application/xml'
@@ -89,11 +83,11 @@ module HCl
     end
 
     def method_missing method, *args
-      if @data.key? method.to_sym
-        @data[method]
-      else
-        super
-      end
+      @data.key?(method.to_sym) ? @data[method] : super
+    end
+
+    def respond_to? method
+      (@data && @data.key?(method.to_sym)) || super
     end
 
     def self.xml_to_hash elem
