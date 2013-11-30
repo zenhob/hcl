@@ -1,5 +1,6 @@
 require 'net/http'
 require 'net/https'
+require 'cgi'
 
 module HCl
   class TimesheetResource
