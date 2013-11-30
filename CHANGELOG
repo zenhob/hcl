@@ -1,10 +1,11 @@
 = Recent Changes in HCl
 
-== next
+== v0.4.7 2013-11-30
 
 * added --reauth option to refresh credentials
 * added support for retrying on API throttle
 * note command without args now displays all notes for a running timer
+* fixed a crash on ruby 1.9.3
 
 == v0.4.6 2013-11-21
 
