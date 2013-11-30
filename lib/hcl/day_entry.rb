@@ -15,6 +15,10 @@ module HCl
       "#{client} - #{project} - #{task} (#{formatted_hours})"
     end
 
+    def task
+      @data[:task]
+    end
+
     def self.from_xml xml
       doc = REXML::Document.new xml
       raise Failure, "No root node in XML document: #{xml}" if doc.root.nil?

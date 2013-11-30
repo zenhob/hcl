@@ -13,7 +13,7 @@ require 'fileutils'
 require 'fakeweb'
 
 # override the default hcl dir
-ENV['HCL_DIR'] = __dir__+"/dot_hcl"
+ENV['HCL_DIR'] = File.dirname(__FILE__)+"/dot_hcl"
 
 require 'hcl'
 

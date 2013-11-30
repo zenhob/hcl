@@ -129,7 +129,7 @@ module HCl
       DayEntry.all(date).each do |day|
         running = day.running? ? '(running) ' : ''
         columns = HighLine::SystemExtensions.terminal_size[0]
-        result << "\t#{day.formatted_hours}\t#{running}#{day.project}: #{day.notes.lines.last}\n"[0..columns-1]
+        result << "\t#{day.formatted_hours}\t#{running}#{day.project}: #{day.notes.lines.to_a.last}\n"[0..columns-1]
         total_hours = total_hours + day.hours.to_f
       end
       result << ("\t" + '-' * 13) << "\n"
