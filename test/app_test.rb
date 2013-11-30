@@ -29,4 +29,19 @@ class AppTest < Test::Unit::TestCase
     app.expects(:show).when(throttled.is(true))
     app.process_args('show').run
   end
+
+  def test_report_generic_failure
+    app = HCl::App.new
+    app.expects(:show).raises(RuntimeError)
+    app.expects(:exit).with(1)
+    app.process_args('show').run
+  end
+
+  def test_report_socket_error
+    app = HCl::App.new
+    app.expects(:show).raises(SocketError)
+    app.expects(:exit).with(1)
+    app.process_args('show').run
+  end
+
 end
