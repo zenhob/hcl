@@ -1,5 +1,9 @@
 = Recent Changes in HCl
 
+== v0.4.8 2013-11-30
+
+* more fixes for 1.9.3
+
 == v0.4.7 2013-11-30
 
 * added --reauth option to refresh credentials
