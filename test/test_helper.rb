@@ -11,6 +11,7 @@ require 'test/unit'
 require 'mocha/setup'
 require 'fileutils'
 require 'fakeweb'
+require 'debugger'
 
 # override the default hcl dir
 ENV['HCL_DIR'] = File.dirname(__FILE__)+"/dot_hcl"
