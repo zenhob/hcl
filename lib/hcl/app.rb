@@ -190,7 +190,11 @@ EOM
     end
 
     def has_security_command
-      File.exists?('/usr/bin/security')
+      if @has_security.nil? 
+        @has_security = File.exists?('/usr/bin/security') 
+      else
+        @has_security
+      end
     end
 
     def load_password config
