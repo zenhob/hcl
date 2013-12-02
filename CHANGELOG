@@ -1,5 +1,9 @@
 = Recent Changes in HCl
 
+== next
+
+* MacOS X: store password in default keychain
+
 == v0.4.8 2013-11-30
 
 * more fixes for 1.9.3
