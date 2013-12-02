@@ -135,7 +135,10 @@ EOM
 
     def read_config force=false
       if File.exists? CONFIG_FILE
-        config = YAML::load File.read(CONFIG_FILE)
+        config = YAML::load(File.read(CONFIG_FILE)) || {}
+        if has_security_command
+          load_password config
+        end
         TimesheetResource.configure config
       elsif File.exists? OLD_CONFIG_FILE
         config = YAML::load File.read(OLD_CONFIG_FILE)
@@ -159,10 +162,13 @@ EOM
 
     def write_config config
       puts "Writing configuration to #{CONFIG_FILE}."
+      if has_security_command
+        save_password config
+      end
       File.open(CONFIG_FILE, 'w') do |f|
        f.write config.to_yaml
       end
-      FileUtils.chmod 0400, CONFIG_FILE
+      FileUtils.chmod 0600, CONFIG_FILE
     end
 
     def read_settings
@@ -181,6 +187,27 @@ EOM
        f.write @settings.to_yaml
       end
       nil
+    end
+
+    def has_security_command
+      File.exists?('/usr/bin/security')
+    end
+
+    def load_password config
+      cmd = "security find-internet-password -l hcl -a '%s' -s '%s.harvestapp.com' -w" % [
+        config['login'],
+        config['subdomain'],
+      ]
+      password = `#{cmd}`
+      config.update('password'=>password.chomp) if $?.success?
+    end
+
+    def save_password config
+      if system("security add-internet-password -U -l hcl -a '%s' -s '%s.harvestapp.com' -w '%s'" % [
+        config['login'],
+        config['subdomain'],
+        config['password'],
+      ]) then config.delete('password') end
     end
   end
 end
