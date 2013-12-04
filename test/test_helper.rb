@@ -1,9 +1,12 @@
 require 'bundler'
-require 'simplecov'
-SimpleCov.start do
-  add_filter '/test/'
-  add_filter do |source_file|
-    source_file.lines.count < 15
+
+if ENV['COVERAGE'] == 'YES'
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter '/test/'
+    add_filter do |source_file|
+      source_file.lines.count < 15
+    end
   end
 end
 

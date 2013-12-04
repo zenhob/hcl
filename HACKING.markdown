@@ -8,6 +8,11 @@ Use Bundler to install dependencies before you run the tests:
     bundle
     rake test
 
+To view the test coverage:
+
+    rake coverage
+    open coverage/index.html
+
 ## Running HCl during development
 
 To run HCl in place (e.g. for testing out local changes) you can use bundle exec:

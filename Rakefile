@@ -13,6 +13,12 @@ Rake::TestTask.new do |t|
 end
 task :default => :test
 
+task :coverage_env { ENV['COVERAGE'] = "YES" }
+Rake::TestTask.new(:coverage => :coverage_env) do |t|
+  t.libs << 'test'
+  t.test_files = FileList['test/*_test.rb']
+end
+
 require 'yard'
 YARD::Rake::YardocTask.new
 task :doc => :yard
