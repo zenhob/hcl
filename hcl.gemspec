@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'trollop'
   s.add_runtime_dependency 'chronic'
   s.add_runtime_dependency 'highline'
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'rubygems-tasks'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'yard'
