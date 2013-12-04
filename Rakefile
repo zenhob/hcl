@@ -13,7 +13,7 @@ Rake::TestTask.new do |t|
 end
 task :default => :test
 
-task :coverage_env { ENV['COVERAGE'] = "YES" }
+task(:coverage_env) { ENV['COVERAGE'] = "YES" }
 Rake::TestTask.new(:coverage => :coverage_env) do |t|
   t.libs << 'test'
   t.test_files = FileList['test/*_test.rb']
