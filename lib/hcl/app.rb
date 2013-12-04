@@ -133,7 +133,7 @@ EOM
 
     private
 
-    def read_config force=false
+    def read_config
       if File.exists? CONFIG_FILE
         config = YAML::load(File.read(CONFIG_FILE)) || {}
         if has_security_command
