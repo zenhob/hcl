@@ -4,6 +4,7 @@ require 'hcl'
 Gem::Specification.new do |s|
   s.name = "hcl"
   s.version = HCl::VERSION
+  s.extensions = 'ext/mkrf_conf.rb'
 
   s.authors = ["Zack Hobson"]
   s.email = "zack@zackhobson.com"
