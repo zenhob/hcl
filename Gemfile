@@ -4,4 +4,6 @@ gemspec
 gem 'rubysl-abbrev', platform:'rbx'
 gem 'rubysl-singleton', platform:'rbx'
 gem 'rubysl-rexml', platform:'rbx'
-gem 'rubysl-test-unit', platform:'rbx', group:'development'
+gem 'rubysl-test-unit', platform:'rbx', group:'test'
+gem 'rubysl-coverage', platform:'rbx', group:'test'
+gem 'rubinius-coverage', platform:'rbx', group:'test'

@@ -18,8 +18,10 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.8.2)
     rake (10.1.0)
+    rubinius-coverage (2.0.3)
     rubygems-tasks (0.2.4)
     rubysl-abbrev (2.0.4)
+    rubysl-coverage (2.0.3)
     rubysl-rexml (2.0.2)
     rubysl-singleton (2.0.0)
     rubysl-test-unit (2.0.3)
@@ -39,8 +41,10 @@ DEPENDENCIES
   hcl!
   mocha
   rake
+  rubinius-coverage
   rubygems-tasks
   rubysl-abbrev
+  rubysl-coverage
   rubysl-rexml
   rubysl-singleton
   rubysl-test-unit
