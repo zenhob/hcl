@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UtilityTest < MiniTest::Unit::TestCase
+class UtilityTest < HCl::TestCase
   include HCl::Utility
 
   def test_time2float_decimal

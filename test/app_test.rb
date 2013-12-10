@@ -1,5 +1,5 @@
 require 'test_helper'
-class AppTest < MiniTest::Unit::TestCase
+class AppTest < HCl::TestCase
 
   def setup
     # touch config to avoid triggering manual config

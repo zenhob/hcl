@@ -1,5 +1,5 @@
 require 'test_helper'
-class CommandTest < MiniTest::Unit::TestCase
+class CommandTest < HCl::TestCase
   include HCl::Commands
   include HCl::Utility
 

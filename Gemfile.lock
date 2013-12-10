@@ -24,8 +24,6 @@ GEM
     rubysl-coverage (2.0.3)
     rubysl-rexml (2.0.2)
     rubysl-singleton (2.0.0)
-    rubysl-test-unit (2.0.3)
-      minitest (~> 4.7)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
@@ -50,7 +48,6 @@ DEPENDENCIES
   rubysl-coverage
   rubysl-rexml
   rubysl-singleton
-  rubysl-test-unit
   simplecov
   yajl-ruby
   yard

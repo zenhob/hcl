@@ -1,5 +1,10 @@
 module HCl
+  class CommandError < StandardError; end
   module Utility
+    def fail message
+      raise CommandError, message
+    end
+
     def get_task_ids ident, args
       if @settings.key? "task.#{ident}"
         @settings["task.#{ident}"].split(/\s+/)

@@ -1,5 +1,5 @@
 
-class Task < MiniTest::Unit::TestCase
+class Task < HCl::TestCase
   def test_cache_file
     assert_equal "#{HCl::App::HCL_DIR}/cache/tasks.yml", HCl::Task.cache_file
   end

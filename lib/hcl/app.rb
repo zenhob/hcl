@@ -55,22 +55,25 @@ module HCl
         else
           puts show
         end
+      rescue CommandError => e
+        $stderr.puts e
+        exit 1
       rescue RuntimeError => e
-        STDERR.puts "Error: #{e}"
+        $stderr.puts "Error: #{e}"
         exit 1
       rescue SocketError => e
-        STDERR.puts "Connection failed. (#{e.message})"
+        $stderr.puts "Connection failed. (#{e.message})"
         exit 1
       rescue TimesheetResource::ThrottleFailure => e
-        STDERR.puts "Too many requests, retrying in #{e.retry_after+5} seconds..."
+        $stderr.puts "Too many requests, retrying in #{e.retry_after+5} seconds..."
         sleep e.retry_after+5
         run
       rescue TimesheetResource::AuthFailure => e
-        STDERR.puts "Unable to authenticate: #{e}"
+        $stderr.puts "Unable to authenticate: #{e}"
         request_config
         run
       rescue TimesheetResource::Failure => e
-        STDERR.puts "API failure: #{e}"
+        $stderr.puts "API failure: #{e}"
         exit 1
       end
     end

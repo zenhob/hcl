@@ -3,6 +3,8 @@ require 'highline'
 
 module HCl
   module Commands
+    class Error < StandardError; end
+
     def tasks project_code=nil
       tasks = Task.all
       if tasks.empty? # cache tasks
@@ -11,8 +13,7 @@ module HCl
       end
       tasks.select! {|t| t.project.code == project_code } if project_code
       if tasks.empty?
-        puts "No matching tasks."
-        exit 1
+        fail "No matching tasks."
       end
       tasks.map { |task| "#{task.project.id} #{task.id}\t#{task}" }.join("\n")
     end
@@ -37,12 +38,10 @@ module HCl
         if entry.cancel
           "Deleted entry #{entry}."
         else
-          puts "Failed to delete #{entry}!"
-          exit 1
+          fail "Failed to delete #{entry}!"
         end
       else
-        puts 'Nothing to cancel.'
-        exit 1
+        fail 'Nothing to cancel.'
       end
     end
     alias_method :oops, :cancel
@@ -64,8 +63,7 @@ module HCl
         set "task.#{task_name}", *value
         "Added alias @#{task_name} for #{task}."
       else
-        puts "Unrecognized project and task ID: #{value.inspect}"
-        exit 1
+        fail "Unrecognized project and task ID: #{value.inspect}"
       end
     end
 
@@ -81,8 +79,7 @@ module HCl
       starting_time = get_starting_time args
       task = get_task args
       if task.nil?
-        puts "Unknown task alias, try one of the following: ", aliases.join(', ')
-        exit 1
+        fail "Unknown task alias, try one of the following: ", aliases.join(', ')
       end
       timer = task.start \
         :starting_time => starting_time,
@@ -102,8 +99,7 @@ module HCl
         entry.toggle
         "Stopped #{entry} (at #{current_time})"
       else
-        puts "No running timers found."
-        exit 1
+        fail "No running timers found."
       end
     end
 
@@ -117,8 +113,7 @@ module HCl
           "Added note to #{entry}."
         end
       else
-        puts "No running timers found."
-        exit 1
+        fail "No running timers found."
       end
     end
 
@@ -147,8 +142,7 @@ module HCl
       if entry
         entry.toggle
       else
-        puts "No matching timer found."
-        exit 1
+        fail "No matching timer found."
       end
     end
 
