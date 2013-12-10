@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email = "zack@zackhobson.com"
   s.description = "HCl is a command-line client for manipulating Harvest time sheets."
   s.executables = ["hcl"]
-  s.files = %w[CHANGELOG LICENSE Rakefile] + Dir['*.markdown'] +
+  s.files = %w[CHANGELOG LICENSE Rakefile Gemfile] + Dir['*.markdown'] +
     Dir['bin/*'] + Dir['lib/**/*.rb'] + Dir['test/**/*.rb']
   s.homepage = "http://zackhobson.com/hcl/"
   s.licenses = ["MIT"]

@@ -8,9 +8,8 @@ Use Bundler to install dependencies before you run the tests:
     bundle
     rake test
 
-To view the test coverage:
+Coverage is tested automatically. To view the test coverage report:
 
-    rake coverage
     open coverage/index.html
 
 ## Running HCl during development
