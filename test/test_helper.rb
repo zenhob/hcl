@@ -12,14 +12,14 @@ begin
     minimum_coverage case RUBY_ENGINE
       when "rbx" then 84
       when "jruby" then 73
-      else 78
+      else 77
     end
   end
 rescue LoadError => e
   $stderr.puts 'No test coverage tools found, skipping coverage check.'
 end
 
-require 'test/unit'
+require 'minitest/autorun'
 require 'mocha/setup'
 require 'fileutils'
 require 'fakeweb'

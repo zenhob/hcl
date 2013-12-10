@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DayEntryTest < Test::Unit::TestCase
+class DayEntryTest < MiniTest::Unit::TestCase
   def test_from_xml
     entries = HCl::DayEntry.from_xml(<<-EOD)
 <daily>

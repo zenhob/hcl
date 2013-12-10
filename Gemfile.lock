@@ -41,6 +41,7 @@ PLATFORMS
 DEPENDENCIES
   fakeweb
   hcl!
+  minitest
   mocha
   rake
   rubinius-coverage
