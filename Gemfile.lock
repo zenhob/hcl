@@ -31,6 +31,7 @@ GEM
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
     trollop (2.0)
+    yajl-ruby (1.1.0)
     yard (0.8.7.3)
 
 PLATFORMS
@@ -49,4 +50,5 @@ DEPENDENCIES
   rubysl-singleton
   rubysl-test-unit
   simplecov
+  yajl-ruby
   yard
