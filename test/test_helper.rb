@@ -12,7 +12,7 @@ begin
     minimum_coverage case RUBY_ENGINE
       when "rbx" then 84
       when "jruby" then 73
-      else 74
+      else 78
     end
   end
 rescue LoadError => e

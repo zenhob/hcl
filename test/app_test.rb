@@ -30,16 +30,33 @@ class AppTest < Test::Unit::TestCase
     app.process_args('show').run
   end
 
-  def test_report_generic_failure
+  def test_generic_failure
     app = HCl::App.new
     app.expects(:show).raises(RuntimeError)
     app.expects(:exit).with(1)
     app.process_args('show').run
   end
 
-  def test_report_socket_error
+  def test_socket_error
     app = HCl::App.new
     app.expects(:show).raises(SocketError)
+    app.expects(:exit).with(1)
+    app.process_args('show').run
+  end
+
+  def test_configure_on_auth_failure
+    app = HCl::App.new
+    configured = states('configured').starts_as(false)
+    app.expects(:show).raises(HCl::TimesheetResource::AuthFailure).when(configured.is(false))
+    app.expects(:ask).returns('xxx').times(4).when(configured.is(false))
+    app.expects(:write_config).then(configured.is(true))
+    app.expects(:show).when(configured.is(true))
+    app.process_args('show').run
+  end
+
+  def test_api_failure
+    app = HCl::App.new
+    app.expects(:show).raises(HCl::TimesheetResource::Failure)
     app.expects(:exit).with(1)
     app.process_args('show').run
   end
