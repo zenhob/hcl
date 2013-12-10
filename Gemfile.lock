@@ -35,6 +35,7 @@ GEM
     yard (0.8.7.3)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
