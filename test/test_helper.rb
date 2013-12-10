@@ -28,7 +28,7 @@ require 'mocha/setup'
 require 'fileutils'
 require 'fakeweb'
 
-module IgnoreStderr
+module CaptureOutput
   def before_setup
     super
     $stderr = @stderr = StringIO.new
@@ -39,9 +39,15 @@ module IgnoreStderr
     $stderr = STDERR
     $stdout = STDOUT
   end
+  def error
+    @stderr.string
+  end
+  def output
+    @stdout.string
+  end
 end
 class HCl::TestCase < MiniTest::Unit::TestCase
-  include IgnoreStderr
+  include CaptureOutput
 end
 
 
