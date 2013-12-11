@@ -21,33 +21,13 @@ end
 
 # override the default hcl dir
 ENV['HCL_DIR'] = File.dirname(__FILE__)+"/dot_hcl"
-require 'hcl'
 
+require 'hcl'
 require 'minitest/autorun'
 require 'mocha/setup'
 require 'fileutils'
 require 'fakeweb'
 
-module CaptureOutput
-  def before_setup
-    super
-    $stderr = @stderr = StringIO.new
-    $stdout = @stdout = StringIO.new
-  end
-  def after_teardown
-    super
-    $stderr = STDERR
-    $stdout = STDOUT
-  end
-  def error
-    @stderr.string
-  end
-  def output
-    @stdout.string
-  end
-end
-class HCl::TestCase < MiniTest::Unit::TestCase
-  include CaptureOutput
-end
-
+# require test extensions/helpers
+Dir[File.dirname(__FILE__) + '/ext/*.rb'].each { |ext| require ext }
 
