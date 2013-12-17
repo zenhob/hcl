@@ -31,3 +31,5 @@ require 'fakeweb'
 # require test extensions/helpers
 Dir[File.dirname(__FILE__) + '/ext/*.rb'].each { |ext| require ext }
 
+class HCl::TestCase < MiniTest::Unit::TestCase; end
+
