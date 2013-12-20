@@ -88,6 +88,7 @@ module HCl
     end
 
     def log *args
+      fail "There is already a timer running." if DayEntry.with_timer
       start *args
       stop
     end

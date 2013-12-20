@@ -18,6 +18,11 @@ class CommandTest < HCl::TestCase
     @settings
   end
 
+  def test_log_failure
+    HCl::DayEntry.expects(:with_timer).returns(stub)
+    assert_raises(HCl::CommandError) { log "stuff" }
+  end
+
   def test_tasks
     HCl::Task.expects(:all).returns([HCl::Task.new(
       id:123,

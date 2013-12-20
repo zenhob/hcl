@@ -3,6 +3,7 @@
 == next
 
 * MacOS X: store password in default keychain
+* abort log command when a timer is running
 
 == v0.4.8 2013-11-30
 

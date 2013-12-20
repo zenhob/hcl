@@ -1,8 +1,8 @@
 module HCl
   class CommandError < StandardError; end
   module Utility
-    def fail message
-      raise CommandError, message
+    def fail *message
+      raise CommandError, message.join(' ')
     end
 
     def get_task_ids ident, args
