@@ -3,6 +3,17 @@ require 'fileutils'
 
 module HCl
   class Task < TimesheetResource
+    def self.cache_tasks_hash day_entry_hash
+      tasks = day_entry_hash['projects'].
+        map { |p| p['tasks'].each {|t| new t.merge(project:p) } }.flatten.uniq
+      unless tasks.empty?
+        FileUtils.mkdir_p(cache_dir)
+        File.open(cache_file, 'w') do |f|
+          f.write tasks.to_yaml
+        end
+      end
+    end
+
     def self.cache_tasks doc
       tasks = []
       doc.root.elements.collect('projects/project') do |project_elem|

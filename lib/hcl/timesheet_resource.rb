@@ -1,6 +1,7 @@
 require 'net/http'
 require 'net/https'
 require 'cgi'
+require 'faraday_middleware'
 
 module HCl
   class TimesheetResource
@@ -41,48 +42,45 @@ module HCl
       CONFIG_VARS.inject({}) {|c,k| c.update(k => TimesheetResource.send(k)) }
     end
 
+    def get action
+      new self.class.get(action).body
+    end
+    def post action, data
+      new self.class.post(action, data).body
+    end
+    def delete action
+      new self.class.delete(action).body
+    end
+
+    def self.faraday
+      @faraday ||= begin
+        Faraday.new(
+          "http#{ssl && 's'}://#{subdomain}.harvestapp.com"
+        ) do |f|
+          #f.headers['Accept'] = 'application/json'
+          f.headers['Accept'] = 'application/xml'
+          #f.request :json
+          f.request :basic_auth, login, password
+          #f.response :json, content_type: /\bjson$/
+          f.adapter Faraday.default_adapter
+        end
+      end
+    end
+
     def initialize params
       @data = params
     end
 
     def self.get action
-      http_do Net::HTTP::Get, action
+      faraday.get(action).body
     end
 
     def self.post action, data
-      http_do Net::HTTP::Post, action, data
+      faraday.post(action, data).body
     end
 
     def self.delete action
-      http_do Net::HTTP::Delete, action
-    end
-
-    def self.connect
-      Net::HTTP.new("#{subdomain}.harvestapp.com", (ssl ? 443 : 80)).tap do |https|
-        https.use_ssl = ssl
-        https.verify_mode = OpenSSL::SSL::VERIFY_NONE if ssl
-      end
-    end
-
-    def self.http_do method_class, action, data = nil
-      https = connect
-      request = method_class.new "/#{action}"
-      request.basic_auth login, password
-      request.content_type = 'application/xml'
-      request['Accept']    = 'application/xml'
-      response = https.request request, data
-      case response
-      when Net::HTTPSuccess
-        response.body
-      when Net::HTTPFound
-        raise Failure, "Redirected! Perhaps your ssl configuration variable is set incorrectly?"
-      when Net::HTTPServiceUnavailable
-        raise ThrottleFailure, response
-      when Net::HTTPUnauthorized
-        raise AuthFailure, "Login failed."
-      else
-        raise Failure, "Unexpected response from the upstream API."
-      end
+      faraday.delete(action).body
     end
 
     def id
