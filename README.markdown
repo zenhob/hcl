@@ -121,10 +121,11 @@ configuration:
 
 ### Configuration Profiles
 
-You can modify your credentials with `--reauth` command, and review them
-with the `config` command. If you'd rather store multiple configurations as
+You can modify your credentials with the `--reauth` option, and review them
+with `hcl config`. If you'd rather store multiple configurations at
 once, specify an alternate configuration directory in the environment as
-`HCL_DIR`. This can be used to easily interact with multiple harvest accounts.
+`HCL_DIR`. This can be used to interact with multiple harvest accounts at
+once.
 
 Here is a shell alias `myhcl` with a separate configuration from the
 main `hcl` command, and another command to configure alias completion:
@@ -132,8 +133,9 @@ main `hcl` command, and another command to configure alias completion:
     alias myhcl="env HCL_DIR=~/.myhcl hcl"
     eval `myhcl completion myhcl`
 
-When using `myhcl` you can use different credentials and aliases, while
-`hcl` will continue to function with your original configuration.
+Adding something like the above to your bashrc will enable a new command,
+`myhcl`. When using `myhcl` you can use different credentials and aliases,
+while `hcl` will continue to function with your original configuration.
 
 ### Date Formats
 
