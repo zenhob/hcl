@@ -1,6 +1,6 @@
 = Recent Changes in HCl
 
-== next
+== v0.4.9 2013-12-21
 
 * MacOS X: store password in default keychain
 * abort log command when a timer is running
