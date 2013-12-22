@@ -33,6 +33,7 @@ or you can install from source:
     hcl alias <task_alias> <project_id> <task_id>
     hcl aliases
     hcl (cancel | nvm | oops)
+    hcl config
 
 ### Available Projects and Tasks
 
@@ -120,10 +121,13 @@ configuration:
 
 ### Configuration Profiles
 
-You can specify an alternate configuration directory in the environment as
+You can modify your credentials with `--reauth` command, and review them
+with the `config` command. If you'd rather store multiple configurations as
+once, specify an alternate configuration directory in the environment as
 `HCL_DIR`. This can be used to easily interact with multiple harvest accounts.
+
 Here is a shell alias `myhcl` with a separate configuration from the
-main `hcl` command, including alias completion:
+main `hcl` command, and another command to configure alias completion:
 
     alias myhcl="env HCL_DIR=~/.myhcl hcl"
     eval `myhcl completion myhcl`
