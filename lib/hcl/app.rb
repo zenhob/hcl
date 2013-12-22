@@ -12,8 +12,6 @@ module HCl
     HCL_DIR = ENV['HCL_DIR'] || "#{ENV['HOME']}/.hcl"
     SETTINGS_FILE = "#{HCL_DIR}/settings.yml"
     CONFIG_FILE = "#{HCL_DIR}/config.yml"
-    OLD_SETTINGS_FILE = "#{ENV['HOME']}/.hcl_settings"
-    OLD_CONFIG_FILE = "#{ENV['HOME']}/.hcl_config"
 
     def initialize
       FileUtils.mkdir_p(HCL_DIR)
@@ -143,10 +141,6 @@ EOM
           load_password config
         end
         TimesheetResource.configure config
-      elsif File.exists? OLD_CONFIG_FILE
-        config = YAML::load File.read(OLD_CONFIG_FILE)
-        TimesheetResource.configure config
-        write_config config
       else
         request_config
       end
@@ -177,9 +171,6 @@ EOM
     def read_settings
       if File.exists? SETTINGS_FILE
         @settings = YAML.load(File.read(SETTINGS_FILE))
-      elsif File.exists? OLD_SETTINGS_FILE
-        @settings = YAML.load(File.read(OLD_SETTINGS_FILE))
-        write_settings
       else
         @settings = {}
       end
