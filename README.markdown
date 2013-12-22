@@ -3,10 +3,13 @@
 HCl is a command-line tool for interacting with Harvest time sheets using the
 [Harvest time tracking API][htt].
 
-[htt]: http://www.getharvest.com/api/time_tracking
+[View this documentation online][rdoc].
 
 [![Build Status](https://travis-ci.org/zenhob/hcl.png?branch=master)](https://travis-ci.org/zenhob/hcl)
 [![Gem Version](https://badge.fury.io/rb/hcl.png)](http://badge.fury.io/rb/hcl)
+
+[htt]: http://www.getharvest.com/api/time_tracking
+[rdoc]: http://rdoc.info/github/zenhob/hcl/file/README.markdown
 
 ## Quick Start
 
