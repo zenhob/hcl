@@ -1,5 +1,9 @@
 = Recent Changes in HCl
 
+== next version
+
+* addded `config` command to display current credentials
+
 == v0.4.9 2013-12-21
 
 * MacOS X: store password in default keychain

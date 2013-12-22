@@ -24,7 +24,8 @@ module HCl
     end
 
     # configuration accessors
-    %w[ login password subdomain ssl ].each do |config_var|
+    CONFIG_VARS = [ :login, :password, :subdomain, :ssl ].freeze
+    CONFIG_VARS.each do |config_var|
       class_eval <<-EOC
         def self.#{config_var}= arg
           @@#{config_var} = arg
@@ -33,6 +34,11 @@ module HCl
           @@#{config_var}
         end
       EOC
+    end
+
+    # @return [Hash]
+    def self.config_hash
+      CONFIG_VARS.inject({}) {|c,k| c.update(k => TimesheetResource.send(k)) }
     end
 
     def initialize params
