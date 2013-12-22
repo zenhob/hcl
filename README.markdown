@@ -12,24 +12,24 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 
 You can install hcl directly from rubygems.org:
 
-    $ gem install hcl
+    gem install hcl
 
 or you can install from source:
 
-    $ rake install
+    rake install
 
 ## Usage
 
-    $ hcl [start] @<task_alias> [+<time>] [<message>]
-    $ hcl note <message>
-    $ hcl stop [<message>]
-    $ hcl resume [@<task_alias>]
-    $ hcl log @<task_alias> [+<time>] [<message>]
-    $ hcl show [<date>]
-    $ hcl tasks [<project_code>]
-    $ hcl alias <task_alias> <project_id> <task_id>
-    $ hcl aliases
-    $ hcl (cancel | nvm | oops)
+    hcl [start] @<task_alias> [+<time>] [<message>]
+    hcl note <message>
+    hcl stop [<message>]
+    hcl resume [@<task_alias>]
+    hcl log @<task_alias> [+<time>] [<message>]
+    hcl show [<date>]
+    hcl tasks [<project_code>]
+    hcl alias <task_alias> <project_id> <task_id>
+    hcl aliases
+    hcl (cancel | nvm | oops)
 
 ### Available Projects and Tasks
 
@@ -37,7 +37,7 @@ To start a new timer you need to identify the project and task.
 The tasks command displays a list of available tasks with their
 project and task IDs.
 
-    $ hcl tasks
+    hcl tasks
 
 You can also pass a project code (this is the short optional code associated
 with each project) to list only the tasks for that project.
@@ -47,8 +47,8 @@ with each project) to list only the tasks for that project.
 Since it's not practical to enter two long numbers every time you want to
 identify a task, HCl supports task aliases:
 
-    $ hcl alias tacodev 1234 5678
-    $ hcl @tacodev Adding a new feature
+    hcl alias tacodev 1234 5678
+    hcl @tacodev Adding a new feature
 
 ### Starting a Timer with Initial Time
 
@@ -56,20 +56,20 @@ You can also provide an initial time when starting a new timer.
 This can be expressed in floating-point or HH:MM. The following two
 commands are equivalent:
 
-    $ hcl @tacodev +0:15 Doing some stuff
-    $ hcl +.25 @tacodev Doing some stuff
+    hcl @tacodev +0:15 Doing some stuff
+    hcl +.25 @tacodev Doing some stuff
 
 ### Adding Notes to a Running Task
 
 While a task is running you can append lines to the task notes:
 
-    $ hcl note Then I did something else
+    hcl note Then I did something else
 
 **Note** that `show` only displays the last line of the timer notes.
 You can list all the notes for a running timer by issuing the note
 command without any arguments:
 
-    $ hcl note
+    hcl note
 
 ### Stopping a Timer
 
@@ -77,22 +77,22 @@ The following command will stop a running timer (currently only one timer at
 a time is supported). You can provide a message when stopping a timer as
 well:
 
-    $ hcl stop All done doing things
+    hcl stop All done doing things
 
 ### Resuming a Timer
 
 You can resume a stopped timer. Specify a task to resume the last timer
 for that task:
 
-    $ hcl resume
-    $ hcl resume @xdev
+    hcl resume
+    hcl resume @xdev
 
 ### Canceling a Timer
 
 If you accidentally started a timer that you didn't mean to, you can cancel
 it:
 
-    $ hcl cancel
+    hcl cancel
 
 This will delete the running timer, or the last-updated timer if one isn't
 running. You can also use `nvm` or `oops` instead of `cancel`.
@@ -102,26 +102,42 @@ running. You can also use `nvm` or `oops` instead of `cancel`.
 You can log time and notes without leaving a timer running. It takes
 the same arguments as start:
 
-    $ hcl log @xdev +1 Worked for an hour.
+    hcl log @xdev +1 Worked for an hour.
 
 The above starts and immediately stops a one-hour timer with the given note.
 
+## Advanced Usage
+
 ### Bash Auto-completion of Task Aliases
 
-You can enable auto-completion of task aliases by adding this to your bashrc:
+You can enable auto-completion of task aliases by adding this to your shell
+configuration:
 
     eval `hcl completion`
+
+### Configuration Profiles
+
+You can specify an alternate configuration directory in the environment as
+`HCL_DIR`. This can be used to easily interact with multiple harvest accounts.
+Here is a shell alias `myhcl` with a separate configuration from the
+main `hcl` command, including alias completion:
+
+    alias myhcl="env HCL_DIR=~/.myhcl hcl"
+    eval `myhcl completion myhcl`
+
+When using `myhcl` you can use different credentials and aliases, while
+`hcl` will continue to function with your original configuration.
 
 ### Date Formats
 
 Dates can be expressed in a variety of ways. See the [Chronic documentation][cd]
 for more information about available date input formats. The following
-commands show the timesheet for the specified day:
+commands show the time sheet for the specified day:
 
-    $ hcl show yesterday
-    $ hcl show last friday
-    $ hcl show 2 days ago
-    $ hcl show 1 week ago
+    hcl show yesterday
+    hcl show last friday
+    hcl show 2 days ago
+    hcl show 1 week ago
 
 [cd]: http://chronic.rubyforge.org/
 

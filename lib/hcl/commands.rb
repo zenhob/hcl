@@ -67,8 +67,8 @@ module HCl
       end
     end
 
-    def completion
-      %[complete -W "#{aliases.join ' '}" hcl]
+    def completion command=$PROGRAM_NAME
+      %[complete -W "#{aliases.join ' '}" #{command}]
     end
 
     def aliases
