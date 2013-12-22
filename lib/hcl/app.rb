@@ -139,7 +139,7 @@ EOM
     def read_config
       if File.exists? CONFIG_FILE
         config = YAML::load(File.read(CONFIG_FILE)) || {}
-        if has_security_command
+        if has_security_command?
           load_password config
         end
         TimesheetResource.configure config
@@ -165,7 +165,7 @@ EOM
 
     def write_config config
       puts "Writing configuration to #{CONFIG_FILE}."
-      if has_security_command
+      if has_security_command?
         save_password config
       end
       File.open(CONFIG_FILE, 'w') do |f|
@@ -192,9 +192,10 @@ EOM
       nil
     end
 
-    def has_security_command
+    def has_security_command?
       if @has_security.nil? 
-        @has_security = File.exists?('/usr/bin/security') 
+        @has_security = File.exists?('/usr/bin/security') &&
+          (`/usr/bin/security error 1` =~ /CSSM_ERRCODE_INTERNAL_ERROR/)
       else
         @has_security
       end
