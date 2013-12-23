@@ -1,8 +1,8 @@
 require 'faraday_middleware/response_middleware'
-require 'yajl'
+require 'multi_json'
 require 'cgi'
 
-class HCl::YajlMiddleware < FaradayMiddleware::ResponseMiddleware
+class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
   def self.unescape obj
     if obj.kind_of? Hash
       obj.inject({}){|o,(k,v)| o[k] = unescape(v);o}
@@ -14,6 +14,6 @@ class HCl::YajlMiddleware < FaradayMiddleware::ResponseMiddleware
   end
 
   define_parser do |body|
-    unescape Yajl::Parser.parse(body, symbolize_keys:true)
+    unescape MultiJson.load(body, symbolize_keys:true)
   end
 end

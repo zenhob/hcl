@@ -7,5 +7,5 @@ module HCl
   autoload :Project, 'hcl/project'
   autoload :Task, 'hcl/task'
   autoload :DayEntry, 'hcl/day_entry'
-  autoload :YajlMiddleware, 'hcl/yajl_middleware'
+  autoload :HarvestMiddleware, 'hcl/harvest_middleware'
 end
