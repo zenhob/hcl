@@ -3,18 +3,13 @@ require 'fileutils'
 
 module HCl
   class Task < TimesheetResource
-    def self.cache_tasks doc
-      tasks = []
-      doc.root.elements.collect('projects/project') do |project_elem|
-        project = Project.new xml_to_hash(project_elem)
-        tasks.concat(project_elem.elements.collect('tasks/task') do |task|
-          new xml_to_hash(task).merge(:project => project)
-        end)
-      end
+    def self.cache_tasks_hash day_entry_hash
+      tasks = day_entry_hash[:projects].
+        map { |p| p[:tasks].map {|t| new t.merge(project:Project.new(p)) } }.flatten.uniq
       unless tasks.empty?
         FileUtils.mkdir_p(cache_dir)
         File.open(cache_file, 'w') do |f|
-          f.write tasks.uniq.to_yaml
+          f.write tasks.to_yaml
         end
       end
     end
@@ -55,16 +50,13 @@ module HCl
     def add opts
       notes = opts[:note]
       starting_time = opts[:starting_time] || 0
-      days = DayEntry.from_xml Task.post("daily/add", <<-EOT)
-      <request>
-        <notes>#{notes}</notes>
-        <hours>#{starting_time}</hours>
-        <project_id type="integer">#{project.id}</project_id>
-        <task_id type="integer">#{id}</task_id>
-        <spent_at type="date">#{Date.today}</spent_at>
-      </request>
-      EOT
-      days.first
+      DayEntry.new Net.post("daily/add", {
+        notes: notes,
+        hours: starting_time,
+        project_id: project.id,
+        task_id: id,
+        spent_at: Date.today
+      })
     end
 
     def start opts
@@ -72,7 +64,7 @@ module HCl
       if day.running?
         day
       else
-        DayEntry.from_xml(Task.get("daily/timer/#{day.id}")).first
+        DayEntry.new Net.get("daily/timer/#{day.id}")
       end
     end
   end

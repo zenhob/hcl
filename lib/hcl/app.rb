@@ -62,15 +62,15 @@ module HCl
       rescue SocketError => e
         $stderr.puts "Connection failed. (#{e.message})"
         exit 1
-      rescue TimesheetResource::ThrottleFailure => e
+      rescue HarvestMiddleware::ThrottleFailure => e
         $stderr.puts "Too many requests, retrying in #{e.retry_after+5} seconds..."
         sleep e.retry_after+5
         run
-      rescue TimesheetResource::AuthFailure => e
+      rescue HarvestMiddleware::AuthFailure => e
         $stderr.puts "Unable to authenticate: #{e}"
         request_config
         run
-      rescue TimesheetResource::Failure => e
+      rescue HarvestMiddleware::Failure => e
         $stderr.puts "API failure: #{e}"
         exit 1
       end
@@ -140,7 +140,7 @@ EOM
         if has_security_command?
           load_password config
         end
-        TimesheetResource.configure config
+        Net.configure config
       else
         request_config
       end
@@ -153,7 +153,7 @@ EOM
       config['password'] = ask("Password: ") { |q| q.echo = false }.to_s
       config['subdomain'] = ask("Subdomain: ").to_s
       config['ssl'] = /^y/.match(ask("Use SSL? (y/n): ").downcase)
-      TimesheetResource.configure config
+      Net.configure config
       write_config config
     end
 

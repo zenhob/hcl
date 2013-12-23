@@ -3,20 +3,34 @@ PATH
   specs:
     hcl (0.4.9)
       chronic
+      faraday
+      faraday_middleware
       highline
+      multi_json
       trollop
 
 GEM
   remote: https://rubygems.org/
   specs:
     chronic (0.10.2)
+    coderay (1.0.9)
     fakeweb (1.3.0)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
+    faraday_middleware (0.9.0)
+      faraday (>= 0.7.4, < 0.9)
     highline (1.6.20)
     metaclass (0.0.1)
+    method_source (0.8.2)
     minitest (4.7.5)
     mocha (0.14.0)
       metaclass (~> 0.0.1)
     multi_json (1.8.2)
+    multipart-post (1.2.0)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
     rake (10.1.0)
     rubinius-coverage (2.0.3)
     rubygems-tasks (0.2.4)
@@ -28,6 +42,7 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
+    slop (3.4.7)
     trollop (2.0)
     yajl-ruby (1.1.0)
     yard (0.8.7.3)
@@ -41,6 +56,7 @@ DEPENDENCIES
   hcl!
   minitest
   mocha
+  pry
   rake
   rubinius-coverage
   rubygems-tasks
