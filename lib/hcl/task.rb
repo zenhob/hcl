@@ -50,7 +50,7 @@ module HCl
     def add opts
       notes = opts[:note]
       starting_time = opts[:starting_time] || 0
-      DayEntry.new Task.post("daily/add", {
+      DayEntry.new Net.post("daily/add", {
         notes: notes,
         hours: starting_time,
         project_id: project.id,
@@ -64,7 +64,7 @@ module HCl
       if day.running?
         day
       else
-        DayEntry.new Task.get("daily/timer/#{day.id}")
+        DayEntry.new Net.get("daily/timer/#{day.id}")
       end
     end
   end

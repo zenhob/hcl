@@ -6,7 +6,7 @@ module HCl
     # defaults to today.
     def self.all date = nil
       url = date.nil? ? 'daily' : "daily/#{date.strftime '%j/%Y'}"
-      doc = get url
+      doc = Net.get url
       Task.cache_tasks_hash doc
       doc[:day_entries].map {|e| new e}
     end
@@ -37,7 +37,7 @@ module HCl
       # If I don't include hours it gets reset.
       # This doens't appear to be the case for task and project.
       (self.notes << "\n#{new_notes}").lstrip!
-      DayEntry.post "daily/update/#{id}", notes:notes, hours:hours
+      Net.post "daily/update/#{id}", notes:notes, hours:hours
     end
 
     def self.with_timer date=nil
@@ -63,7 +63,7 @@ module HCl
     end
 
     def toggle
-      DayEntry.get("daily/timer/#{id}")
+      Net.get("daily/timer/#{id}")
       self
     end
 

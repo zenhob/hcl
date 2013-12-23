@@ -7,7 +7,7 @@ module HCl
 
     # Display a sanitized view of your auth credentials.
     def config
-      TimesheetResource.config_hash.merge(password:'***').
+      Net.config_hash.merge(password:'***').
         map {|k,v| "#{k}: #{v}" }.join("\n")
     end
 

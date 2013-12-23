@@ -21,14 +21,14 @@ class DayEntryTest < HCl::TestCase
 
   def test_append_note
     entry = HCl::DayEntry.new(:id => '1', :notes => 'yourmom.', :hours => '1.0')
-    HCl::DayEntry.stubs(:post)
+    HCl::Net.stubs(:post)
     entry.append_note('hi world')
     assert_equal "yourmom.\nhi world", entry.notes
   end
 
   def test_append_note_to_empty
     entry = HCl::DayEntry.new(:id => '1', :notes => nil, :hours => '1.0')
-    HCl::DayEntry.stubs(:post)
+    HCl::Net.stubs(:post)
     entry.append_note('hi world')
     assert_equal 'hi world', entry.notes
   end

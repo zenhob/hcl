@@ -4,7 +4,7 @@ class TimesheetResourceTest < HCl::TestCase
 
   def setup
     FakeWeb.allow_net_connect = false
-    HCl::TimesheetResource.configure \
+    HCl::Net.configure \
       'login' => 'bob',
       'password' => 'secret',
       'subdomain' => 'bobclock',
@@ -12,30 +12,30 @@ class TimesheetResourceTest < HCl::TestCase
   end
 
   def test_configure
-    assert_equal 'bob', HCl::TimesheetResource.login
-    assert_equal 'secret', HCl::TimesheetResource.password
-    assert_equal 'bobclock', HCl::TimesheetResource.subdomain
-    assert_equal true, HCl::TimesheetResource.ssl
+    assert_equal 'bob', HCl::Net.login
+    assert_equal 'secret', HCl::Net.password
+    assert_equal 'bobclock', HCl::Net.subdomain
+    assert_equal true, HCl::Net.ssl
   end
 
   def test_http_get
     FakeWeb.register_uri(:get, "https://bob:secret@bobclock.harvestapp.com/foo",
                          :body => 'gotten!'.inspect)
-    body = HCl::TimesheetResource.get 'foo'
+    body = HCl::Net.get 'foo'
     assert_equal 'gotten!', body
   end
 
   def test_http_post
     FakeWeb.register_uri(:post, "https://bob:secret@bobclock.harvestapp.com/foo",
                          :body => 'posted!'.inspect)
-    body = HCl::TimesheetResource.post 'foo', {pizza:'taco'}
+    body = HCl::Net.post 'foo', {pizza:'taco'}
     assert_equal 'posted!', body
   end
 
   def test_http_delete
     FakeWeb.register_uri(:delete, "https://bob:secret@bobclock.harvestapp.com/foo",
                          :body => 'wiped!'.inspect)
-    body = HCl::TimesheetResource.delete 'foo'
+    body = HCl::Net.delete 'foo'
     assert_equal 'wiped!', body
   end
 end

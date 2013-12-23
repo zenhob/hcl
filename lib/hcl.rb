@@ -1,6 +1,7 @@
 module HCl
   autoload :VERSION, 'hcl/version'
   autoload :App, 'hcl/app'
+  autoload :Net, 'hcl/net'
   autoload :Commands, 'hcl/commands'
   autoload :TimesheetResource, 'hcl/timesheet_resource'
   autoload :Utility, 'hcl/utility'

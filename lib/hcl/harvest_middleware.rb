@@ -18,7 +18,7 @@ class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
       case env[:status]
       when 200..299
         begin 
-          env[:body] = unescape(MultiJson.load(env[:body].chomp, symbolize_keys:true))
+          env[:body] = unescape(MultiJson.load(env[:body], symbolize_keys:true))
         rescue MultiJson::LoadError
           env[:body]
         end
