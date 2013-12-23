@@ -19,19 +19,22 @@ class TimesheetResourceTest < HCl::TestCase
   end
 
   def test_http_get
-    FakeWeb.register_uri(:get, "https://bob:secret@bobclock.harvestapp.com/foo", :body => 'gotten!')
+    FakeWeb.register_uri(:get, "https://bob:secret@bobclock.harvestapp.com/foo",
+                         :body => 'gotten!'.inspect)
     body = HCl::TimesheetResource.get 'foo'
     assert_equal 'gotten!', body
   end
 
   def test_http_post
-    FakeWeb.register_uri(:post, "https://bob:secret@bobclock.harvestapp.com/foo", :body => 'posted!')
+    FakeWeb.register_uri(:post, "https://bob:secret@bobclock.harvestapp.com/foo",
+                         :body => 'posted!'.inspect)
     body = HCl::TimesheetResource.post 'foo', {pizza:'taco'}
     assert_equal 'posted!', body
   end
 
   def test_http_delete
-    FakeWeb.register_uri(:delete, "https://bob:secret@bobclock.harvestapp.com/foo", :body => 'wiped!')
+    FakeWeb.register_uri(:delete, "https://bob:secret@bobclock.harvestapp.com/foo",
+                         :body => 'wiped!'.inspect)
     body = HCl::TimesheetResource.delete 'foo'
     assert_equal 'wiped!', body
   end

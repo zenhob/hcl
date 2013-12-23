@@ -62,15 +62,15 @@ module HCl
       rescue SocketError => e
         $stderr.puts "Connection failed. (#{e.message})"
         exit 1
-      rescue TimesheetResource::ThrottleFailure => e
+      rescue HarvestMiddleware::ThrottleFailure => e
         $stderr.puts "Too many requests, retrying in #{e.retry_after+5} seconds..."
         sleep e.retry_after+5
         run
-      rescue TimesheetResource::AuthFailure => e
+      rescue HarvestMiddleware::AuthFailure => e
         $stderr.puts "Unable to authenticate: #{e}"
         request_config
         run
-      rescue TimesheetResource::Failure => e
+      rescue HarvestMiddleware::Failure => e
         $stderr.puts "API failure: #{e}"
         exit 1
       end

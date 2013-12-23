@@ -9,7 +9,7 @@ class DayEntryTest < HCl::TestCase
 
   def test_cancel_failure
     entry = HCl::DayEntry.new(id:123)
-    HCl::DayEntry.expects(:delete).raises(HCl::TimesheetResource::Failure)
+    HCl::DayEntry.expects(:delete).raises(HCl::HarvestMiddleware::Failure)
     assert !entry.cancel
   end
 

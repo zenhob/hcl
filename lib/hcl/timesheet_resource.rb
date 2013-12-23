@@ -5,15 +5,6 @@ require 'faraday_middleware'
 
 module HCl
   class TimesheetResource
-    class Failure < StandardError; end
-    class AuthFailure < StandardError; end
-    class ThrottleFailure < StandardError
-      attr_reader :retry_after
-      def initialize response
-        @retry_after = response.headers['Retry-After'].to_i
-        super "Too many requests! Try again in #{@retry_after} seconds."
-      end
-    end
 
     def self.configure opts = nil
       if opts

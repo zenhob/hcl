@@ -22,7 +22,7 @@ module HCl
     def cancel
       begin
         DayEntry.delete("daily/delete/#{id}")
-      rescue TimesheetResource::Failure
+      rescue HarvestMiddleware::Failure
         return false
       end
       true

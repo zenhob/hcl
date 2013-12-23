@@ -64,7 +64,7 @@ module HCl
       if day.running?
         day
       else
-        DayEntry.new Task.get("daily/timer/#{day.id}")[:day_entries].first
+        DayEntry.new Task.get("daily/timer/#{day.id}")
       end
     end
   end

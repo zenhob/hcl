@@ -23,7 +23,7 @@ class AppTest < HCl::TestCase
     app = HCl::App.new
     throttled = states('throttled').starts_as(false)
     app.expects(:show).
-      raises(HCl::TimesheetResource::ThrottleFailure, stub(headers:{'Retry-After' => 42})).
+      raises(HCl::HarvestMiddleware::ThrottleFailure, {headers:{'Retry-After' => 42}}).
       then(throttled.is(true))
     app.expects(:sleep).with(47).when(throttled.is(true))
     app.expects(:show).when(throttled.is(true))
@@ -48,7 +48,7 @@ class AppTest < HCl::TestCase
   def test_configure_on_auth_failure
     app = HCl::App.new
     configured = states('configured').starts_as(false)
-    app.expects(:show).raises(HCl::TimesheetResource::AuthFailure).when(configured.is(false))
+    app.expects(:show).raises(HCl::HarvestMiddleware::AuthFailure).when(configured.is(false))
     app.expects(:ask).returns('xxx').times(4).when(configured.is(false))
     app.expects(:write_config).then(configured.is(true))
     app.expects(:show).when(configured.is(true))
@@ -58,7 +58,7 @@ class AppTest < HCl::TestCase
 
   def test_api_failure
     app = HCl::App.new
-    app.expects(:show).raises(HCl::TimesheetResource::Failure)
+    app.expects(:show).raises(HCl::HarvestMiddleware::Failure)
     app.expects(:exit).with(1)
     app.process_args('show').run
     assert_match /API failure/i, error_output

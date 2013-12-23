@@ -3,7 +3,51 @@ require 'multi_json'
 require 'cgi'
 
 class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
-  def self.unescape obj
+  class Failure < StandardError; end
+  class AuthFailure < StandardError; end
+  class ThrottleFailure < StandardError
+    attr_reader :retry_after
+    def initialize env
+      @retry_after = env[:headers]['Retry-After'].to_i
+      super "Too many requests! Try again in #{@retry_after} seconds."
+    end
+  end
+
+  define_parser do |body|
+    unescape MultiJson.load(body, symbolize_keys:true)
+  end
+
+  def call(env)
+    @app.call(env).on_complete do |env|
+      case env[:status]
+      when 200..299
+        env[:body] = unescape MultiJson.load(env[:body], symbolize_keys:true)
+      when 300..399
+        raise Failure, "Redirected! Perhaps your ssl configuration variable is set incorrectly?"
+      when 400..499
+        raise AuthFailure, "Login failed."
+      when 503
+       raise ThrottleFailure, env
+      else
+        raise Failure, "Unexpected response from the upstream API."
+      end
+    end
+  end
+
+  # case response
+  # when Net::HTTPSuccess
+  #   response.body
+  # when Net::HTTPFound
+  #   raise Failure, "Redirected! Perhaps your ssl configuration variable is set incorrectly?"
+  # when Net::HTTPServiceUnavailable
+  #   raise ThrottleFailure, response
+  # when Net::HTTPUnauthorized
+  #   raise AuthFailure, "Login failed."
+  # else
+  #   raise Failure, "Unexpected response from the upstream API."
+  # end
+
+  def unescape obj
     if obj.kind_of? Hash
       obj.inject({}){|o,(k,v)| o[k] = unescape(v);o}
     elsif obj.kind_of? Array
@@ -13,7 +57,4 @@ class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
     end
   end
 
-  define_parser do |body|
-    unescape MultiJson.load(body, symbolize_keys:true)
-  end
 end
