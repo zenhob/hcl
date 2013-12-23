@@ -33,16 +33,6 @@ module HCl
       CONFIG_VARS.inject({}) {|c,k| c.update(k => TimesheetResource.send(k)) }
     end
 
-    def get action
-      new self.class.get(action).body
-    end
-    def post action, data
-      new self.class.post(action, data).body
-    end
-    def delete action
-      new self.class.delete(action).body
-    end
-
     def self.faraday
       @faraday ||= Faraday.new(
         "http#{ssl && 's'}://#{subdomain}.harvestapp.com"
