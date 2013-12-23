@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TimesheetResourceTest < HCl::TestCase
+class NetTest < HCl::TestCase
 
   def setup
     FakeWeb.allow_net_connect = false
