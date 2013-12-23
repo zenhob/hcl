@@ -8,20 +8,20 @@ class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
   class ThrottleFailure < StandardError
     attr_reader :retry_after
     def initialize env
-      @retry_after = env[:headers]['Retry-After'].to_i
+      @retry_after = env[:response_headers]['retry-after'].to_i
       super "Too many requests! Try again in #{@retry_after} seconds."
     end
-  end
-
-  define_parser do |body|
-    unescape MultiJson.load(body, symbolize_keys:true)
   end
 
   def call(env)
     @app.call(env).on_complete do |env|
       case env[:status]
       when 200..299
-        env[:body] = unescape MultiJson.load(env[:body], symbolize_keys:true)
+        begin 
+          env[:body] = unescape(MultiJson.load(env[:body].chomp, symbolize_keys:true))
+        rescue MultiJson::LoadError
+          env[:body]
+        end
       when 300..399
         raise Failure, "Redirected! Perhaps your ssl configuration variable is set incorrectly?"
       when 400..499

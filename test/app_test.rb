@@ -23,7 +23,7 @@ class AppTest < HCl::TestCase
     app = HCl::App.new
     throttled = states('throttled').starts_as(false)
     app.expects(:show).
-      raises(HCl::HarvestMiddleware::ThrottleFailure, {headers:{'Retry-After' => 42}}).
+      raises(HCl::HarvestMiddleware::ThrottleFailure, {response_headers:{'retry-after' => 42}}).
       then(throttled.is(true))
     app.expects(:sleep).with(47).when(throttled.is(true))
     app.expects(:show).when(throttled.is(true))

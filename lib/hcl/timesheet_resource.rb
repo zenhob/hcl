@@ -50,7 +50,7 @@ module HCl
         f.headers['Accept'] = 'application/json'
         f.request :json
         f.request :basic_auth, login, password
-        f.use HCl::HarvestMiddleware, content_type: /\bjson$/
+        f.use HCl::HarvestMiddleware, content_type: /\bjson\b/
         f.adapter Faraday.default_adapter
       end
     end
