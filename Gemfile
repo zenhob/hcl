@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 gemspec
+gem 'pry', group:['test','development']
 # XXX this is dumb but it's crazy hard to get platform specfic deps into a gemspec
 gem 'rubysl-abbrev', platform:'rbx'
 gem 'rubysl-singleton', platform:'rbx'

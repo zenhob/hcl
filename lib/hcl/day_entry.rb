@@ -1,5 +1,3 @@
-require 'rexml/document'
-
 module HCl 
   class DayEntry < TimesheetResource
     include Utility
@@ -8,7 +6,9 @@ module HCl
     # defaults to today.
     def self.all date = nil
       url = date.nil? ? 'daily' : "daily/#{date.strftime '%j/%Y'}"
-      from_xml get(url)
+      doc = get url
+      Task.cache_tasks_hash doc
+      doc[:day_entries].map {|e| new e}
     end
 
     def to_s
@@ -17,15 +17,6 @@ module HCl
 
     def task
       @data[:task]
-    end
-
-    def self.from_xml xml
-      doc = REXML::Document.new xml
-      raise Failure, "No root node in XML document: #{xml}" if doc.root.nil?
-      Task.cache_tasks doc
-      doc.root.elements.collect('//day_entry') do |day|
-        new xml_to_hash(day)
-      end
     end
 
     def cancel
@@ -46,8 +37,7 @@ module HCl
       # If I don't include hours it gets reset.
       # This doens't appear to be the case for task and project.
       (self.notes << "\n#{new_notes}").lstrip!
-      DayEntry.post "daily/update/#{id}",
-        %{<request><notes>#{notes}</notes><hours>#{hours}</hours></request>}
+      DayEntry.post "daily/update/#{id}", notes:notes, hours:hours
     end
 
     def self.with_timer date=nil

@@ -53,17 +53,14 @@ module HCl
     end
 
     def self.faraday
-      @faraday ||= begin
-        Faraday.new(
-          "http#{ssl && 's'}://#{subdomain}.harvestapp.com"
-        ) do |f|
-          #f.headers['Accept'] = 'application/json'
-          f.headers['Accept'] = 'application/xml'
-          #f.request :json
-          f.request :basic_auth, login, password
-          #f.response :json, content_type: /\bjson$/
-          f.adapter Faraday.default_adapter
-        end
+      @faraday ||= Faraday.new(
+        "http#{ssl && 's'}://#{subdomain}.harvestapp.com"
+      ) do |f|
+        f.headers['Accept'] = 'application/json'
+        f.request :json
+        f.request :basic_auth, login, password
+        f.use HCl::YajlMiddleware, content_type: /\bjson$/
+        f.adapter Faraday.default_adapter
       end
     end
 
@@ -93,13 +90,6 @@ module HCl
 
     def respond_to? method
       (@data && @data.key?(method.to_sym)) || super
-    end
-
-    def self.xml_to_hash elem
-      elem.elements.map { |e| e.name }.inject({}) do |a, f|
-        a[f.to_sym] = CGI.unescape_html(elem.elements[f].text || '') if elem.elements[f]
-        a
-      end
     end
   end
 end
