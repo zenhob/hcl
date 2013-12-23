@@ -34,19 +34,6 @@ class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
     end
   end
 
-  # case response
-  # when Net::HTTPSuccess
-  #   response.body
-  # when Net::HTTPFound
-  #   raise Failure, "Redirected! Perhaps your ssl configuration variable is set incorrectly?"
-  # when Net::HTTPServiceUnavailable
-  #   raise ThrottleFailure, response
-  # when Net::HTTPUnauthorized
-  #   raise AuthFailure, "Login failed."
-  # else
-  #   raise Failure, "Unexpected response from the upstream API."
-  # end
-
   def unescape obj
     if obj.kind_of? Hash
       obj.inject({}){|o,(k,v)| o[k] = unescape(v);o}
