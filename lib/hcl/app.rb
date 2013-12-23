@@ -9,9 +9,9 @@ module HCl
     include HCl::Utility
     include HCl::Commands
 
-    HCL_DIR = ENV['HCL_DIR'] || "#{ENV['HOME']}/.hcl"
-    SETTINGS_FILE = "#{HCL_DIR}/settings.yml"
-    CONFIG_FILE = "#{HCL_DIR}/config.yml"
+    HCL_DIR = (ENV['HCL_DIR'] || "#{ENV['HOME']}/.hcl").freeze
+    SETTINGS_FILE = "#{HCL_DIR}/settings.yml".freeze
+    CONFIG_FILE = "#{HCL_DIR}/config.yml".freeze
 
     def initialize
       FileUtils.mkdir_p(HCL_DIR)
