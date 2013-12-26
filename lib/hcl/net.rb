@@ -1,4 +1,4 @@
-require 'faraday_middleware'
+require 'faraday'
 
 module HCl
   module Net
@@ -20,28 +20,26 @@ module HCl
         end
       end
 
-      def faraday
-        @faraday ||= Faraday.new(
+      def http
+        @http ||= Faraday.new(
           "http#{ssl && 's'}://#{subdomain}.harvestapp.com"
         ) do |f|
-          f.headers['Accept'] = 'application/json'
-          f.request :json
           f.request :basic_auth, login, password
-          f.use HCl::HarvestMiddleware, content_type: /\bjson\b/
+          f.use :harvest
           f.adapter Faraday.default_adapter
         end
       end
 
       def get action
-        faraday.get(action).body
+        http.get(action).body
       end
 
       def post action, data
-        faraday.post(action, data).body
+        http.post(action, data).body
       end
 
       def delete action
-        faraday.delete(action).body
+        http.delete(action).body
       end
     end
   end

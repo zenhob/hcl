@@ -1,19 +1,19 @@
-require 'faraday_middleware/response_middleware'
-require 'yajl'
-require 'escape_utils'
+require 'faraday/middleware'
 
-class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
-  class Failure < StandardError; end
-  class AuthFailure < StandardError; end
-  class ThrottleFailure < StandardError
-    attr_reader :retry_after
-    def initialize env
-      @retry_after = env[:response_headers]['retry-after'].to_i
-      super "Too many requests! Try again in #{@retry_after} seconds."
-    end
+class HCl::HarvestMiddleware < Faraday::Middleware
+  Faraday.register_middleware harvest: ->{ self }
+  MIME_TYPE = 'application/json'.freeze
+
+  dependency do
+    require 'yajl'
+    require 'escape_utils'
   end
 
   def call(env)
+    env[:request_headers]['Accept'] = MIME_TYPE
+    env[:request_headers]['Content-Type'] = MIME_TYPE
+    env[:body] = Yajl::Encoder.encode(env[:body])
+
     @app.call(env).on_complete do |env|
       case env[:status]
       when 200..299
@@ -44,4 +44,13 @@ class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
     end
   end
 
+  class Failure < StandardError; end
+  class AuthFailure < StandardError; end
+  class ThrottleFailure < StandardError
+    attr_reader :retry_after
+    def initialize env
+      @retry_after = env[:response_headers]['retry-after'].to_i
+      super "Too many requests! Try again in #{@retry_after} seconds."
+    end
+  end
 end
