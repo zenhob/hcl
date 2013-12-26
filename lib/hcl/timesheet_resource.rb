@@ -17,14 +17,14 @@ module HCl
     end
 
     class << self
-      def post url, data
-        new Net.post url, data
+      def post *args
+        new Net.post *args
       end
-      def get url
-        new Net.get url
+      def get *args
+        new Net.get *args
       end
-      def get_all url
-        Net.get(url)[collection_key].map {|o| new o }
+      def get_all *args
+        Net.get(*args)[collection_key].map {|o| new o }
       end
 
       def collection_key
