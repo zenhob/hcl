@@ -1,6 +1,6 @@
 require 'faraday_middleware/response_middleware'
 require 'multi_json'
-require 'cgi'
+require 'escape_utils'
 
 class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
   class Failure < StandardError; end
@@ -40,7 +40,7 @@ class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
     elsif obj.kind_of? Array
       obj.inject([]){|o,v| o << unescape(v);o}
     else
-      CGI.unescape_html(obj.to_s)
+      EscapeUtils.unescape_html(obj.to_s)
     end
   end
 
