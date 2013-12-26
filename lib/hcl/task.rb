@@ -22,7 +22,7 @@ module HCl
       File.join(HCl::App::HCL_DIR, 'cache')
     end
 
-    def self.all
+    def self.get_all
       tasks = File.exists?(cache_file) ? YAML.load(File.read(cache_file)) : []
       tasks = tasks.sort do |a,b|
         r = a.project.client <=> b.project.client
@@ -34,7 +34,7 @@ module HCl
     end
 
     def self.find project_id, id
-      all.detect do |t|
+      get_all.detect do |t|
         t.project.id.to_i == project_id.to_i && t.id.to_i == id.to_i
       end
     end
@@ -50,7 +50,7 @@ module HCl
     def add opts
       notes = opts[:note]
       starting_time = opts[:starting_time] || 0
-      DayEntry.new Net.post("daily/add", {
+      DayEntry.post("daily/add", {
         notes: notes,
         hours: starting_time,
         project_id: project.id,
@@ -64,7 +64,7 @@ module HCl
       if day.running?
         day
       else
-        DayEntry.new Net.get("daily/timer/#{day.id}")
+        DayEntry.get("daily/timer/#{day.id}")
       end
     end
   end

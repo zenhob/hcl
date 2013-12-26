@@ -13,7 +13,7 @@ class AppTest < HCl::TestCase
   end
 
   def test_command_show
-    HCl::DayEntry.expects(:all).returns [HCl::DayEntry.new(
+    HCl::DayEntry.expects(:get_all).returns [HCl::DayEntry.new(
       hours:'2.06', notes:'hi world', project:'App'
     )]
     HCl::App.command 'show'
