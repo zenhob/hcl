@@ -7,8 +7,8 @@ PATH
       faraday
       faraday_middleware
       highline
-      multi_json
       trollop
+      yajl-ruby
 
 GEM
   remote: https://rubygems.org/
