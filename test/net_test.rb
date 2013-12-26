@@ -18,6 +18,18 @@ class NetTest < HCl::TestCase
     assert_equal true, HCl::Net.ssl
   end
 
+  def test_http_deep_unescape
+    FakeWeb.register_uri(:get, "https://bob:secret@bobclock.harvestapp.com/foo",
+                         :body => Yajl::Encoder.encode({
+      status:'gotten &amp; got!',
+      comparisons:['burrito &gt; taco', 'rain &lt; sun']
+    }))
+    body = HCl::Net.get 'foo'
+    assert_equal 'gotten & got!', body[:status]
+    assert_equal 'burrito > taco', body[:comparisons][0]
+    assert_equal 'rain < sun', body[:comparisons][1]
+  end
+
   def test_http_get
     FakeWeb.register_uri(:get, "https://bob:secret@bobclock.harvestapp.com/foo",
                          :body => 'gotten!'.inspect)

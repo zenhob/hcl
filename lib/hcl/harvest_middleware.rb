@@ -1,5 +1,5 @@
 require 'faraday_middleware/response_middleware'
-require 'multi_json'
+require 'yajl'
 require 'escape_utils'
 
 class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
@@ -18,8 +18,8 @@ class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
       case env[:status]
       when 200..299
         begin 
-          env[:body] = unescape(MultiJson.load(env[:body], symbolize_keys:true))
-        rescue MultiJson::LoadError
+          env[:body] = deep_html_unescape(Yajl::Parser.parse(env[:body], symbolize_keys:true))
+        rescue Yajl::ParseError
           env[:body]
         end
       when 300..399
@@ -34,11 +34,11 @@ class HCl::HarvestMiddleware < FaradayMiddleware::ResponseMiddleware
     end
   end
 
-  def unescape obj
+  def deep_html_unescape obj
     if obj.kind_of? Hash
-      obj.inject({}){|o,(k,v)| o[k] = unescape(v);o}
+      obj.inject({}){|o,(k,v)| o.update(k => deep_html_unescape(v)) }
     elsif obj.kind_of? Array
-      obj.inject([]){|o,v| o << unescape(v);o}
+      obj.inject([]){|o,v| o << deep_html_unescape(v) }
     else
       EscapeUtils.unescape_html(obj.to_s)
     end
