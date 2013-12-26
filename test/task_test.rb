@@ -15,7 +15,7 @@ class TaskTest < HCl::TestCase
         billable: true
       }]
     }]})
-    assert_equal 1, HCl::Task.get_all.size
-    assert_equal 'Security support', HCl::Task.get_all.first.name
+    assert_equal 1, HCl::Task.all.size
+    assert_equal 'Security support', HCl::Task.all.first.name
   end
 end

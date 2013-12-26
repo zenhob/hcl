@@ -4,7 +4,7 @@ module HCl
 
     # Get the time sheet entries for a given day. If no date is provided
     # defaults to today.
-    def self.get_all date = nil
+    def self.all date = nil
       url = date.nil? ? 'daily' : "daily/#{date.strftime '%j/%Y'}"
       doc = Net.get url
       Task.cache_tasks_hash doc
@@ -37,7 +37,7 @@ module HCl
       # If I don't include hours it gets reset.
       # This doens't appear to be the case for task and project.
       (self.notes << "\n#{new_notes}").lstrip!
-      DayEntry.post "daily/update/#{id}", notes:notes, hours:hours
+      Net.post "daily/update/#{id}", notes:notes, hours:hours
     end
 
     def self.with_timer date=nil

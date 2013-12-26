@@ -24,7 +24,7 @@ class CommandTest < HCl::TestCase
   end
 
   def test_tasks
-    HCl::Task.expects(:get_all).returns([HCl::Task.new(
+    HCl::Task.expects(:all).returns([HCl::Task.new(
       id:123,
       name: 'Dev',
       project: HCl::Project.new(id:456, name:'App', client:'Bob', code:'b')
@@ -34,7 +34,7 @@ class CommandTest < HCl::TestCase
   end
 
   def test_show
-    HCl::DayEntry.expects(:get_all).returns([HCl::DayEntry.new({
+    HCl::DayEntry.expects(:all).returns([HCl::DayEntry.new({
       hours:'2.06',
       notes: 'hi world',
       project: 'App'
@@ -46,7 +46,7 @@ class CommandTest < HCl::TestCase
   end
 
   def test_aliases
-    HCl::Task.expects(:get_all).returns([HCl::Task.new(
+    HCl::Task.expects(:all).returns([HCl::Task.new(
       id:123,
       name: 'Dev',
       project: HCl::Project.new(id:456, name:'App', client:'Bob', code:'b')

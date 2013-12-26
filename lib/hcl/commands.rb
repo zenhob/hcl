@@ -11,10 +11,10 @@ module HCl
     end
 
     def tasks project_code=nil
-      tasks = Task.get_all
+      tasks = Task.all
       if tasks.empty? # cache tasks
-        DayEntry.get_all
-        tasks = Task.get_all
+        DayEntry.all
+        tasks = Task.all
       end
       tasks.select! {|t| t.project.code == project_code } if project_code
       if tasks.empty?
@@ -127,7 +127,7 @@ module HCl
       date = args.empty? ? nil : Chronic.parse(args.join(' '))
       total_hours = 0.0
       result = ''
-      DayEntry.get_all(date).each do |day|
+      DayEntry.all(date).each do |day|
         running = day.running? ? '(running) ' : ''
         columns = HighLine::SystemExtensions.terminal_size[0] rescue 80
         result << "\t#{day.formatted_hours}\t#{running}#{day.project}: #{day.notes.lines.to_a.last}\n"[0..columns-1]
