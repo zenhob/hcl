@@ -1,6 +1,28 @@
 require 'test_helper'
 
 class DayEntryTest < HCl::TestCase
+  def test_all_today_empty
+    FakeWeb.register_uri(:get, %r{/daily$}, body: Yajl::Encoder.encode({projects:[],day_entries:[]}))
+    assert HCl::DayEntry.all.empty?
+  end
+
+  def test_all_today
+    FakeWeb.register_uri(:get, %r{/daily$}, body: Yajl::Encoder.encode({
+      projects:[], day_entries:[{id:1,note:'hi'}]}))
+    assert_equal 'hi', HCl::DayEntry.all.first.note
+  end
+
+  def test_all_with_date
+    FakeWeb.register_uri(:get, %r{/daily/013/2013$}, body: Yajl::Encoder.encode({
+      projects:[], day_entries:[{id:1,note:'hi'}]}))
+    assert_equal 'hi', HCl::DayEntry.all(Date.civil(2013,1,13)).first.note
+  end
+
+  def test_toggle
+    entry = HCl::DayEntry.new(id:123)
+    FakeWeb.register_uri(:get, %r{/daily/timer/123$}, body:'hi'.inspect)
+    entry.toggle
+  end
   def test_cancel_success
     entry = HCl::DayEntry.new(id:123)
     HCl::DayEntry.expects(:delete)
