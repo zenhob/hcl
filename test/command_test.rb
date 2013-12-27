@@ -75,9 +75,9 @@ class CommandTest < HCl::TestCase
 
   def test_stop
     entry = stub
-    HCl::DayEntry.expects(:with_timer).returns(entry)
-    entry.expects(:append_note).with('all done')
-    entry.expects(:toggle)
+    register_uri(:get, '/daily', {day_entries:[{id:123,notes:'',hours:1,client:nil,project:nil,timer_started_at:DateTime.now}]})
+    register_uri(:post, '/daily/update/123', {day_entry:{notes:'all done'}})
+    register_uri(:get, '/daily/timer/123')
     stop 'all done'
   end
 
