@@ -10,11 +10,10 @@ class NetTest < HCl::TestCase
   end
 
   def test_http_deep_unescape
-    FakeWeb.register_uri(:get, "https://bob:secret@bobclock.harvestapp.com/foo",
-                         :body => Yajl::Encoder.encode({
+    register_uri(:get, "/foo", {
       status:'gotten &amp; got!',
       comparisons:['burrito &gt; taco', 'rain &lt; sun']
-    }))
+    })
     body = HCl::Net.get 'foo'
     assert_equal 'gotten & got!', body[:status]
     assert_equal 'burrito > taco', body[:comparisons][0]
@@ -22,23 +21,20 @@ class NetTest < HCl::TestCase
   end
 
   def test_http_get
-    FakeWeb.register_uri(:get, "https://bob:secret@bobclock.harvestapp.com/foo",
-                         :body => 'gotten!'.inspect)
+    register_uri(:get, "/foo", {message:'gotten!'})
     body = HCl::Net.get 'foo'
-    assert_equal 'gotten!', body
+    assert_equal 'gotten!', body[:message]
   end
 
   def test_http_post
-    FakeWeb.register_uri(:post, "https://bob:secret@bobclock.harvestapp.com/foo",
-                         :body => 'posted!'.inspect)
+    register_uri(:post, "/foo", {message:'posted!'})
     body = HCl::Net.post 'foo', {pizza:'taco'}
-    assert_equal 'posted!', body
+    assert_equal 'posted!', body[:message]
   end
 
   def test_http_delete
-    FakeWeb.register_uri(:delete, "https://bob:secret@bobclock.harvestapp.com/foo",
-                         :body => 'wiped!'.inspect)
+    register_uri(:delete, "/foo", {message:'wiped!'})
     body = HCl::Net.delete 'foo'
-    assert_equal 'wiped!', body
+    assert_equal 'wiped!', body[:message]
   end
 end

@@ -36,6 +36,12 @@ class HCl::TestCase < MiniTest::Unit::TestCase
       'subdomain' => 'bobclock',
       'ssl' => true
   end
+
+  def register_uri method, path, data={}
+    FakeWeb.register_uri(method, "https://bob:secret@bobclock.harvestapp.com#{path}",
+                         body: Yajl::Encoder.encode(data))
+  end
+
   def teardown
     FakeWeb.clean_registry
   end
