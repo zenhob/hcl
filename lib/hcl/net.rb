@@ -1,4 +1,5 @@
 require 'hcl/harvest_middleware'
+require 'faraday'
 
 module HCl
   module Net
@@ -20,7 +21,7 @@ module HCl
 
       def http
         @http ||= Faraday.new(
-          "http#{ssl && 's'}://#{subdomain}.harvestapp.com"
+          "http#{ssl ? 's' : '' }://#{subdomain}.harvestapp.com"
         ) do |f|
           f.use :harvest, login, password
           f.adapter Faraday.default_adapter

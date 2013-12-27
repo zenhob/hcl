@@ -4,6 +4,7 @@ class CommandTest < HCl::TestCase
   include HCl::Utility
 
   def setup
+    super
     @settings = {}
   end
 
@@ -34,7 +35,7 @@ class CommandTest < HCl::TestCase
   end
 
   def test_show
-    HCl::DayEntry.expects(:all).returns([HCl::DayEntry.new({
+    HCl::DayEntry.expects(:daily).returns([HCl::DayEntry.new({
       hours:'2.06',
       notes: 'hi world',
       project: 'App'
@@ -74,9 +75,9 @@ class CommandTest < HCl::TestCase
 
   def test_stop
     entry = stub
-    HCl::DayEntry.expects(:with_timer).returns(entry)
-    entry.expects(:append_note).with('all done')
-    entry.expects(:toggle)
+    register_uri(:get, '/daily', {day_entries:[{id:123,notes:'',hours:1,client:nil,project:nil,timer_started_at:DateTime.now}]})
+    register_uri(:post, '/daily/update/123', {day_entry:{notes:'all done'}})
+    register_uri(:get, '/daily/timer/123')
     stop 'all done'
   end
 

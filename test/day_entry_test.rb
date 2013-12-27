@@ -1,19 +1,25 @@
 require 'test_helper'
 
 class DayEntryTest < HCl::TestCase
+  def test_project_info
+    register_uri(:get, '/daily', {projects:[], day_entries:[{project_id:123}]})
+    register_uri(:get, '/projects/123', {project:{name:'fun times'}})
+    assert_equal 'fun times', HCl::DayEntry.today.first.project_info.name
+  end
+
   def test_all_today_empty
     register_uri(:get, '/daily', {projects:[],day_entries:[]})
-    assert HCl::DayEntry.all.empty?
+    assert HCl::DayEntry.today.empty?
   end
 
   def test_all_today
     register_uri(:get, '/daily', {projects:[], day_entries:[{id:1,note:'hi'}]})
-    assert_equal 'hi', HCl::DayEntry.all.first.note
+    assert_equal 'hi', HCl::DayEntry.today.first.note
   end
 
   def test_all_with_date
     register_uri(:get, '/daily/013/2013', {projects:[], day_entries:[{id:1,note:'hi'}]})
-    assert_equal 'hi', HCl::DayEntry.all(Date.civil(2013,1,13)).first.note
+    assert_equal 'hi', HCl::DayEntry.daily(Date.civil(2013,1,13)).first.note
   end
 
   def test_toggle
