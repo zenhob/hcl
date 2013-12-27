@@ -20,6 +20,10 @@ module HCl
       self
     end
 
+    def http
+      HCl::Net
+    end
+
     # Run the given command and arguments.
     def self.command *args
       new.process_args(*args).run

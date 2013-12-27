@@ -8,7 +8,7 @@ module HCl
 
     # Display a sanitized view of your auth credentials.
     def config
-      Net.config_hash.merge(password:'***').map {|k,v| "#{k}: #{v}" }.join("\n")
+      http.config_hash.merge(password:'***').map {|k,v| "#{k}: #{v}" }.join("\n")
     end
 
     def console
@@ -46,7 +46,7 @@ module HCl
     def cancel
       entry = DayEntry.with_timer || DayEntry.last
       if entry
-        if entry.cancel
+        if entry.cancel http
           "Deleted entry #{entry}."
         else
           fail "Failed to delete #{entry}!"
@@ -92,7 +92,7 @@ module HCl
       if task.nil?
         fail "Unknown task alias, try one of the following: ", aliases.join(', ')
       end
-      timer = task.start \
+      timer = task.start http,
         :starting_time => starting_time,
         :note => args.join(' ')
       "Started timer for #{timer} (at #{current_time})"
@@ -107,8 +107,8 @@ module HCl
     def stop *args
       entry = DayEntry.with_timer || DayEntry.with_timer(DateTime.yesterday)
       if entry
-        entry.append_note(args.join(' ')) if args.any?
-        entry.toggle
+        entry.append_note(http, args.join(' ')) if args.any?
+        entry.toggle http
         "Stopped #{entry} (at #{current_time})"
       else
         fail "No running timers found."
@@ -121,7 +121,7 @@ module HCl
         if args.empty?
           return entry.notes
         else
-          entry.append_note args.join(' ')
+          entry.append_note http, args.join(' ')
           "Added note to #{entry}."
         end
       else
@@ -152,7 +152,7 @@ module HCl
           DayEntry.last
         end
       if entry
-        entry.toggle
+        entry.toggle http
       else
         fail "No matching timer found."
       end

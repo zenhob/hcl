@@ -69,7 +69,7 @@ class CommandTest < HCl::TestCase
       project: HCl::Project.new(id:456, name:'App', client:'Bob', code:'b')
     )
     HCl::Task.expects(:find).with('456','123').returns(task)
-    task.expects(:start).with(starting_time:nil, note:'do stuff')
+    task.expects(:start).with(http, starting_time:nil, note:'do stuff')
     start *%w[ 456 123 do stuff ]
   end
 
@@ -106,7 +106,7 @@ class CommandTest < HCl::TestCase
   def test_note
     entry = stub
     HCl::DayEntry.expects(:with_timer).returns(entry)
-    entry.expects(:append_note).with('hi world')
+    entry.expects(:append_note).with(http, 'hi world')
     note 'hi world'
   end
 

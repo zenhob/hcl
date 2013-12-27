@@ -28,9 +28,10 @@ require 'fakeweb'
 Dir[File.dirname(__FILE__) + '/ext/*.rb'].each { |ext| require ext }
 
 class HCl::TestCase < MiniTest::Unit::TestCase
+  attr_reader :http
   def setup
     FakeWeb.allow_net_connect = false
-    HCl::Net.configure \
+    @http = HCl::Net.configure \
       'login' => 'bob',
       'password' => 'secret',
       'subdomain' => 'bobclock',

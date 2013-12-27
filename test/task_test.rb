@@ -23,7 +23,7 @@ class TaskTest < HCl::TestCase
     task = HCl::Task.new(id:1, project:HCl::Project.new({id:2}))
     register_uri(:post, '/daily/add', {
       note:'good stuff', hours:0.2, project_id:2, task_id:1, spent_at: Date.today})
-    entry = task.add(note:'good stuff', starting_time:0.2)
+    entry = task.add(http, note:'good stuff', starting_time:0.2)
     assert_equal 'good stuff', entry.note
   end
 
@@ -32,7 +32,7 @@ class TaskTest < HCl::TestCase
     register_uri(:post, '/daily/add', {
       note:'good stuff', timer_started_at:DateTime.now,
       hours:0.2, project_id:2, task_id:1, spent_at: Date.today})
-    entry = task.start(note:'good stuff', starting_time:0.2)
+    entry = task.start(http, note:'good stuff', starting_time:0.2)
     assert_equal 'good stuff', entry.note
   end
 
@@ -41,7 +41,7 @@ class TaskTest < HCl::TestCase
     register_uri(:post, '/daily/add', {id:123, note:'woot'})
     register_uri(:get, '/daily/timer/123', {note:'good stuff', hours:0.2,
                                             project_id:2, task_id:1, spent_at: Date.today})
-    entry = task.start(note:'good stuff', starting_time:0.2)
+    entry = task.start(http, note:'good stuff', starting_time:0.2)
     assert_equal 'good stuff', entry.note
   end
 end

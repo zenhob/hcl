@@ -16,6 +16,10 @@ module HCl
       (@data && @data.key?(method.to_sym)) || super
     end
 
+    def http
+      self.class.http
+    end
+
     class << self
       def _prepare_resource name, *args, &url_cb
         ((@resources ||= {})[name] = {}).tap do |res|
@@ -34,6 +38,11 @@ module HCl
         end
       end
 
+      def http
+        # XXX how do I get the app instance in here?
+        HCl::Net
+      end
+
       def resources name, *args, &url_cb
         res = _prepare_resource name, *args, &url_cb
         cls = res[:opts][:class_name] ? HCl.const_get(res[:opts][:class_name]) : self
@@ -41,7 +50,7 @@ module HCl
         send(method, name) do |*args|
           url = instance_exec *args, &res[:url_cb]
           cb = res[:opts][:load_cb]
-          Net.get(url).tap{|e| cb.call(e) if cb }[cls.collection_name].map{|e|new(e)}
+          http.get(url).tap{|e| cb.call(e) if cb }[cls.collection_name].map{|e|new(e)}
         end
       end
 
@@ -52,7 +61,7 @@ module HCl
         send(method, name) do |*args|
           url = instance_exec *args, &res[:url_cb]
           cb = res[:opts][:load_cb]
-          cls.new Net.get(url).tap{|e| cb.call(e) if cb }[cls.underscore_name]
+          cls.new http.get(url).tap{|e| cb.call(e) if cb }[cls.underscore_name]
         end
       end
 

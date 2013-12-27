@@ -47,10 +47,10 @@ module HCl
       end
     end
 
-    def add opts
+    def add http, opts
       notes = opts[:note]
       starting_time = opts[:starting_time] || 0
-      DayEntry.new Net.post("daily/add", {
+      DayEntry.new http.post("daily/add", {
         notes: notes,
         hours: starting_time,
         project_id: project.id,
@@ -59,12 +59,12 @@ module HCl
       })
     end
 
-    def start opts
-      day = add opts
+    def start http, opts
+      day = add http, opts
       if day.running?
         day
       else
-        DayEntry.new Net.get("daily/timer/#{day.id}")
+        DayEntry.new http.get("daily/timer/#{day.id}")
       end
     end
   end

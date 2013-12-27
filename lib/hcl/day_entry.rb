@@ -15,9 +15,9 @@ module HCl
       @data[:task]
     end
 
-    def cancel
+    def cancel http
       begin
-        Net.delete("daily/delete/#{id}")
+        http.delete("daily/delete/#{id}")
       rescue HarvestMiddleware::Failure
         return false
       end
@@ -29,11 +29,11 @@ module HCl
     end
 
     # Append a string to the notes for this task.
-    def append_note new_notes
+    def append_note http, new_notes
       # If I don't include hours it gets reset.
       # This doens't appear to be the case for task and project.
       (self.notes << "\n#{new_notes}").lstrip!
-      Net.post "daily/update/#{id}", notes:notes, hours:hours
+      http.post "daily/update/#{id}", notes:notes, hours:hours
     end
 
     def self.with_timer date=nil
@@ -58,8 +58,8 @@ module HCl
       # TODO cache client/project names and ids
     end
 
-    def toggle
-      Net.get("daily/timer/#{id}")
+    def toggle http
+      http.get("daily/timer/#{id}")
       self
     end
 
