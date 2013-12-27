@@ -17,7 +17,7 @@ module HCl
 
     def cancel
       begin
-        DayEntry.delete("daily/delete/#{id}")
+        Net.delete("daily/delete/#{id}")
       rescue HarvestMiddleware::Failure
         return false
       end
