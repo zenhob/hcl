@@ -9,11 +9,7 @@ begin
       source_file.lines.count < 15
     end
     # source: https://travis-ci.org/zenhob/hcl
-    minimum_coverage case RUBY_ENGINE
-      when "rbx" then 84
-      when "jruby" then 73
-      else 78
-    end
+    minimum_coverage 84
   end
 rescue LoadError => e
   $stderr.puts 'No test coverage tools found, skipping coverage check.'
