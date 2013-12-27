@@ -1,5 +1,6 @@
 require 'chronic'
 require 'highline'
+require 'pry'
 
 module HCl
   module Commands
@@ -8,6 +9,11 @@ module HCl
     # Display a sanitized view of your auth credentials.
     def config
       Net.config_hash.merge(password:'***').map {|k,v| "#{k}: #{v}" }.join("\n")
+    end
+
+    def console
+      Console.new(self)
+      nil
     end
 
     def tasks project_code=nil
