@@ -31,7 +31,7 @@ class HCl::TestCase < MiniTest::Unit::TestCase
   attr_reader :http
   def setup
     FakeWeb.allow_net_connect = false
-    @http = HCl::Net.configure \
+    @http = HCl::Net.new \
       'login' => 'bob',
       'password' => 'secret',
       'subdomain' => 'bobclock',
