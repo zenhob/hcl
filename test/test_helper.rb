@@ -31,5 +31,18 @@ require 'fakeweb'
 # require test extensions/helpers
 Dir[File.dirname(__FILE__) + '/ext/*.rb'].each { |ext| require ext }
 
-class HCl::TestCase < MiniTest::Unit::TestCase; end
+class HCl::TestCase < MiniTest::Unit::TestCase
+  def setup
+    FakeWeb.allow_net_connect = false
+    HCl::Net.configure \
+      'login' => 'bob',
+      'password' => 'secret',
+      'subdomain' => 'bobclock',
+      'ssl' => true
+  end
+  def teardown
+    FakeWeb.clean_registry
+  end
+end
+
 

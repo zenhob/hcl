@@ -2,15 +2,6 @@ require 'test_helper'
 
 class NetTest < HCl::TestCase
 
-  def setup
-    FakeWeb.allow_net_connect = false
-    HCl::Net.configure \
-      'login' => 'bob',
-      'password' => 'secret',
-      'subdomain' => 'bobclock',
-      'ssl' => true
-  end
-
   def test_configure
     assert_equal 'bob', HCl::Net.login
     assert_equal 'secret', HCl::Net.password
