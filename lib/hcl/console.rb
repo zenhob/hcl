@@ -7,10 +7,10 @@ module HCl
     def initialize app
       @hcl = app
       prompt = $PROGRAM_NAME.split('/').last + "> "
-
+      columns = HighLine::SystemExtensions.terminal_size[0] rescue 80
       binding.pry quiet: true,
         prompt:[->(a,b,c){ prompt }],
-        print:->(io, *p){ pp p }
+        print:->(io, *p){ PP.pp p, io, columns }
     end
 
     Commands.instance_methods.each do |command|
