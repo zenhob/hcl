@@ -3,13 +3,11 @@ module CaptureOutput
     super
     @stderr = StringIO.new
     @stdout = StringIO.new
-    return if ENV['VERBOSE']
     $stderr = @stderr
     $stdout = @stdout
   end
   def after_teardown
     super
-    return if ENV['VERBOSE']
     $stderr = STDERR
     $stdout = STDOUT
   end

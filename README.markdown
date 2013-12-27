@@ -148,9 +148,9 @@ It's also possible to issue HCl commands directly (as Ruby methods), or
 to query specific JSON end points and have the results pretty-printed:
 
     hcl console
-    bin/hcl> show "yesterday"
+    hcl> show "yesterday"
     # => prints yesterday's timesheet, note the quotes!
-    bin/hcl> Net.get('daily')
+    hcl> Net.get('daily')
     # => displays a pretty-printed version of the JSON output
 
 Note that unlike the commands themselves, the HCl internals may change without
