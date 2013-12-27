@@ -137,7 +137,7 @@ Adding something like the above to your bashrc will enable a new command,
 `myhcl`. When using `myhcl` you can use different credentials and aliases,
 while `hcl` will continue to function with your original configuration.
 
-### Interactive console
+### Interactive Console
 
 An interactive Ruby console is provided to allow you to use the fairly
 powerful Harvest API client built into HCl, since not all of its
@@ -154,7 +154,7 @@ pretty-printed:
     hcl> hcl.http.get('daily')
     # => displays a pretty-printed version of the JSON output
 
-Note that the the HCl internals may change without notice.
+Note that the HCl internals may change without notice.
 Also, commands (like `alias`) that are also reserved words in Ruby
 can't be issued directly (use `send :alias` instead).
 
