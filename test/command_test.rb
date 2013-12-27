@@ -69,7 +69,7 @@ class CommandTest < HCl::TestCase
       project: HCl::Project.new(id:456, name:'App', client:'Bob', code:'b')
     )
     HCl::Task.expects(:find).with('456','123').returns(task)
-    task.expects(:start).with(starting_time:nil, note:'do stuff')
+    task.expects(:start).with(http, starting_time:nil, note:'do stuff')
     start *%w[ 456 123 do stuff ]
   end
 
@@ -91,22 +91,22 @@ class CommandTest < HCl::TestCase
   def test_resume_with_task_alias
     entry = stub
     expects(:get_task_ids).with('mytask',[]).returns(%w[ 456 789 ])
-    HCl::DayEntry.expects(:last_by_task).with('456', '789').returns(entry)
-    entry.expects(:toggle)
+    HCl::DayEntry.expects(:last_by_task).with(http, '456', '789').returns(entry)
+    entry.expects(:toggle).with(http)
     resume 'mytask'
   end
 
   def test_cancel
     entry = stub
-    HCl::DayEntry.expects(:with_timer).returns(entry)
-    entry.expects(:cancel).returns(true)
+    HCl::DayEntry.expects(:with_timer).with(http).returns(entry)
+    entry.expects(:cancel).with(http).returns(true)
     cancel
   end
 
   def test_note
     entry = stub
     HCl::DayEntry.expects(:with_timer).returns(entry)
-    entry.expects(:append_note).with('hi world')
+    entry.expects(:append_note).with(http, 'hi world')
     note 'hi world'
   end
 

@@ -144,17 +144,19 @@ powerful Harvest API client built into HCl, since not all of its
 features are exposed via the command line. The current {HCl::App}
 instance is available as `hcl`.
 
-It's also possible to issue HCl commands directly (as Ruby methods), or
-to query specific JSON end points and have the results pretty-printed:
+It's also possible to issue HCl commands directly (except `alias`, see
+below), or to query specific JSON end points and have the results
+pretty-printed:
 
     hcl console
     hcl> show "yesterday"
     # => prints yesterday's timesheet, note the quotes!
-    hcl> Net.get('daily')
+    hcl> hcl.http.get('daily')
     # => displays a pretty-printed version of the JSON output
 
-Note that unlike the commands themselves, the HCl internals may change without
-notice.
+Note that the the HCl internals may change without notice.
+Also, commands (like `alias`) that are also reserved words in Ruby
+can't be issued directly (use `send :alias` instead).
 
 ### Date Formats
 

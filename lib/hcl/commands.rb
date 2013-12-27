@@ -8,7 +8,7 @@ module HCl
 
     # Display a sanitized view of your auth credentials.
     def config
-      Net.config_hash.merge(password:'***').map {|k,v| "#{k}: #{v}" }.join("\n")
+      http.config_hash.merge(password:'***').map {|k,v| "#{k}: #{v}" }.join("\n")
     end
 
     def console
@@ -44,9 +44,9 @@ module HCl
     end
 
     def cancel
-      entry = DayEntry.with_timer || DayEntry.last
+      entry = DayEntry.with_timer(http) || DayEntry.last(http)
       if entry
-        if entry.cancel
+        if entry.cancel http
           "Deleted entry #{entry}."
         else
           fail "Failed to delete #{entry}!"
@@ -92,23 +92,23 @@ module HCl
       if task.nil?
         fail "Unknown task alias, try one of the following: ", aliases.join(', ')
       end
-      timer = task.start \
+      timer = task.start http,
         :starting_time => starting_time,
         :note => args.join(' ')
       "Started timer for #{timer} (at #{current_time})"
     end
 
     def log *args
-      fail "There is already a timer running." if DayEntry.with_timer
+      fail "There is already a timer running." if DayEntry.with_timer(http)
       start *args
       stop
     end
 
     def stop *args
-      entry = DayEntry.with_timer || DayEntry.with_timer(DateTime.yesterday)
+      entry = DayEntry.with_timer(http) || DayEntry.with_timer(http, DateTime.yesterday)
       if entry
-        entry.append_note(args.join(' ')) if args.any?
-        entry.toggle
+        entry.append_note(http, args.join(' ')) if args.any?
+        entry.toggle http
         "Stopped #{entry} (at #{current_time})"
       else
         fail "No running timers found."
@@ -116,12 +116,12 @@ module HCl
     end
 
     def note *args
-      entry = DayEntry.with_timer
+      entry = DayEntry.with_timer http
       if entry
         if args.empty?
           return entry.notes
         else
-          entry.append_note args.join(' ')
+          entry.append_note http, args.join(' ')
           "Added note to #{entry}."
         end
       else
@@ -133,7 +133,7 @@ module HCl
       date = args.empty? ? nil : Chronic.parse(args.join(' '))
       total_hours = 0.0
       result = ''
-      DayEntry.daily(date).each do |day|
+      DayEntry.daily(http, date).each do |day|
         running = day.running? ? '(running) ' : ''
         columns = HighLine::SystemExtensions.terminal_size[0] rescue 80
         result << "\t#{day.formatted_hours}\t#{running}#{day.project}: #{day.notes.lines.to_a.last}\n"[0..columns-1]
@@ -147,12 +147,12 @@ module HCl
       ident = get_ident args
       entry = if ident
           task_ids = get_task_ids ident, args
-          DayEntry.last_by_task *task_ids
+          DayEntry.last_by_task http, *task_ids
         else
-          DayEntry.last
+          DayEntry.last(http)
         end
       if entry
-        entry.toggle
+        entry.toggle http
       else
         fail "No matching timer found."
       end

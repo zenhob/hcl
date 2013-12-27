@@ -13,6 +13,8 @@ module HCl
     SETTINGS_FILE = "#{HCL_DIR}/settings.yml".freeze
     CONFIG_FILE = "#{HCL_DIR}/config.yml".freeze
 
+    attr_reader :http
+
     def initialize
       FileUtils.mkdir_p(HCL_DIR)
       read_config
@@ -140,7 +142,7 @@ EOM
         if has_security_command?
           load_password config
         end
-        Net.configure config
+        @http = HCl::Net.new config
       else
         request_config
       end
@@ -153,7 +155,7 @@ EOM
       config['password'] = ask("Password: ") { |q| q.echo = false }.to_s
       config['subdomain'] = ask("Subdomain: ").to_s
       config['ssl'] = /^y/.match(ask("Use SSL? (y/n): ").downcase)
-      Net.configure config
+      @http = HCl::Net.new config
       write_config config
     end
 

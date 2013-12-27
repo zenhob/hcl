@@ -38,10 +38,10 @@ module HCl
         res = _prepare_resource name, *args, &url_cb
         cls = res[:opts][:class_name] ? HCl.const_get(res[:opts][:class_name]) : self
         method = cls == self ? :define_singleton_method : :define_method
-        send(method, name) do |*args|
+        send(method, name) do |http, *args|
           url = instance_exec *args, &res[:url_cb]
           cb = res[:opts][:load_cb]
-          Net.get(url).tap{|e| cb.call(e) if cb }[cls.collection_name].map{|e|new(e)}
+          http.get(url).tap{|e| cb.call(e) if cb }[cls.collection_name].map{|e|new(e)}
         end
       end
 
@@ -49,10 +49,10 @@ module HCl
         res = _prepare_resource name, *args, &url_cb
         cls = res[:opts][:class_name] ? HCl.const_get(res[:opts][:class_name]) : self
         method = cls == self ? :define_singleton_method : :define_method
-        send(method, name) do |*args|
+        send(method, name) do |http, *args|
           url = instance_exec *args, &res[:url_cb]
           cb = res[:opts][:load_cb]
-          cls.new Net.get(url).tap{|e| cb.call(e) if cb }[cls.underscore_name]
+          cls.new http.get(url).tap{|e| cb.call(e) if cb }[cls.underscore_name]
         end
       end
 
