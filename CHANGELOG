@@ -2,7 +2,8 @@
 
 == next version
 
-* addded `config` command to display current credentials
+* added `config` command to display current credentials
+* added `console` command for exploring the Harvest API
 
 == v0.4.9 2013-12-21
 

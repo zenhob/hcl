@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'faraday'
   s.add_runtime_dependency 'yajl-ruby'
   s.add_runtime_dependency 'escape_utils'
+  s.add_runtime_dependency 'pry'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rubygems-tasks'
   s.add_development_dependency 'mocha'

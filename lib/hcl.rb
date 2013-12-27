@@ -3,6 +3,7 @@ module HCl
   autoload :App, 'hcl/app'
   autoload :Net, 'hcl/net'
   autoload :Commands, 'hcl/commands'
+  autoload :Console, 'hcl/console'
   autoload :TimesheetResource, 'hcl/timesheet_resource'
   autoload :Utility, 'hcl/utility'
   autoload :Project, 'hcl/project'

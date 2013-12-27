@@ -6,6 +6,7 @@ PATH
       escape_utils
       faraday
       highline
+      pry
       trollop
       yajl-ruby
 

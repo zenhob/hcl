@@ -137,6 +137,25 @@ Adding something like the above to your bashrc will enable a new command,
 `myhcl`. When using `myhcl` you can use different credentials and aliases,
 while `hcl` will continue to function with your original configuration.
 
+### Interactive console
+
+An interactive Ruby console is provided to allow you to use the fairly
+powerful Harvest API client built into HCl, since not all of its
+features are exposed via the command line. The current {HCl::App}
+instance is available as `hcl`.
+
+It's also possible to issue HCl commands directly (as Ruby methods), or
+to query specific JSON end points and have the results pretty-printed:
+
+    hcl console
+    bin/hcl> show "yesterday"
+    # => prints yesterday's timesheet, note the quotes!
+    bin/hcl> Net.get('daily')
+    # => displays a pretty-printed version of the JSON output
+
+Note that unlike the commands themselves, the HCl internals may change without
+notice.
+
 ### Date Formats
 
 Dates can be expressed in a variety of ways. See the [Chronic documentation][cd]
