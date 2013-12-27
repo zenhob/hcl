@@ -1,4 +1,5 @@
 require 'pp'
+require 'pry'
 
 module HCl
   class Console

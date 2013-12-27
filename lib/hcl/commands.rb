@@ -1,6 +1,5 @@
 require 'chronic'
 require 'highline'
-require 'pry'
 
 module HCl
   module Commands
