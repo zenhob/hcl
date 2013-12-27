@@ -16,7 +16,7 @@ module CaptureOutput
     @stdout.string
   end
 end
-class MiniTest::Test
+class MiniTest::Unit::TestCase
   include CaptureOutput
 end
 
