@@ -15,13 +15,13 @@ class HCl::HarvestMiddleware < Faraday::Middleware
   end
 
   def call(env)
-    #  basic authentication
-    @auth.call(env)
-
     # encode with and accept json
     env[:request_headers]['Accept'] = MIME_TYPE
     env[:request_headers]['Content-Type'] = MIME_TYPE
     env[:body] = Yajl::Encoder.encode(env[:body])
+
+    #  basic authentication
+    @auth.call(env)
 
     # response processing
     @app.call(env).on_complete do |env|
