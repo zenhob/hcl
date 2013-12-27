@@ -21,15 +21,16 @@ class DayEntryTest < HCl::TestCase
     register_uri(:get, '/daily/timer/123', {note:'hi'})
     entry.toggle
   end
+
   def test_cancel_success
     entry = HCl::DayEntry.new(id:123)
-    HCl::DayEntry.expects(:delete)
+    register_uri(:delete, '/daily/delete/123')
     assert entry.cancel
   end
 
   def test_cancel_failure
     entry = HCl::DayEntry.new(id:123)
-    HCl::DayEntry.expects(:delete).raises(HCl::HarvestMiddleware::Failure)
+    HCl::Net.expects(:delete).raises(HCl::HarvestMiddleware::Failure)
     assert !entry.cancel
   end
 
