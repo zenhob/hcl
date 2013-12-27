@@ -5,19 +5,17 @@ module HCl
     class << self
       # configuration accessors
       CONFIG_VARS = [ :login, :password, :subdomain, :ssl ].freeze
-      CONFIG_VARS.each { |config_var| attr_accessor config_var }
+      CONFIG_VARS.each { |config_var| attr_reader config_var }
 
       def config_hash
         CONFIG_VARS.inject({}) {|c,k| c.update(k => send(k)) }
       end
 
-      def configure opts = nil
-        if opts
-          self.login = opts['login']
-          self.password = opts['password']
-          self.subdomain = opts['subdomain']
-          self.ssl = opts['ssl']
-        end
+      def configure opts
+        @login = opts['login'].freeze
+        @password = opts['password'].freeze
+        @subdomain = opts['subdomain'].freeze
+        @ssl = !!opts['ssl']
       end
 
       def http
