@@ -1,6 +1,6 @@
 require 'faraday'
 
-class HCl::HarvestMiddleware < Faraday::Middleware
+class HCl::HarvestMiddleware < Faraday::Request::BasicAuthentication
   Faraday.register_middleware harvest: ->{ self }
   MIME_TYPE = 'application/json'.freeze
 
@@ -9,22 +9,14 @@ class HCl::HarvestMiddleware < Faraday::Middleware
     require 'escape_utils'
   end
 
-  def initialize app, user, password
-    super app
-    @auth = Faraday::Request::BasicAuthentication.new app, user, password
-  end
-
   def call(env)
     # encode with and accept json
     env[:request_headers]['Accept'] = MIME_TYPE
     env[:request_headers]['Content-Type'] = MIME_TYPE
     env[:body] = Yajl::Encoder.encode(env[:body])
 
-    #  basic authentication
-    @auth.call(env)
-
     # response processing
-    @app.call(env).on_complete do |env|
+    super(env).on_complete do |env|
       case env[:status]
       when 200..299
         begin 
