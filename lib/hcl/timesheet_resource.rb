@@ -52,7 +52,7 @@ module HCl
         send(method, name) do |*args|
           url = instance_exec *args, &res[:url_cb]
           cb = res[:opts][:load_cb]
-          cls.new Net.get(url)[cls.underscore_name].tap{|e| cb.call(e) if cb }
+          cls.new Net.get(url).tap{|e| cb.call(e) if cb }[cls.underscore_name]
         end
       end
 
