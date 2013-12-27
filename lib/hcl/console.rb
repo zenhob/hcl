@@ -5,8 +5,10 @@ module HCl
     attr_reader :hcl
     def initialize app
       @hcl = app
+      prompt = $PROGRAM_NAME.split('/').last + "> "
+
       binding.pry quiet: true,
-        prompt:[->(a,b,c){"#{$PROGRAM_NAME}> "}],
+        prompt:[->(a,b,c){ prompt }],
         print:->(io, *p){ pp p }
     end
 
