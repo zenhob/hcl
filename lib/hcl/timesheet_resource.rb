@@ -29,7 +29,7 @@ module HCl
           when Hash
             res[:opts] = opt_or_cb
             url = args.pop
-            res[:url_cb] ||= ->() { url }
+            res[:url_cb] = ->() { url } if url
           end
         end
       end

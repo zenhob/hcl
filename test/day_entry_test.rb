@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class DayEntryTest < HCl::TestCase
+  def test_project_info
+    register_uri(:get, '/daily', {projects:[], day_entries:[{project_id:123}]})
+    register_uri(:get, '/projects/123', {project:{name:'fun times'}})
+    assert_equal 'fun times', HCl::DayEntry.today.first.project_info.name
+  end
+
   def test_all_today_empty
     register_uri(:get, '/daily', {projects:[],day_entries:[]})
     assert HCl::DayEntry.today.empty?
