@@ -91,15 +91,15 @@ class CommandTest < HCl::TestCase
   def test_resume_with_task_alias
     entry = stub
     expects(:get_task_ids).with('mytask',[]).returns(%w[ 456 789 ])
-    HCl::DayEntry.expects(:last_by_task).with('456', '789').returns(entry)
-    entry.expects(:toggle)
+    HCl::DayEntry.expects(:last_by_task).with(http, '456', '789').returns(entry)
+    entry.expects(:toggle).with(http)
     resume 'mytask'
   end
 
   def test_cancel
     entry = stub
-    HCl::DayEntry.expects(:with_timer).returns(entry)
-    entry.expects(:cancel).returns(true)
+    HCl::DayEntry.expects(:with_timer).with(http).returns(entry)
+    entry.expects(:cancel).with(http).returns(true)
     cancel
   end
 

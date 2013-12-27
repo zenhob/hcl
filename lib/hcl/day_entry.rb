@@ -36,26 +36,21 @@ module HCl
       http.post "daily/update/#{id}", notes:notes, hours:hours
     end
 
-    def self.with_timer date=nil
-      daily(date).detect {|t| t.running? }
+    def self.with_timer http, date=nil
+      daily(http, date).detect {|t| t.running? }
     end
 
-    def self.last_by_task project_id, task_id
-      today.sort {|a,b| b.updated_at<=>a.updated_at}.
+    def self.last_by_task http, project_id, task_id
+      today(http).sort {|a,b| b.updated_at<=>a.updated_at}.
         detect {|t| t.project_id == project_id && t.task_id == task_id }
     end
 
-    def self.last
-      today.sort {|a,b| a.updated_at<=>b.updated_at}[-1]
+    def self.last http
+      today(http).sort {|a,b| a.updated_at<=>b.updated_at}[-1]
     end
 
     def running?
       !@data[:timer_started_at].nil? && !@data[:timer_started_at].empty?
-    end
-
-    def initialize *args
-      super
-      # TODO cache client/project names and ids
     end
 
     def toggle http

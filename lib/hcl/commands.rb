@@ -44,7 +44,7 @@ module HCl
     end
 
     def cancel
-      entry = DayEntry.with_timer || DayEntry.last
+      entry = DayEntry.with_timer(http) || DayEntry.last(http)
       if entry
         if entry.cancel http
           "Deleted entry #{entry}."
@@ -99,13 +99,13 @@ module HCl
     end
 
     def log *args
-      fail "There is already a timer running." if DayEntry.with_timer
+      fail "There is already a timer running." if DayEntry.with_timer(http)
       start *args
       stop
     end
 
     def stop *args
-      entry = DayEntry.with_timer || DayEntry.with_timer(DateTime.yesterday)
+      entry = DayEntry.with_timer(http) || DayEntry.with_timer(http, DateTime.yesterday)
       if entry
         entry.append_note(http, args.join(' ')) if args.any?
         entry.toggle http
@@ -116,7 +116,7 @@ module HCl
     end
 
     def note *args
-      entry = DayEntry.with_timer
+      entry = DayEntry.with_timer http
       if entry
         if args.empty?
           return entry.notes
@@ -133,7 +133,7 @@ module HCl
       date = args.empty? ? nil : Chronic.parse(args.join(' '))
       total_hours = 0.0
       result = ''
-      DayEntry.daily(date).each do |day|
+      DayEntry.daily(http, date).each do |day|
         running = day.running? ? '(running) ' : ''
         columns = HighLine::SystemExtensions.terminal_size[0] rescue 80
         result << "\t#{day.formatted_hours}\t#{running}#{day.project}: #{day.notes.lines.to_a.last}\n"[0..columns-1]
@@ -147,9 +147,9 @@ module HCl
       ident = get_ident args
       entry = if ident
           task_ids = get_task_ids ident, args
-          DayEntry.last_by_task *task_ids
+          DayEntry.last_by_task http, *task_ids
         else
-          DayEntry.last
+          DayEntry.last(http)
         end
       if entry
         entry.toggle http
