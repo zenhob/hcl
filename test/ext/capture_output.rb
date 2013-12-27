@@ -1,11 +1,15 @@
 module CaptureOutput
   def before_setup
     super
-    $stderr = @stderr = StringIO.new
-    $stdout = @stdout = StringIO.new
+    @stderr = StringIO.new
+    @stdout = StringIO.new
+    return if ENV['VERBOSE']
+    $stderr = @stderr
+    $stdout = @stdout
   end
   def after_teardown
     super
+    return if ENV['VERBOSE']
     $stderr = STDERR
     $stdout = STDOUT
   end

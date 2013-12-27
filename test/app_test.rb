@@ -2,6 +2,7 @@ require 'test_helper'
 class AppTest < HCl::TestCase
 
   def setup
+    super
     # touch config to avoid triggering manual config
     FileUtils.mkdir_p HCl::App::HCL_DIR
     FileUtils.touch File.join(HCl::App::HCL_DIR, "config.yml")
@@ -13,7 +14,7 @@ class AppTest < HCl::TestCase
   end
 
   def test_command_show
-    HCl::DayEntry.expects(:all).returns [HCl::DayEntry.new(
+    HCl::DayEntry.expects(:daily).returns [HCl::DayEntry.new(
       hours:'2.06', notes:'hi world', project:'App'
     )]
     HCl::App.command 'show'

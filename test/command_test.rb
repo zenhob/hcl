@@ -4,6 +4,7 @@ class CommandTest < HCl::TestCase
   include HCl::Utility
 
   def setup
+    super
     @settings = {}
   end
 
@@ -34,7 +35,7 @@ class CommandTest < HCl::TestCase
   end
 
   def test_show
-    HCl::DayEntry.expects(:all).returns([HCl::DayEntry.new({
+    HCl::DayEntry.expects(:daily).returns([HCl::DayEntry.new({
       hours:'2.06',
       notes: 'hi world',
       project: 'App'
