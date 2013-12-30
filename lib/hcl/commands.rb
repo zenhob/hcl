@@ -77,7 +77,8 @@ module HCl
       end
     end
 
-    def completion command=$PROGRAM_NAME
+    def completion command=nil
+      command ||= $PROGRAM_NAME.split('/').last
       %[complete -W "#{aliases.join ' '}" #{command}]
     end
 
