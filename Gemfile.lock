@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hcl (0.4.9)
+    hcl (0.4.10)
       chronic
       escape_utils
       faraday
