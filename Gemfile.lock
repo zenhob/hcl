@@ -21,6 +21,7 @@ GEM
       multipart-post (~> 1.2.0)
     ffi (1.9.3-java)
     highline (1.6.20)
+    hpricot (0.8.6)
     metaclass (0.0.1)
     method_source (0.8.2)
     minitest (4.7.5)
@@ -28,6 +29,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.8.2)
     multipart-post (1.2.0)
+    mustache (0.99.5)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -38,6 +40,11 @@ GEM
       slop (~> 3.4)
       spoon (~> 0.0)
     rake (10.1.0)
+    rdiscount (2.1.7)
+    ronn (0.7.3)
+      hpricot (>= 0.8.2)
+      mustache (>= 0.7.0)
+      rdiscount (>= 1.5.8)
     rubinius-coverage (2.0.3)
     rubygems-tasks (0.2.4)
     rubysl-abbrev (2.0.4)
@@ -66,6 +73,7 @@ DEPENDENCIES
   mocha
   pry
   rake
+  ronn
   rubinius-coverage
   rubygems-tasks
   rubysl-abbrev
