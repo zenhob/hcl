@@ -1,7 +1,8 @@
 = Recent Changes in HCl
 
-== latest
+== v0.4.11 2014-01-25
 
+* more detailed gem dependencies, prevents unexpected failures
 * added a UNIX manual page for hcl(1)
 
 == v0.4.10 2014-01-06
