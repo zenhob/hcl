@@ -1,7 +1,7 @@
 require 'faraday'
 
 class HCl::HarvestMiddleware < Faraday::Request::BasicAuthentication
-  Faraday.register_middleware harvest: ->{ self }
+  Faraday::Middleware.register_middleware harvest: ->{ self }
   MIME_TYPE = 'application/json'.freeze
 
   dependency do

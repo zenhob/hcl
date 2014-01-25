@@ -2,33 +2,34 @@ PATH
   remote: .
   specs:
     hcl (0.4.10)
-      chronic
-      escape_utils
-      faraday
-      highline
-      pry
-      trollop
-      yajl-ruby
+      chronic (~> 0.10.2)
+      escape_utils (~> 1.0.1)
+      faraday (~> 0.9.0)
+      highline (~> 1.6.20)
+      pry (~> 0.9.12)
+      trollop (~> 2.0)
+      yajl-ruby (~> 1.1.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     chronic (0.10.2)
     coderay (1.0.9)
-    escape_utils (1.0.0)
+    escape_utils (1.0.1)
     fakeweb (1.3.0)
-    faraday (0.8.8)
-      multipart-post (~> 1.2.0)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.3-java)
     highline (1.6.20)
     hpricot (0.8.6)
+    hpricot (0.8.6-java)
     metaclass (0.0.1)
     method_source (0.8.2)
     minitest (4.7.5)
     mocha (0.14.0)
       metaclass (~> 0.0.1)
     multi_json (1.8.2)
-    multipart-post (1.2.0)
+    multipart-post (2.0.0)
     mustache (0.99.5)
     pry (0.9.12.2)
       coderay (~> 1.0.5)

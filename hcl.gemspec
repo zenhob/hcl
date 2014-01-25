@@ -15,13 +15,13 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.summary = "Harvest timesheets from the command-line"
 
-  s.add_runtime_dependency 'trollop'
-  s.add_runtime_dependency 'chronic'
-  s.add_runtime_dependency 'highline'
-  s.add_runtime_dependency 'faraday'
-  s.add_runtime_dependency 'yajl-ruby'
-  s.add_runtime_dependency 'escape_utils'
-  s.add_runtime_dependency 'pry'
+  s.add_runtime_dependency 'trollop', '~>2.0'
+  s.add_runtime_dependency 'chronic', '~>0.10.2'
+  s.add_runtime_dependency 'highline', '~> 1.6.20'
+  s.add_runtime_dependency 'faraday', '~>0.9.0'
+  s.add_runtime_dependency 'yajl-ruby', '~>1.1.0'
+  s.add_runtime_dependency 'escape_utils','~>1.0.1'
+  s.add_runtime_dependency 'pry','~>0.9.12'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rubygems-tasks'
   s.add_development_dependency 'mocha'
