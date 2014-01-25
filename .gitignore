@@ -8,3 +8,4 @@ doc
 *.gem
 coverage
 test/dot_hcl
+*.1

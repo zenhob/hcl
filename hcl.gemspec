@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = "HCl is a command-line client for manipulating Harvest time sheets."
   s.executables = ["hcl"]
   s.files = %w[CHANGELOG LICENSE Rakefile Gemfile] + Dir['*.markdown'] +
-    Dir['bin/*'] + Dir['lib/**/*.rb'] + Dir['test/**/*.rb']
+    Dir['bin/*'] + Dir['lib/**/*.rb'] + Dir['test/**/*.rb'] + Dir['man/hcl.1']
   s.homepage = "http://zackhobson.com/hcl/"
   s.licenses = ["MIT"]
   s.summary = "Harvest timesheets from the command-line"
