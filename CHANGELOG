@@ -1,9 +1,10 @@
 = Recent Changes in HCl
 
-== next version
+== v0.4.10 2014-01-25
 
 * added `config` command to display current credentials
 * added `console` command for exploring the Harvest API
+* added a UNIX manual page for hcl(1)
 
 == v0.4.9 2013-12-21
 
