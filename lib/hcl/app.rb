@@ -3,6 +3,7 @@ require 'fileutils'
 
 require 'trollop'
 require 'highline/import'
+require 'rdiscount'
 
 module HCl
   class App
@@ -38,6 +39,10 @@ module HCl
     # Start the application.
     def run
       request_config if @options[:reauth]
+      if @options[:changelog]
+        system %[ more "#{File.join(File.dirname(__FILE__), '../../CHANGELOG.markdown')}" ]
+        exit
+      end
       begin
         if @command
           if command? @command
@@ -128,6 +133,7 @@ Examples:
 Options:
 EOM
         opt :reauth, "Force refresh of auth details"
+        opt :changelog, "Review the HCl changelog"
       end
       @command = args.shift
       @args = args

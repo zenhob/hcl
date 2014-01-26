@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'trollop', '~>2.0'
   s.add_runtime_dependency 'chronic', '~>0.10.2'
-  s.add_runtime_dependency 'highline', '~> 1.6.20'
+  s.add_runtime_dependency 'highline', '~>1.6.20'
   s.add_runtime_dependency 'faraday', '~>0.9.0'
   s.add_runtime_dependency 'yajl-ruby', '~>1.1.0'
   s.add_runtime_dependency 'escape_utils','~>1.0.1'
