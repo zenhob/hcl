@@ -3,7 +3,6 @@ require 'fileutils'
 
 require 'trollop'
 require 'highline/import'
-require 'rdiscount'
 
 module HCl
   class App
