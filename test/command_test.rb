@@ -100,6 +100,14 @@ class CommandTest < HCl::TestCase
     entry = stub
     HCl::DayEntry.expects(:with_timer).with(http).returns(entry)
     entry.expects(:cancel).with(http).returns(true)
+    expects(:ask).returns('y')
+    cancel
+  end
+
+  def test_cancel_no
+    entry = stub
+    HCl::DayEntry.expects(:with_timer).with(http).returns(entry)
+    expects(:ask).returns('n')
     cancel
   end
 

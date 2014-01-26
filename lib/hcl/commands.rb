@@ -45,6 +45,9 @@ module HCl
     def cancel
       entry = DayEntry.with_timer(http) || DayEntry.last(http)
       if entry
+        confirmed = /^y/.match(ask("#{entry}\nDelete this entry? (y/n): ").downcase)
+        return unless confirmed
+
         if entry.cancel http
           "Deleted entry #{entry}."
         else
