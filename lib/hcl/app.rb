@@ -11,6 +11,7 @@ module HCl
 
     HCL_DIR = (ENV['HCL_DIR'] || "#{ENV['HOME']}/.hcl").freeze
     SETTINGS_FILE = "#{HCL_DIR}/settings.yml".freeze
+    ALIAS_LIST = "#{HCL_DIR}/aliases".freeze
     CONFIG_FILE = "#{HCL_DIR}/config.yml".freeze
 
     attr_reader :http
@@ -187,6 +188,9 @@ EOM
     end
 
     def write_settings
+      File.open(ALIAS_LIST, 'w') do |f|
+        f.write aliases.join(' ')
+      end
       File.open(SETTINGS_FILE, 'w') do |f|
        f.write @settings.to_yaml
       end

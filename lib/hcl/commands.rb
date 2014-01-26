@@ -79,6 +79,9 @@ module HCl
 
     def completion command=nil
       command ||= $PROGRAM_NAME.split('/').last
+      $stderr.puts \
+        "The hcl completion command is deprecated (and slow!), instead use something like:",
+        "> complete -W `cat #{HCl::App::ALIAS_LIST}` #{command}"
       %[complete -W "#{aliases.join ' '}" #{command}]
     end
 
