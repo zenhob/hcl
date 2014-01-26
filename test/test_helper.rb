@@ -9,7 +9,7 @@ begin
       source_file.lines.count < 15
     end
     # source: https://travis-ci.org/zenhob/hcl
-    minimum_coverage 84
+    minimum_coverage 80
   end
 rescue LoadError => e
   $stderr.puts 'No test coverage tools found, skipping coverage check.'
