@@ -2,8 +2,9 @@
 
 ## latest
 
-* add --changelog option
+* added --changelog option
 * remove completion command, cache aliases in a file instead, closes #51
+* confirm timer deletion/cancellation, closes #47
 
 ## v0.4.11 2014-01-25
 
