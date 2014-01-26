@@ -97,6 +97,9 @@ Commands:
     # create a task alias
     hcl alias <task_alias> <project_id> <task_id>
 
+    # remove a task alias
+    hcl unalias <task_alias>
+
     # list task aliases
     hcl aliases
 

@@ -31,6 +31,7 @@ or you can install from source:
     hcl show [<date>]
     hcl tasks [<project_code>]
     hcl alias <task_alias> <project_id> <task_id>
+    hcl unalias <task_alias>
     hcl aliases
     hcl (cancel | nvm | oops)
     hcl config
