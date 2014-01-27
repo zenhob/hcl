@@ -111,7 +111,7 @@ module HCl
     end
 
     def stop *args
-      entry = DayEntry.with_timer(http) || DayEntry.with_timer(http, DateTime.yesterday)
+      entry = DayEntry.with_timer(http) || DayEntry.with_timer(http, Date.today - 1)
       if entry
         entry.append_note(http, args.join(' ')) if args.any?
         entry.toggle http

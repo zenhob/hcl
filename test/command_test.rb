@@ -81,6 +81,15 @@ class CommandTest < HCl::TestCase
     stop 'all done'
   end
 
+  def test_yesterday
+    entry = stub
+    register_uri(:get, '/daily', {day_entries:[]})
+    register_uri(:get, '/daily/026/2014', {day_entries:[{id:321,notes:'',hours:1,client:nil,project:nil,timer_started_at:DateTime.now}]})
+    register_uri(:post, '/daily/update/321', {day_entry:{notes:'all done next day'}})
+    register_uri(:get, '/daily/timer/321')
+    stop 'all done next day'
+  end
+
   def test_resume
     entry = stub
     HCl::DayEntry.expects(:last).returns(entry)
