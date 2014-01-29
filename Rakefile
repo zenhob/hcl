@@ -10,8 +10,13 @@ Rake::TestTask.new do |t|
 end
 task :default => :test
 
+require 'ronn'
 task :man do
-  system 'ronn -r man/hcl.1.ronn'
+  print "Writing manual page..."
+  File.open('man/hcl.1','w').tap do |man|
+    man.write Ronn::Document.new('man/hcl.1.ronn').to_roff
+  end
+  puts "done."
 end
 task 'build:gem' => [:man]
 
