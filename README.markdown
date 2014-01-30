@@ -120,6 +120,9 @@ configuration:
 
     complete -W `cat ~/.hcl/aliases` hcl
 
+Note: You will need to have run `hcl` at least once to create the aliases
+file. Without it, this command will fail with an error.
+
 ### Configuration Profiles
 
 You can modify your credentials with the `--reauth` option, and review them
