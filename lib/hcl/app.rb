@@ -185,15 +185,20 @@ EOM
       else
         @settings = {}
       end
+      cache_aliases
     end
 
-    def write_settings
+    def cache_aliases
       File.open(ALIAS_LIST, 'w') do |f|
         f.write aliases.join(' ')
       end
+    end
+
+    def write_settings
       File.open(SETTINGS_FILE, 'w') do |f|
        f.write @settings.to_yaml
       end
+      cache_aliases
       nil
     end
 
