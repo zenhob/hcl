@@ -118,7 +118,7 @@ The above starts and immediately stops a one-hour timer with the given note.
 You can enable auto-completion of task aliases by adding this to your shell
 configuration:
 
-    complete -W `cat ~/.hcl/aliases` hcl
+    complete -W "`cat ~/.hcl/aliases`" hcl
 
 Note: You will need to have run `hcl` at least once to create the aliases
 file. Without it, this command will fail with an error.
