@@ -1,9 +1,9 @@
 # Recent Changes in HCl
 
-## latest
+## v0.4.12 2014-02-04
 
-* fixed crash when stopping a timer the next day
 * fixed crash when caching tasks for the first time, closes #56
+* fixed crash when stopping a timer the next day
 * added --changelog option
 * remove completion command, cache aliases in a file instead, closes #51
 * confirm timer deletion/cancellation, closes #47
