@@ -114,7 +114,7 @@ the same arguments as start:
 
 The above starts and immediately stops a one-hour timer with the given note.
 
-## Advanced Usage
+## ADVANCED USAGE
 
 ### Bash Auto-completion of Task Aliases
 
