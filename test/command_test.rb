@@ -25,13 +25,13 @@ class CommandTest < HCl::TestCase
   end
 
   def test_tasks
-    HCl::Task.expects(:all).returns([HCl::Task.new(
-      id:123,
-      name: 'Dev',
-      project: HCl::Project.new(id:456, name:'App', client:'Bob', code:'b')
-    )])
+    FileUtils.rm_rf ENV['HCL_DIR']+"/cache"
+    register_uri(:get, '/daily', {:day_entries=>[], :projects=> [{
+      :name=>"Harvest Command Line", :code=>"hcl", :id=>"123", :client=>"zenhob",
+      :tasks=> [{:name=>"Development", :id=>"456"} ]
+    }]})
     result = tasks
-    assert_equal "456 123\tBob - [b] App - Dev", result
+    assert_equal "123 456\tzenhob - [hcl] Harvest Command Line - Development", result
   end
 
   def test_show
