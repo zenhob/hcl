@@ -28,7 +28,7 @@ module HCl
     def tasks project_code=nil
       tasks = Task.all
       if tasks.empty? # cache tasks
-        DayEntry.today
+        DayEntry.today(http)
         tasks = Task.all
       end
       tasks.select! {|t| t.project.code == project_code } if project_code
