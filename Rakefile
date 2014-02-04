@@ -10,15 +10,28 @@ Rake::TestTask.new do |t|
 end
 task :default => :test
 
+# process the README into a manual page using ronn
 require 'ronn'
 task :man do
   print "Writing manual page..."
+  readme = File.read('README.markdown')
+  head, content = readme.split("## SYNOPSIS\n")
+  content.prepend <<-END
+hcl(1) -- Track time with Harvest time sheets
+=============================================
+
+## SYNOPSIS
+  END
+  FileUtils.mkdir_p('man')
+  File.write('man/hcl.1.ronn', content)
   File.open('man/hcl.1','w').tap do |man|
     man.write Ronn::Document.new('man/hcl.1.ronn').to_roff
   end
   puts "done."
 end
 task 'build:gem' => [:man]
+task 'install' => [:man]
+task 'release' => [:man]
 
 require 'yard'
 YARD::Rake::YardocTask.new

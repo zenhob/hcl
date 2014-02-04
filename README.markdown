@@ -11,7 +11,7 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 [htt]: http://www.getharvest.com/api/time_tracking
 [rdoc]: http://rdoc.info/github/zenhob/hcl/file/README.markdown
 
-## Quick Start
+## GETTING STARTED
 
 You can install hcl directly from rubygems.org:
 
@@ -21,7 +21,7 @@ or you can install from source:
 
     rake install
 
-## Usage
+## SYNOPSIS
 
     hcl [start] @<task_alias> [+<time>] [<message>]
     hcl note <message>
@@ -36,6 +36,8 @@ or you can install from source:
     hcl (cancel | nvm | oops)
     hcl config
     hcl status
+
+## DESCRIPTION
 
 ### Available Projects and Tasks
 
@@ -184,7 +186,7 @@ current response time, along with a timestamp of when it was last tested.
 
 [status API]: http://harveststatus.com/status_api
 
-## Author
+## AUTHOR
 
 HCl was designed and implemented by [Zack Hobson][zgh].
 

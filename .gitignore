@@ -9,3 +9,4 @@ doc
 coverage
 test/dot_hcl
 *.1
+man/hcl.1.ronn
