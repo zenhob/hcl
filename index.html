@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>HCl by zenhob</title>
+    <title>Harvest Command Line by zenhob</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -15,7 +15,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>HCl</h1>
+        <h1>Harvest Command Line</h1>
         <p>Command-line tool for manipulating Harvest timesheets</p>
 
         <p class="view"><a href="https://github.com/zenhob/hcl">View the Project on GitHub <small>zenhob/hcl</small></a></p>
@@ -34,49 +34,57 @@
 <p>HCl is a command-line tool for interacting with Harvest time sheets using the
 <a href="http://www.getharvest.com/api/time_tracking">Harvest time tracking API</a>.</p>
 
+<p><a href="http://rdoc.info/github/zenhob/hcl/file/README.markdown">View this documentation online</a>.</p>
+
+<p><a href="https://travis-ci.org/zenhob/hcl"><img src="https://travis-ci.org/zenhob/hcl.png?branch=master" alt="Build Status"></a>
+<a href="http://badge.fury.io/rb/hcl"><img src="https://badge.fury.io/rb/hcl.png" alt="Gem Version"></a></p>
+
 <h2>
-<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>GETTING STARTED</h2>
 
 <p>You can install hcl directly from rubygems.org:</p>
 
-<pre><code>$ gem install hcl
+<pre><code>gem install hcl
 </code></pre>
 
 <p>or you can install from source:</p>
 
-<pre><code>$ rake install
-</code></pre>
-
-<p>If you're using HCl for the first time, the show command sets up your
-Harvest credentials:</p>
-
-<pre><code>$ hcl show
+<pre><code>rake install
 </code></pre>
 
 <h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a name="synopsis" class="anchor" href="#synopsis"><span class="octicon octicon-link"></span></a>SYNOPSIS</h2>
 
 <pre><code>hcl [start] @&lt;task_alias&gt; [+&lt;time&gt;] [&lt;message&gt;]
 hcl note &lt;message&gt;
-hcl stop [message]
+hcl stop [&lt;message&gt;]
 hcl resume [@&lt;task_alias&gt;]
 hcl log @&lt;task_alias&gt; [+&lt;time&gt;] [&lt;message&gt;]
-hcl show [date]
-hcl tasks
+hcl show [&lt;date&gt;]
+hcl tasks [&lt;project_code&gt;]
 hcl alias &lt;task_alias&gt; &lt;project_id&gt; &lt;task_id&gt;
+hcl unalias &lt;task_alias&gt;
 hcl aliases
 hcl (cancel | nvm | oops)
+hcl config
+hcl status
 </code></pre>
+
+<h2>
+<a name="description" class="anchor" href="#description"><span class="octicon octicon-link"></span></a>DESCRIPTION</h2>
 
 <h3>
 <a name="available-projects-and-tasks" class="anchor" href="#available-projects-and-tasks"><span class="octicon octicon-link"></span></a>Available Projects and Tasks</h3>
 
-<p>To start a new timer you need to identify the project and task. After you've
-used the show command you can use the tasks command to view a cached list of
-available tasks.</p>
+<p>To start a new timer you need to identify the project and task.
+The tasks command displays a list of available tasks with their
+project and task IDs.</p>
 
-<pre><code>$ hcl tasks
+<pre><code>hcl tasks
 </code></pre>
+
+<p>You can also pass a project code (this is the short optional code associated
+with each project) to list only the tasks for that project.</p>
 
 <h3>
 <a name="starting-a-timer" class="anchor" href="#starting-a-timer"><span class="octicon octicon-link"></span></a>Starting a Timer</h3>
@@ -84,8 +92,8 @@ available tasks.</p>
 <p>Since it's not practical to enter two long numbers every time you want to
 identify a task, HCl supports task aliases:</p>
 
-<pre><code>$ hcl alias tacodev 1234 5678
-$ hcl @tacodev Adding a new feature
+<pre><code>hcl alias tacodev 1234 5678
+hcl @tacodev Adding a new feature
 </code></pre>
 
 <h3>
@@ -95,8 +103,8 @@ $ hcl @tacodev Adding a new feature
 This can be expressed in floating-point or HH:MM. The following two
 commands are equivalent:</p>
 
-<pre><code>$ hcl @tacodev +0:15 Doing some stuff
-$ hcl +.25 @tacodev Doing some stuff
+<pre><code>hcl @tacodev +0:15 Doing some stuff
+hcl +.25 @tacodev Doing some stuff
 </code></pre>
 
 <h3>
@@ -104,7 +112,14 @@ $ hcl +.25 @tacodev Doing some stuff
 
 <p>While a task is running you can append lines to the task notes:</p>
 
-<pre><code>$ hcl note Then I did something else
+<pre><code>hcl note Then I did something else
+</code></pre>
+
+<p><strong>Note</strong> that <code>show</code> only displays the last line of the timer notes.
+You can list all the notes for a running timer by issuing the note
+command without any arguments:</p>
+
+<pre><code>hcl note
 </code></pre>
 
 <h3>
@@ -114,7 +129,7 @@ $ hcl +.25 @tacodev Doing some stuff
 a time is supported). You can provide a message when stopping a timer as
 well:</p>
 
-<pre><code>$ hcl stop All done doing things
+<pre><code>hcl stop All done doing things
 </code></pre>
 
 <h3>
@@ -123,8 +138,8 @@ well:</p>
 <p>You can resume a stopped timer. Specify a task to resume the last timer
 for that task:</p>
 
-<pre><code>$ hcl resume
-$ hcl resume @xdev
+<pre><code>hcl resume
+hcl resume @xdev
 </code></pre>
 
 <h3>
@@ -133,7 +148,7 @@ $ hcl resume @xdev
 <p>If you accidentally started a timer that you didn't mean to, you can cancel
 it:</p>
 
-<pre><code>$ hcl cancel
+<pre><code>hcl cancel
 </code></pre>
 
 <p>This will delete the running timer, or the last-updated timer if one isn't
@@ -145,34 +160,91 @@ running. You can also use <code>nvm</code> or <code>oops</code> instead of <code
 <p>You can log time and notes without leaving a timer running. It takes
 the same arguments as start:</p>
 
-<pre><code>$ hcl log @xdev +1 Worked for an hour.
+<pre><code>hcl log @xdev +1 Worked for an hour.
 </code></pre>
 
 <p>The above starts and immediately stops a one-hour timer with the given note.</p>
 
+<h2>
+<a name="advanced-usage" class="anchor" href="#advanced-usage"><span class="octicon octicon-link"></span></a>ADVANCED USAGE</h2>
+
 <h3>
 <a name="bash-auto-completion-of-task-aliases" class="anchor" href="#bash-auto-completion-of-task-aliases"><span class="octicon octicon-link"></span></a>Bash Auto-completion of Task Aliases</h3>
 
-<p>You can enable auto-completion of task aliases by adding this to your bashrc:</p>
+<p>You can enable auto-completion of task aliases by adding this to your shell
+configuration (note the backticks inside the double quotes):</p>
 
-<pre><code>eval `hcl completion`
+<pre><code>complete -W "`cat ~/.hcl/aliases`" hcl
 </code></pre>
+
+<p>Warning: You will need to have run <code>hcl</code> at least once to create the aliases
+file. Without it, this command will fail with an error.</p>
+
+<h3>
+<a name="configuration-profiles" class="anchor" href="#configuration-profiles"><span class="octicon octicon-link"></span></a>Configuration Profiles</h3>
+
+<p>You can modify your credentials with the <code>--reauth</code> option, and review them
+with <code>hcl config</code>. If you'd rather store multiple configurations at
+once, specify an alternate configuration directory in the environment as
+<code>HCL_DIR</code>. This can be used to interact with multiple harvest accounts at
+once.</p>
+
+<p>Here is a shell alias <code>myhcl</code> with a separate configuration from the
+main <code>hcl</code> command, and another command to configure alias completion:</p>
+
+<pre><code>alias myhcl="env HCL_DIR=~/.myhcl hcl"
+complete -W "`cat ~/.myhcl/aliases`" myhcl
+</code></pre>
+
+<p>Adding something like the above to your bashrc will enable a new command,
+<code>myhcl</code>. When using <code>myhcl</code> you can use different credentials and aliases,
+while <code>hcl</code> will continue to function with your original configuration.</p>
+
+<h3>
+<a name="interactive-console" class="anchor" href="#interactive-console"><span class="octicon octicon-link"></span></a>Interactive Console</h3>
+
+<p>An interactive Ruby console is provided to allow you to use the fairly
+powerful Harvest API client built into HCl, since not all of its
+features are exposed via the command line. The current {HCl::App}
+instance is available as <code>hcl</code>.</p>
+
+<p>It's also possible to issue HCl commands directly (except <code>alias</code>, see
+below), or to query specific JSON end points and have the results
+pretty-printed:</p>
+
+<pre><code>hcl console
+hcl&gt; show "yesterday"
+# =&gt; prints yesterday's timesheet, note the quotes!
+hcl&gt; hcl.http.get('daily')
+# =&gt; displays a pretty-printed version of the JSON output
+</code></pre>
+
+<p>Note that the HCl internals may change without notice.
+Also, commands (like <code>alias</code>) that are also reserved words in Ruby
+can't be issued directly (use <code>send :alias</code> instead).</p>
 
 <h3>
 <a name="date-formats" class="anchor" href="#date-formats"><span class="octicon octicon-link"></span></a>Date Formats</h3>
 
 <p>Dates can be expressed in a variety of ways. See the <a href="http://chronic.rubyforge.org/">Chronic documentation</a>
 for more information about available date input formats. The following
-commands show the timesheet for the specified day:</p>
+commands show the time sheet for the specified day:</p>
 
-<pre><code>$ hcl show yesterday
-$ hcl show last friday
-$ hcl show 2 days ago
-$ hcl show 1 week ago
+<pre><code>hcl show yesterday
+hcl show last friday
+hcl show 2 days ago
+hcl show 1 week ago
 </code></pre>
 
+<h3>
+<a name="harvest-service-status" class="anchor" href="#harvest-service-status"><span class="octicon octicon-link"></span></a>Harvest service status</h3>
+
+<p>Harvest provides a <a href="http://harveststatus.com/status_api">status API</a>, which you can query using the
+<code>hcl status</code> command. This will tell you whether Harvest itself is up and the
+current response time, along with a timestamp of when it was last tested.</p>
+
 <h2>
-<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
+<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>AUTHOR</h2>
 
 <p>HCl was designed and implemented by <a href="http://github.com/zenhob">Zack Hobson</a>.</p>
 
