@@ -116,11 +116,11 @@ The above starts and immediately stops a one-hour timer with the given note.
 ### Bash Auto-completion of Task Aliases
 
 You can enable auto-completion of task aliases by adding this to your shell
-configuration:
+configuration (note the backticks inside the double quotes):
 
     complete -W "`cat ~/.hcl/aliases`" hcl
 
-Note: You will need to have run `hcl` at least once to create the aliases
+Warning: You will need to have run `hcl` at least once to create the aliases
 file. Without it, this command will fail with an error.
 
 ### Configuration Profiles
