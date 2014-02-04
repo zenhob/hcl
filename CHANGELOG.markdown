@@ -6,6 +6,7 @@
 * remove completion command, cache aliases in a file instead, closes #51
 * confirm timer deletion/cancellation, closes #47
 * fixed: crash when stopping a timer the next day
+* added `status` command to query Harvest service status
 
 ## v0.4.11 2014-01-25
 
