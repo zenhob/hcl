@@ -124,6 +124,12 @@ Commands:
     # display the daily timesheet
     hcl [show [<date>]]
 
+    # show your current credentials
+    hcl config
+
+    # display Harvest service status
+    hcl status
+
 Examples:
     hcl alias mytask 1234 4567
     hcl @mytask +:15 Doing a thing that I started 15 minutes ago.

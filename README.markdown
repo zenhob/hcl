@@ -35,6 +35,7 @@ or you can install from source:
     hcl aliases
     hcl (cancel | nvm | oops)
     hcl config
+    hcl status
 
 ### Available Projects and Tasks
 
@@ -174,6 +175,12 @@ commands show the time sheet for the specified day:
     hcl show 1 week ago
 
 [cd]: http://chronic.rubyforge.org/
+
+Harvest provides an [status API], which you can query using the
+`hcl status` command. This will tell you whether Harvest itself is up and the
+current response time, along with a timestamp of when it was last tested.
+
+[status API]: http://harveststatus.com/status_api
 
 ## Author
 
