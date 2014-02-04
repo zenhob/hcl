@@ -176,7 +176,7 @@ commands show the time sheet for the specified day:
 
 [cd]: http://chronic.rubyforge.org/
 
-Harvest provides an [status API], which you can query using the
+Harvest provides a [status API], which you can query using the
 `hcl status` command. This will tell you whether Harvest itself is up and the
 current response time, along with a timestamp of when it was last tested.
 
