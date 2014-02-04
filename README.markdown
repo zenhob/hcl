@@ -136,7 +136,7 @@ Here is a shell alias `myhcl` with a separate configuration from the
 main `hcl` command, and another command to configure alias completion:
 
     alias myhcl="env HCL_DIR=~/.myhcl hcl"
-    complete -W `cat ~/.myhcl/aliases` myhcl
+    complete -W "`cat ~/.myhcl/aliases`" myhcl
 
 Adding something like the above to your bashrc will enable a new command,
 `myhcl`. When using `myhcl` you can use different credentials and aliases,
