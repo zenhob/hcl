@@ -1,5 +1,9 @@
 # Recent Changes in HCl
 
+## v0.4.13 2014-02-04
+
+* oops, fixed a syntax error that was accidentally committed before release!
+
 ## v0.4.12 2014-02-04
 
 * fixed crash when caching tasks for the first time, closes #56
