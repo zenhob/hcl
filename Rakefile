@@ -1,3 +1,6 @@
+require 'rubygems/tasks'
+Gem::Tasks.new
+
 require 'fileutils'
 task :clean do
   FileUtils.rm_rf %w[ pkg coverage doc man/hcl.1 ]
@@ -14,8 +17,7 @@ task :default => :test
 require 'ronn'
 task :man do
   print "Writing manual page..."
-  readme = File.read('README.markdown')
-  head, content = readme.split("## SYNOPSIS\n")
+  head, content = File.read('README.markdown').split("## SYNOPSIS\n")
   content.prepend <<-END
 hcl(1) -- Track time with Harvest time sheets
 =============================================
@@ -29,14 +31,9 @@ hcl(1) -- Track time with Harvest time sheets
   end
   puts "done."
 end
-task 'build:gem' => [:man]
-task 'install' => [:man]
-task 'release' => [:man]
+task "pkg/hcl-#{HCl::VERSION}.gem" => :man
 
 require 'yard'
 YARD::Rake::YardocTask.new
 task :doc => [:yard, :man]
-
-require 'rubygems/tasks'
-Gem::Tasks.new
 
