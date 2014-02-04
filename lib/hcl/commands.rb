@@ -10,6 +10,16 @@ module HCl
       http.config_hash.merge(password:'***').map {|k,v| "#{k}: #{v}" }.join("\n")
     end
 
+    # Show the network status of the Harvest service.
+    def status
+      result = Faraday.new("http://harveststatus.com/") do |f|
+        f.use :harvest, '', ''
+        f.adapter Faraday.default_adapter
+      end.get('status.json').body
+      date = Time.at(result[:last_check_time].to_i)
+      "Harvest is #{result[:status]}, response time: #{result[:last_response_time]}ms. [#{date}]"
+    end
+
     def console
       Console.new(self)
       nil

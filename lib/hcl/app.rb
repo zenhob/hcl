@@ -181,7 +181,7 @@ EOM
 
     def read_settings
       if File.exists? SETTINGS_FILE
-        @settings = YAML.load(File.read(SETTINGS_FILE))
+        @settings = YAML.load(File.read(SETTINGS_FILE)) || {}
       else
         @settings = {}
       end
