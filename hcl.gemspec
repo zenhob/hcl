@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.executables = ["hcl"]
   s.files = %w[LICENSE Rakefile Gemfile bin/hcl man/hcl.1] + Dir['*.markdown'] +
     Dir['lib/**/*.rb'] + Dir['test/**/*.rb']
-  s.homepage = "http://zackhobson.com/hcl/"
+  s.homepage = "https://zenhob.github.io/hcl/"
   s.licenses = ["MIT"]
   s.summary = "Harvest timesheets from the command-line"
 
