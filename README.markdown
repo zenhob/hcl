@@ -21,6 +21,14 @@ or you can install from source:
 
     rake install
 
+Once installed, you can view this README as a man page:
+
+    gem man hcl
+
+I recommend aliasing your `man` command to additionally load gem man pages:
+
+    alias man="gem man -ls"
+
 ## SYNOPSIS
 
     hcl [start] @<task_alias> [+<time>] [<message>]

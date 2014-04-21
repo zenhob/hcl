@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.summary = "Harvest timesheets from the command-line"
 
+  s.add_runtime_dependency 'gem-man', '~>0.3.0'
   s.add_runtime_dependency 'trollop', '~>2.0'
   s.add_runtime_dependency 'chronic', '~>0.10.2'
   s.add_runtime_dependency 'highline', '~>1.6.20'
