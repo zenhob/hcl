@@ -66,7 +66,7 @@ module HCl
       rescue RuntimeError => e
         $stderr.puts "Error: #{e}"
         exit 1
-      rescue SocketError => e
+      rescue Faraday::Error => e
         $stderr.puts "Connection failed. (#{e.message})"
         exit 1
       rescue HarvestMiddleware::ThrottleFailure => e

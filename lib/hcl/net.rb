@@ -19,7 +19,11 @@ module HCl
         "https://#{subdomain}.harvestapp.com"
       ) do |f|
         f.use :harvest, login, password
-        f.adapter Faraday.default_adapter
+        if opts['test_adapter']
+          f.adapter :test, opts['test_adapter']
+        else
+          f.adapter Faraday.default_adapter
+        end
       end
     end
 

@@ -22,7 +22,7 @@ require 'hcl'
 require 'minitest/autorun'
 require 'mocha/setup'
 require 'fileutils'
-require 'fakeweb'
+require 'faraday'
 require 'debugger' if ENV['DEBUG']
 
 # require test extensions/helpers
@@ -31,20 +31,20 @@ Dir[File.dirname(__FILE__) + '/ext/*.rb'].each { |ext| require ext }
 class HCl::TestCase < MiniTest::Test
   attr_reader :http
   def setup
-    FakeWeb.allow_net_connect = false
+    @stubs = Faraday::Adapter::Test::Stubs.new
     @http = HCl::Net.new \
       'login' => 'bob',
       'password' => 'secret',
-      'subdomain' => 'bobclock'
+      'subdomain' => 'bobclock',
+      'test_adapter' => @stubs
   end
 
   def register_uri method, path, data={}
-    FakeWeb.register_uri(method, "https://bob:secret@bobclock.harvestapp.com#{path}",
-                         body: Yajl::Encoder.encode(data))
+    @stubs.send(method, path) { [200, {}, Yajl::Encoder.encode(data)] }
   end
 
   def teardown
-    FakeWeb.clean_registry
+    @stubs.verify_stubbed_calls
   end
 end
 

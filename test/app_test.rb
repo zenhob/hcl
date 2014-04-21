@@ -40,7 +40,7 @@ class AppTest < HCl::TestCase
 
   def test_socket_error
     app = HCl::App.new
-    app.expects(:show).raises(SocketError)
+    app.expects(:show).raises(Faraday::Error)
     app.expects(:exit).with(1)
     app.process_args('show').run
     assert_match /connection failed/i, error_output

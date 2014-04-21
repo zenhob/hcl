@@ -18,12 +18,11 @@ GEM
     coderay (1.1.0)
     docile (1.1.2)
     escape_utils (1.0.1)
-    fakeweb (1.3.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.3-java)
     gem-man (0.3.0)
-    highline (1.6.20)
+    highline (1.6.21)
     hpricot (0.8.6)
     hpricot (0.8.6-java)
     metaclass (0.0.2)
@@ -72,7 +71,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  fakeweb
   hcl!
   minitest
   mocha
