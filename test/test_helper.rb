@@ -23,7 +23,7 @@ require 'minitest/autorun'
 require 'mocha/setup'
 require 'fileutils'
 require 'faraday'
-require 'debugger' if ENV['DEBUG']
+require 'byebug' if ENV['DEBUG']
 
 # require test extensions/helpers
 Dir[File.dirname(__FILE__) + '/ext/*.rb'].each { |ext| require ext }
