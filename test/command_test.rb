@@ -92,7 +92,6 @@ class CommandTest < HCl::TestCase
   end
 
   def test_stop
-    entry = stub
     register_uri(:get, '/daily', {day_entries:[{id:123,notes:'',hours:1,client:nil,project:nil,timer_started_at:DateTime.now}]})
     register_uri(:post, '/daily/update/123', {day_entry:{notes:'all done'}})
     register_uri(:get, '/daily/timer/123')
@@ -100,7 +99,6 @@ class CommandTest < HCl::TestCase
   end
 
   def test_stop_yesterday
-    entry = stub
     yesterday = (DateTime.now - 1).strftime("%3j")
     register_uri(:get, '/daily', {day_entries:[]})
     register_uri(:get, "/daily/#{yesterday}/2014", {day_entries:[{id:321,notes:'',hours:1,client:nil,project:nil,timer_started_at:DateTime.now}]})
