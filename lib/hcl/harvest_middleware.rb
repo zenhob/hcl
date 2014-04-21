@@ -25,7 +25,7 @@ class HCl::HarvestMiddleware < Faraday::Request::BasicAuthentication
           env[:body]
         end
       when 300..399
-        raise Failure, "Redirected! Perhaps your ssl configuration variable is set incorrectly?"
+        raise Failure, "Redirected!"
       when 400..499
         raise AuthFailure, "Login failed."
       when 503

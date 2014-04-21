@@ -6,7 +6,6 @@ class NetTest < HCl::TestCase
     assert_equal 'bob', http.login
     assert_equal 'secret', http.password
     assert_equal 'bobclock', http.subdomain
-    assert_equal true, http.ssl
   end
 
   def test_http_deep_unescape

@@ -50,7 +50,7 @@ class AppTest < HCl::TestCase
     app = HCl::App.new
     configured = states('configured').starts_as(false)
     app.expects(:show).raises(HCl::HarvestMiddleware::AuthFailure).when(configured.is(false))
-    app.expects(:ask).returns('xxx').times(4).when(configured.is(false))
+    app.expects(:ask).returns('xxx').times(3).when(configured.is(false))
     app.expects(:write_config).then(configured.is(true))
     app.expects(:show).when(configured.is(true))
     app.process_args('show').run

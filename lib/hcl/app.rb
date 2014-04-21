@@ -169,7 +169,6 @@ EOM
       config['login'] = ask("Email Address: ").to_s
       config['password'] = ask("Password: ") { |q| q.echo = false }.to_s
       config['subdomain'] = ask("Subdomain: ").to_s
-      config['ssl'] = /^y/.match(ask("Use SSL? (y/n): ").downcase)
       @http = HCl::Net.new config
       write_config config
     end
@@ -209,7 +208,7 @@ EOM
     end
 
     def has_security_command?
-      if @has_security.nil? 
+      if @has_security.nil?
         @has_security = File.exists?('/usr/bin/security') &&
           (`/usr/bin/security error 1` =~ /CSSM_ERRCODE_INTERNAL_ERROR/)
       else

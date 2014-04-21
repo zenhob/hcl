@@ -35,8 +35,7 @@ class HCl::TestCase < MiniTest::Test
     @http = HCl::Net.new \
       'login' => 'bob',
       'password' => 'secret',
-      'subdomain' => 'bobclock',
-      'ssl' => true
+      'subdomain' => 'bobclock'
   end
 
   def register_uri method, path, data={}

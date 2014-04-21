@@ -1,5 +1,9 @@
 # Recent Changes in HCl
 
+## next
+
+* remove the non-SSL option as it's no longer needed, closes #57
+
 ## v0.4.13 2014-02-04
 
 * oops, fixed a syntax error that was accidentally committed before release!

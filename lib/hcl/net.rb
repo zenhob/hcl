@@ -4,7 +4,7 @@ require 'faraday'
 module HCl
   class Net
     # configuration accessors
-    CONFIG_VARS = [ :login, :password, :subdomain, :ssl ].freeze.
+    CONFIG_VARS = [ :login, :password, :subdomain ].freeze.
       each { |config_var| attr_reader config_var }
 
     def config_hash
@@ -15,9 +15,8 @@ module HCl
       @login = opts['login'].freeze
       @password = opts['password'].freeze
       @subdomain = opts['subdomain'].freeze
-      @ssl = !!opts['ssl']
       @http = Faraday.new(
-        "http#{ssl ? 's' : '' }://#{subdomain}.harvestapp.com"
+        "https://#{subdomain}.harvestapp.com"
       ) do |f|
         f.use :harvest, login, password
         f.adapter Faraday.default_adapter
