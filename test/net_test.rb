@@ -8,6 +8,26 @@ class NetTest < HCl::TestCase
     assert_equal 'bobclock', http.subdomain
   end
 
+  def test_redirect_failure
+    register_status(:get, "/taco", 302)
+    assert_raises(HCl::HarvestMiddleware::Failure) { http.get('/taco') }
+  end
+
+  def test_auth_failure
+    register_status(:get, "/burrito", 403)
+    assert_raises(HCl::HarvestMiddleware::AuthFailure) { http.get('/burrito') }
+  end
+
+  def test_throttle_failure
+    register_status(:get, "/sushi", 503)
+    assert_raises(HCl::HarvestMiddleware::ThrottleFailure) { http.get('/sushi') }
+  end
+
+  def test_generic_failure
+    register_status(:get, "/kimchee", 500)
+    assert_raises(HCl::HarvestMiddleware::Failure) { http.get('/kimchee') }
+  end
+
   def test_http_deep_unescape
     register_uri(:get, "/foo", {
       status:'gotten &amp; got!',

@@ -43,6 +43,10 @@ class HCl::TestCase < MiniTest::Test
     @stubs.send(method, path) { [200, {}, Yajl::Encoder.encode(data)] }
   end
 
+  def register_status method, path, status_code
+    @stubs.send(method, path) { [status_code.to_i, {}, ''] }
+  end
+
   def teardown
     @stubs.verify_stubbed_calls
   end
