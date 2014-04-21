@@ -5,18 +5,28 @@ class TaskTest < HCl::TestCase
   end
 
   def test_cache_tasks_hash
-    HCl::Task.cache_tasks_hash({ projects: [{
-      name: "Click and Type",
-      id: 3,
-      client: "AFS",
-      tasks: [{
-        name: "Security support",
-        id: 14,
-        billable: true
-      }]
-    }]})
-    assert_equal 1, HCl::Task.all.size
-    assert_equal 'Security support', HCl::Task.all.first.name
+    HCl::Task.cache_tasks_hash({ projects: [ {
+        name: "taco tasks",
+        id: 3,
+        client: "Taco Town",
+        tasks: [{
+          name: "frying tortilla",
+          id: 12,
+          billable: true
+        }]
+      }, {
+        name: "burrito tasks",
+        id: 5,
+        client: "Burritoville",
+        tasks: [{
+          name: "wrapping",
+          id: 16,
+          billable: true
+        }]
+      } ]})
+    assert_equal 2, HCl::Task.all.size
+    assert_equal 'wrapping', HCl::Task.all.first.name
+    assert_equal 'frying tortilla', HCl::Task.all.last.name
   end
 
   def test_add

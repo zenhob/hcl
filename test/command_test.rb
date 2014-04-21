@@ -19,6 +19,18 @@ class CommandTest < HCl::TestCase
     @settings
   end
 
+  def test_config
+    config.each_line do |config_line|
+      assert_match(/^(login: bob|password: \*\*\*|subdomain: bobclock)$/, config_line)
+    end
+  end
+
+  def test_set_without_args
+    @settings = {'taco.time'=>'now'}
+    set
+    assert_equal "taco.time: now\n", standard_output
+  end
+
   def test_log_failure
     HCl::DayEntry.expects(:with_timer).returns(stub)
     assert_raises(HCl::CommandError) { log "stuff" }
@@ -29,9 +41,15 @@ class CommandTest < HCl::TestCase
     register_uri(:get, '/daily', {:day_entries=>[], :projects=> [{
       :name=>"Harvest Command Line", :code=>"hcl", :id=>"123", :client=>"zenhob",
       :tasks=> [{:name=>"Development", :id=>"456"} ]
+    },{
+      :name=>"Detached", :code=>'', :id=>"456", :client=>"zenhob",
+      :tasks=> [{:name=>"Development", :id=>"678"} ]
     }]})
     result = tasks
-    assert_equal "123 456\tzenhob - [hcl] Harvest Command Line - Development", result
+    assert_equal \
+      "456 678\tzenhob - Detached - Development\n"+
+      "123 456\tzenhob - [hcl] Harvest Command Line - Development",
+      result
   end
 
   def test_show
