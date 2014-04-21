@@ -1,8 +1,9 @@
 # Recent Changes in HCl
 
-## next
+## v0.4.14 2014-04-21
 
 * remove the non-SSL option as it's no longer needed, closes #57
+* add a dependency on `gem-man` and instructions for use
 
 ## v0.4.13 2014-02-04
 
