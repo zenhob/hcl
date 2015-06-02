@@ -19,7 +19,7 @@ You can install hcl directly from rubygems.org:
 
 or you can install from source:
 
-    rake install
+    rake doc && rake install
 
 Once installed, you can view this README as a man page:
 
