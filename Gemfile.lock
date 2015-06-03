@@ -90,3 +90,6 @@ DEPENDENCIES
   simplecov
   yajl-ruby
   yard
+
+BUNDLED WITH
+   1.10.2
