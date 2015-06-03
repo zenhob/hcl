@@ -12,7 +12,7 @@ module HCl
 
     # Show the network status of the Harvest service.
     def status
-      result = Faraday.new("http://harveststatus.com/") do |f|
+      result = Faraday.new("http://kccljmymlslr.statuspage.io/api/v2") do |f|
         f.use :harvest, '', ''
         f.adapter Faraday.default_adapter
       end.get('status.json').body
