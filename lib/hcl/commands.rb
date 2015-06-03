@@ -15,8 +15,12 @@ module HCl
       result = Faraday.new("http://kccljmymlslr.statuspage.io/api/v2") do |f|
         f.adapter Faraday.default_adapter
       end.get('status.json').body
-      date = Time.at(result[:last_check_time].to_i)
-      "Harvest is #{result[:status]}, response time: #{result[:last_response_time]}ms. [#{date}]"
+
+      json = Yajl::Parser.parse result, symbolize_keys: true
+      status = json[:status][:description]
+      updated_at = DateTime.parse(json[:page][:updated_at]).strftime "%F %T %:z"
+
+      "#{status} [#{updated_at}]"
     end
 
     def console
