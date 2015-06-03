@@ -23,6 +23,7 @@ GEM
     escape_utils (1.1.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
+    ffi (1.9.8-java)
     gem-man (0.3.0)
     highline (1.7.2)
     hpricot (0.8.6)
@@ -40,6 +41,11 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry (0.10.1-java)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+      spoon (~> 0.0)
     rake (10.4.2)
     rdiscount (2.1.8)
     ronn (0.7.3)
@@ -58,6 +64,8 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
     slop (3.6.0)
+    spoon (0.0.4)
+      ffi
     trollop (2.1.2)
     yajl-ruby (1.2.1)
     yard (0.8.7.6)
@@ -82,6 +90,3 @@ DEPENDENCIES
   simplecov
   yajl-ruby
   yard
-
-BUNDLED WITH
-   1.10.2
