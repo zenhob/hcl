@@ -2,7 +2,7 @@ source "https://rubygems.org"
 gemspec
 gem 'ronn', group:['development']
 # XXX this is dumb but it's crazy hard to get platform specfic deps into a gemspec
-gem 'byebug', group:['test','development'], platform:'ruby_20'
+gem 'byebug', group:['test','development'], platform: %w/mri_20 mri_21 mri_22/
 gem 'rubysl-abbrev', platform:'rbx'
 gem 'rubysl-singleton', platform:'rbx'
 gem 'rubysl-rexml', platform:'rbx'
