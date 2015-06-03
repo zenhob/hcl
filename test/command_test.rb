@@ -100,8 +100,9 @@ class CommandTest < HCl::TestCase
 
   def test_stop_yesterday
     yesterday = (DateTime.now - 1).strftime("%3j")
+    yesteryear = (DateTime.now - 1).strftime("%Y")
     register_uri(:get, '/daily', {day_entries:[]})
-    register_uri(:get, "/daily/#{yesterday}/2014", {day_entries:[{id:321,notes:'',hours:1,client:nil,project:nil,timer_started_at:DateTime.now}]})
+    register_uri(:get, "/daily/#{yesterday}/#{yesteryear}", {day_entries:[{id:321,notes:'',hours:1,client:nil,project:nil,timer_started_at:DateTime.now}]})
     register_uri(:post, '/daily/update/321', {day_entry:{notes:'all done next day'}})
     register_uri(:get, '/daily/timer/321')
     stop 'all done next day'
