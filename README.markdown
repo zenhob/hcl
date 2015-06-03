@@ -9,7 +9,7 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 [![Gem Version](https://badge.fury.io/rb/hcl.png)](http://badge.fury.io/rb/hcl)
 
 [htt]: http://www.getharvest.com/api/time_tracking
-[rdoc]: http://rdoc.info/github/zenhob/hcl/file/README.markdown
+[rdoc]: http://www.rubydoc.info/github/zenhob/hcl/master
 
 ## GETTING STARTED
 
