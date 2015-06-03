@@ -189,10 +189,10 @@ commands show the time sheet for the specified day:
 ### Harvest service status
 
 Harvest provides a [status API], which you can query using the
-`hcl status` command. This will tell you whether Harvest itself is up and the
-current response time, along with a timestamp of when it was last tested.
+`hcl status` command. This will tell you whether Harvest itself is up,
+along with a timestamp of when it was last tested.
 
-[status API]: http://harveststatus.com/status_api
+[status API]: http://harveststatus.com
 
 ## AUTHOR
 
