@@ -52,12 +52,7 @@ GEM
       hpricot (>= 0.8.2)
       mustache (>= 0.7.0)
       rdiscount (>= 1.5.8)
-    rubinius-coverage (2.0.3)
     rubygems-tasks (0.2.4)
-    rubysl-abbrev (2.0.4)
-    rubysl-coverage (2.0.3)
-    rubysl-rexml (2.0.4)
-    rubysl-singleton (2.0.0)
     simplecov (0.10.0)
       docile (~> 1.1.0)
       json (~> 1.8)
@@ -81,14 +76,8 @@ DEPENDENCIES
   mocha
   rake
   ronn
-  rubinius-coverage
   rubygems-tasks
-  rubysl-abbrev
-  rubysl-coverage
-  rubysl-rexml
-  rubysl-singleton
   simplecov
-  yajl-ruby
   yard
 
 BUNDLED WITH
