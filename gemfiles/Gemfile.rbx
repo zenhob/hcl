@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-gemspec path: '../hcl'
+gemspec path: '..'
 
 gem 'rubysl-abbrev'
 gem 'rubysl-singleton'
