@@ -1,6 +1,10 @@
-language: ruby
-rvm:
-  - 2.0.0
-  - 2.1.6
-  - 2.2.2
-  - rbx-2.5.3
+matrix:
+  include:
+    - rvm: 2.0.0
+      gemfile: Gemfile
+    - rvm: 2.1.6
+      gemfile: Gemfile
+    - rvm: 2.2.2
+      gemfile: Gemfile
+    - rvm: rbx-2.5.3
+      gemfile: gemfiles/Gemfile.rbx
