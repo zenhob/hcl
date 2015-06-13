@@ -6,7 +6,7 @@ task :update_bundle do
   system("bundle")
   system("git ci -am 'update gemfile.lock'")
 end
-task :release => :update_bundle
+task :release => [:update_bundle, :man]
 
 require 'fileutils'
 task :clean do
