@@ -1,5 +1,9 @@
 # Recent Changes in HCl
 
+## v0.4.15 2015-06-12
+
+* fix `status` command, closes #59
+
 ## v0.4.14 2014-04-21
 
 * remove the non-SSL option as it's no longer needed, closes #57
