@@ -129,7 +129,7 @@ The above starts and immediately stops a one-hour timer with the given note.
 You can enable auto-completion of commands, project ids, task ids and task aliases by adding this to your shell
 configuration:
 
-    source _hcl_completions
+    source $(ruby -e "print File.dirname(Gem.bin_path('hcl', 'hcl'))")/_hcl_completions
 
 ### Configuration Profiles
 
