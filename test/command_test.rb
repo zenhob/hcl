@@ -55,12 +55,12 @@ class CommandTest < HCl::TestCase
   def test_show
     HCl::DayEntry.expects(:daily).returns([HCl::DayEntry.new({
       hours:'2.06',
-      notes: 'hi world',
+      notes: "hi world\nhello again",
       project: 'App'
     })])
     result = show
     assert_equal \
-      "\t2:03\tApp: hi world\n\t-------------\n\t2:03\ttotal (as of high noon)\n",
+      "\t2:03\tApp: hi world\nhello again\n\t-------------\n\t2:03\ttotal (as of high noon)\n",
       result
   end
 
