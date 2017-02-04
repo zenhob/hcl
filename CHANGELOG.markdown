@@ -1,5 +1,9 @@
 # Recent Changes in HCl
 
+## v0.4.16
+
+* improved bash completion (from chet0xhenry)
+
 ## v0.4.15 2015-06-12
 
 * fix `status` command, closes #59
