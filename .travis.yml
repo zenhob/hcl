@@ -6,5 +6,3 @@ matrix:
       gemfile: Gemfile
     - rvm: 2.2.2
       gemfile: Gemfile
-    - rvm: rbx-2.5.3
-      gemfile: gemfiles/Gemfile.rbx
