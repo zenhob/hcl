@@ -1,0 +1,67 @@
+#!/bin/bash
+
+_hcl_getProjects()
+{
+    $1 tasks | perl -ne 's/ - (?!.* -).*//g; print;' | sed -e 's/\s[0-9]\+\s/ /g' | sed -e 's/\s/ /g' | sort | uniq
+}
+
+_hcl_getTasks()
+{
+    $1 tasks | grep "^$2" | sed -e 's/\s/ /g' | sort | uniq | cut -d" " -f 2-
+}
+
+_hcl()
+{
+    local count=${#COMP_WORDS[@]}
+    local script=${COMP_WORDS[0]}
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    case $count in
+        2)
+            COMPREPLY=( $(compgen -W "start resume log stop note show tasks alias unalias aliases cancel nvm oops config status" -- $cur) )
+            ;;
+        3)
+            local namespace=${COMP_WORDS[1]}
+            
+            case $namespace in
+                'alias')
+                    COMPREPLY=( $(compgen -W "" -- $cur) )
+                ;;
+                'start'|'resume'|'log')
+                    COMPREPLY=( $(compgen -W "$($script aliases | sed -e 's/,//g')" -- $cur) )
+                ;;
+            esac
+            ;;
+        4)
+            local namespace=${COMP_WORDS[1]}
+            local task=${COMP_WORDS[2]}
+            case $namespace in
+                'alias')
+                    local IFS_OLD="$IFS";
+                    local IFS=$'\n';
+                    COMPREPLY=( $(compgen -W "$(_hcl_getProjects $script)" -- $cur) )
+                    local IFS=$IFS_OLD;
+                    if [[ ${#COMPREPLY[*]} -eq 1 ]]; then #Only one completion
+                        COMPREPLY=$(echo $COMPREPLY | sed -e 's/\s.*$//g')
+                    fi
+                ;;
+            esac
+            ;;
+        5)
+            local namespace=${COMP_WORDS[1]}
+            local task=${COMP_WORDS[2]}
+            local projectid=${COMP_WORDS[3]}
+            case $namespace in
+                'alias')
+                    local IFS_OLD="$IFS";
+                    local IFS=$'\n';
+                    COMPREPLY=( $(compgen -W "$(_hcl_getTasks $script $projectid)" -- $cur) )
+                    local IFS=$IFS_OLD;
+                    if [[ ${#COMPREPLY[*]} -eq 1 ]]; then #Only one completion
+                        COMPREPLY=$(echo $COMPREPLY | sed -e 's/\s.*$//g')
+                    fi
+                ;;
+            esac
+            ;;
+    esac 
+}
+complete -F _hcl hcl

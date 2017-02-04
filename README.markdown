@@ -124,15 +124,12 @@ The above starts and immediately stops a one-hour timer with the given note.
 
 ## ADVANCED USAGE
 
-### Bash Auto-completion of Task Aliases
+### Bash Tab Completions
 
-You can enable auto-completion of task aliases by adding this to your shell
-configuration (note the backticks inside the double quotes):
+You can enable auto-completion of commands, project ids, task ids and task aliases by adding this to your shell
+configuration:
 
-    complete -W "`cat ~/.hcl/aliases`" hcl
-
-Warning: You will need to have run `hcl` at least once to create the aliases
-file. Without it, this command will fail with an error.
+    source $(ruby -e "print File.dirname(Gem.bin_path('hcl', 'hcl'))")/_hcl_completions
 
 ### Configuration Profiles
 
@@ -146,7 +143,7 @@ Here is a shell alias `myhcl` with a separate configuration from the
 main `hcl` command, and another command to configure alias completion:
 
     alias myhcl="env HCL_DIR=~/.myhcl hcl"
-    complete -W "`cat ~/.myhcl/aliases`" myhcl
+    complete -F _hcl myhcl
 
 Adding something like the above to your bashrc will enable a new command,
 `myhcl`. When using `myhcl` you can use different credentials and aliases,
