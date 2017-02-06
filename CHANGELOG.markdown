@@ -3,6 +3,7 @@
 ## v0.4.16
 
 * improved bash completion (from chet0xhenry)
+* fix deprecated `respond_to?` impls, closes #72 (charneykaye)
 
 ## v0.4.15 2015-06-12
 

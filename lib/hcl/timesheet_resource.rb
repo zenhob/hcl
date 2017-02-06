@@ -12,7 +12,7 @@ module HCl
       @data.key?(method.to_sym) ? @data[method] : super
     end
 
-    def respond_to? method
+    def respond_to? method, include_all=false
       (@data && @data.key?(method.to_sym)) || super
     end
 
