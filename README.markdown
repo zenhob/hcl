@@ -74,6 +74,15 @@ commands are equivalent:
 
     hcl @tacodev +0:15 Doing some stuff
     hcl +.25 @tacodev Doing some stuff
+    
+### Getting the Current Status
+
+The show command can give you a live view of your current day including
+any running tasks, last note, and total time.
+
+    hcl show
+
+Show can also be used with a variety of date formats. See [Date Formats](#date-formats) for more information
 
 ### Adding Notes to a Running Task
 
