@@ -48,9 +48,9 @@ module HCl
           if command? @command
             result = send @command, *@args
             if not result.nil?
-              if result.respond_to? :join
+              if result.respond_to? :join, include_all=false
                 puts result.join(', ')
-              elsif result.respond_to? :to_s
+              elsif result.respond_to? :to_s, include_all=false
                 puts result
               end
             end
