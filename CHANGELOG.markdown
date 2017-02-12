@@ -1,9 +1,10 @@
 # Recent Changes in HCl
 
-## v0.4.16
+## v0.4.16 2017-02-12
 
 * improved bash completion (from chet0xhenry)
 * fix deprecated `respond_to?` impls, closes #72 (charneykaye)
+* fix manpage installation, closes #75 (thanks to lukehatfield)
 
 ## v0.4.15 2015-06-12
 
