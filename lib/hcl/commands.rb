@@ -118,9 +118,16 @@ module HCl
     end
 
     def log *args
-      fail "There is already a timer running." if DayEntry.with_timer(http)
-      start *args
-      stop
+      date = get_date(args)
+      starting_time = get_starting_time args
+      task = get_task args
+      if task.nil?
+        fail "Unknown task alias, try one of the following: ", aliases.join(', ')
+      end
+      timer = task.add http,
+        :spent_at => date,
+        :starting_time => starting_time,
+        :note => args.join(' ')
     end
 
     def stop *args

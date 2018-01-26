@@ -1,3 +1,5 @@
+require 'chronic'
+
 module HCl
   class CommandError < StandardError; end
   module Utility
@@ -32,6 +34,14 @@ module HCl
       if starting_time
         args.delete(starting_time)
         time2float starting_time
+      end
+    end
+
+    def get_date args
+      ident_index = args.index {|a| a[0] == '@' }
+
+      unless ident_index.nil?
+        Chronic.parse(args.shift(ident_index).join(' '))
       end
     end
 

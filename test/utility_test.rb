@@ -24,6 +24,14 @@ class UtilityTest < HCl::TestCase
     assert_equal 0.25, get_starting_time(%w[ @taco +.25 makin tacos ])
   end
 
+  def test_get_date_without_ident
+    assert_nil get_date(%w[ yesterday +2 no task ])
+  end
+
+  def test_get_date_with_ident
+    assert_equal Chronic.parse('2018-01-15'), get_date(%w[ january 15 2018 @taco +.30 makin tacos ])
+  end
+
   def test_time2float_decimal
     assert_equal 2.5, time2float("2.5")
   end
