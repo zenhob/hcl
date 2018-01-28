@@ -168,7 +168,7 @@ EOM
       puts "Please specify your Harvest credentials.\n"
       config['login'] = ask("Email Address: ").to_s
       config['password'] = ask("Password: ") { |q| q.echo = false }.to_s
-      config['subdomain'] = ask("Subdomain: ").to_s
+      config['subdomain'] = ask("Subdomain (acme in acme.harvestapp.com): ").to_s
       @http = HCl::Net.new config
       write_config config
     end
