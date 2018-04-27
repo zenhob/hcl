@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'chronic', '0.10.2'
   s.add_runtime_dependency 'highline', '1.7.2'
   s.add_runtime_dependency 'faraday', '0.9.1'
-  s.add_runtime_dependency 'yajl-ruby', '1.2.1'
+  s.add_runtime_dependency 'yajl-ruby', '1.3.0'
   s.add_runtime_dependency 'escape_utils', '1.1.0'
   s.add_runtime_dependency 'pry', '0.10.1'
   s.add_development_dependency 'rake'
@@ -30,4 +30,3 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'minitest'
 end
-
