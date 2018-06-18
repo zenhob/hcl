@@ -1,11 +1,3 @@
-function __fish_hcl_needs_command
-    set -l cmd (commandline -opc)
-    if [ (count $cmd) -eq 1 -a $cmd[1] = 'hcl' ]
-        return 0
-    end
-    return 1
-end
-
 function __fish_hcl_using_command
     set -l cmd (commandline -opc)
     if [ (count $cmd) -gt 1 ]
@@ -38,10 +30,10 @@ function __fish_hcl_aliases
     hcl aliases | sed -e "s/, /\n/g"
 end
 
-complete -c hcl -n '__fish_hcl_needs_command' -f -a "start resume log stop note show tasks alias unalias aliases cancel nvm oops config status"
-complete -c hcl -n '__fish_hcl_using_command start' -f -a '(__fish_hcl_aliases)'
-complete -c hcl -n '__fish_hcl_using_command resume' -f -a '(__fish_hcl_aliases)'
-complete -c hcl -n '__fish_hcl_using_command log' -f -a '(__fish_hcl_aliases)'
-complete -c hcl -n '__fish_hcl_using_command alias' -f
+complete -c hcl -f
+complete -c hcl -n '__fish_hcl_arg_count 1' -f -a "start resume log stop note show tasks alias unalias aliases cancel nvm oops config status"
+complete -c hcl -n '__fish_hcl_using_command start; and __fish_hcl_arg_count 2' -f -a '(__fish_hcl_aliases)'
+complete -c hcl -n '__fish_hcl_using_command resume; and __fish_hcl_arg_count 2' -f -a '(__fish_hcl_aliases)'
+complete -c hcl -n '__fish_hcl_using_command log; and __fish_hcl_arg_count 2' -f -a '(__fish_hcl_aliases)'
 complete -c hcl -n '__fish_hcl_using_command alias; and __fish_hcl_arg_count 3' -a '(__fish_hcl_customers)'
 complete -c hcl -n '__fish_hcl_using_command alias; and __fish_hcl_arg_count 4' -a '(__fish_hcl_tasks)'
