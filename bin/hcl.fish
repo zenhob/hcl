@@ -34,10 +34,14 @@ function __fish_hcl_tasks
     hcl tasks | grep "^$customer" | awk -F "\t" '{ split($1,a," "); split($2,b," - "); print a[2] "\t" b[3] }'
 end
 
+function __fish_hcl_aliases
+    hcl aliases | sed -e "s/, /\n/g"
+end
+
 complete -c hcl -n '__fish_hcl_needs_command' -f -a "start resume log stop note show tasks alias unalias aliases cancel nvm oops config status"
-complete -c hcl -n '__fish_hcl_using_command start' -f -a '(hcl aliases | sed -e "s/,//g")'
-complete -c hcl -n '__fish_hcl_using_command resume' -f -a '(hcl aliases | sed -e "s/,//g")'
-complete -c hcl -n '__fish_hcl_using_command log' -f -a '(hcl aliases | sed -e "s/,//g")'
+complete -c hcl -n '__fish_hcl_using_command start' -f -a '(__fish_hcl_aliases)'
+complete -c hcl -n '__fish_hcl_using_command resume' -f -a '(__fish_hcl_aliases)'
+complete -c hcl -n '__fish_hcl_using_command log' -f -a '(__fish_hcl_aliases)'
 complete -c hcl -n '__fish_hcl_using_command alias' -f
 complete -c hcl -n '__fish_hcl_using_command alias; and __fish_hcl_arg_count 3' -a '(__fish_hcl_customers)'
 complete -c hcl -n '__fish_hcl_using_command alias; and __fish_hcl_arg_count 4' -a '(__fish_hcl_tasks)'
