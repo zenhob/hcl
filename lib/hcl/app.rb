@@ -113,7 +113,7 @@ Commands:
     hcl stop [<message>]
 
     # log a task and time without leaving a timer running
-    hcl log @<task_alias> [+<time>] [<message>]
+    hcl log [<date>] @<task_alias> [+<time>] [<message>]
 
     # resume the last stopped timer or a specific task
     hcl resume [@<task_alias>]

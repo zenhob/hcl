@@ -50,12 +50,13 @@ module HCl
     def add http, opts
       notes = opts[:note]
       starting_time = opts[:starting_time] || 0
+      spent_at = opts[:spent_at] || Date.today
       DayEntry.new http.post("daily/add", {
         notes: notes,
         hours: starting_time,
         project_id: project.id,
         task_id: id,
-        spent_at: Date.today
+        spent_at: spent_at
       })
     end
 

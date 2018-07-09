@@ -31,11 +31,6 @@ class CommandTest < HCl::TestCase
     assert_equal "taco.time: now\n", standard_output
   end
 
-  def test_log_failure
-    HCl::DayEntry.expects(:with_timer).returns(stub)
-    assert_raises(HCl::CommandError) { log "stuff" }
-  end
-
   def test_tasks
     FileUtils.rm_rf ENV['HCL_DIR']+"/cache"
     register_uri(:get, '/daily', {:day_entries=>[], :projects=> [{
