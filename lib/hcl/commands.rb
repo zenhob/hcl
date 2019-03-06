@@ -177,5 +177,14 @@ module HCl
       end
     end
 
+    def delete_cache
+      return "Cache appears to be empty" unless File.file?(Task.cache_file)
+
+      if File.delete(Task.cache_file)
+        "Deleted cache, run hcl tasks to rebuild it from scratch"
+      else
+        "Something went wrong while deleting #{Task.cache_file}"
+      end
+    end
   end
 end
