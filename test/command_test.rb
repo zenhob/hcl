@@ -52,6 +52,12 @@ class CommandTest < HCl::TestCase
       result
   end
 
+  def test_delete_cache
+    delete_cache
+
+    assert_equal File.file?(HCl::Task.cache_file), false
+  end
+
   def test_show
     HCl::DayEntry.expects(:daily).returns([HCl::DayEntry.new({
       hours:'2.06',
