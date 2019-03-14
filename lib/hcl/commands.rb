@@ -33,6 +33,8 @@ module HCl
       if tasks.empty? # cache tasks
         DayEntry.today(http)
         tasks = Task.all
+      else
+        refresh_cache
       end
       tasks.select! {|t| t.project.code == project_code } if project_code
       if tasks.empty?
@@ -182,6 +184,11 @@ module HCl
 
       File.delete(Task.cache_file)
       "Deleted cache, run hcl tasks to rebuild it from scratch"
+    end
+
+    def refresh_cache
+      # refresh cache if it has not been changed the last 24 hours
+      DayEntry.today(http) if File.mtime(cache_file) > (Time.now - 24 * 60 * 60)
     end
   end
 end

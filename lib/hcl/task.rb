@@ -23,7 +23,6 @@ module HCl
     end
 
     def self.all
-      refresh_cache if File.exists?(cache_file)
       tasks = File.exists?(cache_file) ? YAML.load(File.read(cache_file)) : []
       tasks = tasks.sort do |a,b|
         r = a.project.client <=> b.project.client
@@ -69,13 +68,6 @@ module HCl
       end
     end
 
-    def self.refresh_cache
-      # refresh cache if it has not been changed the last 24 hours
-      puts File.mtime(cache_file)
-      puts ENV
-      byebug
-      DayEntry.today(http) if File.mtime(cache_file) > (DateTime.now)
-    end
   end
 end
 
