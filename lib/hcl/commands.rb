@@ -188,7 +188,8 @@ module HCl
 
     def refresh_cache
       # refresh cache if it has not been changed the last 24 hours
-      DayEntry.today(http) if File.mtime(Task.cache_file) < (Time.now)
+      DayEntry.today(http) if File.mtime(Task.cache_file) < (Time.now - 24 * 60 * 60)
+      "Refreshed the cached tasks list"
     end
   end
 end
