@@ -180,7 +180,7 @@ module HCl
     end
 
     def delete_cache
-      fail "Cache appears to be empty" unless File.file?(Task.cache_file)
+      return "Cache appears to be empty" unless File.file?(Task.cache_file)
 
       File.delete(Task.cache_file)
       "Deleted cache, run hcl tasks to rebuild it from scratch"
