@@ -67,7 +67,6 @@ module HCl
         DayEntry.new http.get("daily/timer/#{day.id}")
       end
     end
-
   end
 end
 
