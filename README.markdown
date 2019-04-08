@@ -44,6 +44,7 @@ I recommend aliasing your `man` command to additionally load gem man pages:
     hcl (cancel | nvm | oops)
     hcl config
     hcl status
+    hcl delete_cache
 
 ## DESCRIPTION
 
@@ -57,6 +58,13 @@ project and task IDs.
 
 You can also pass a project code (this is the short optional code associated
 with each project) to list only the tasks for that project.
+
+Pojects and tasks are cached to speed up listing them.
+In order to clear the cache run:
+
+    hcl delete_cache
+
+If the cache has not been updated in the last 24 hours running `hcl tasks` will rebuild it.
 
 ### Starting a Timer
 
@@ -74,7 +82,7 @@ commands are equivalent:
 
     hcl @tacodev +0:15 Doing some stuff
     hcl +.25 @tacodev Doing some stuff
-    
+
 ### Getting the Current Status
 
 The show command can give you a live view of your current day including
