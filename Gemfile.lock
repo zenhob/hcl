@@ -63,7 +63,7 @@ GEM
       ffi
     trollop (2.1.2)
     yajl-ruby (1.3.0)
-    yard (0.8.7.6)
+    yard (0.9.20)
 
 PLATFORMS
   java
