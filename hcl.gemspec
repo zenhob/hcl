@@ -15,18 +15,19 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.summary = "Harvest timesheets from the command-line"
 
-  s.add_runtime_dependency 'gem-man', '0.3.0'
-  s.add_runtime_dependency 'trollop', '2.1.2'
-  s.add_runtime_dependency 'chronic', '0.10.2'
-  s.add_runtime_dependency 'highline', '1.7.2'
-  s.add_runtime_dependency 'faraday', '0.9.1'
-  s.add_runtime_dependency 'yajl-ruby', '1.3.0'
-  s.add_runtime_dependency 'escape_utils', '1.1.0'
-  s.add_runtime_dependency 'pry', '0.10.1'
+  s.add_runtime_dependency 'gem-man', '>=0.3.0'
+  s.add_runtime_dependency 'trollop', '>=2.1.2'
+  s.add_runtime_dependency 'chronic', '>=0.10.2'
+  s.add_runtime_dependency 'highline', '>=1.7.2'
+  s.add_runtime_dependency 'faraday', '>=0.9.1'
+  s.add_runtime_dependency 'yajl-ruby', '>=1.3.1'
+  s.add_runtime_dependency 'escape_utils', '>=1.2.1'
+  s.add_runtime_dependency 'pry', '>=0.12.2'
+
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rubygems-tasks'
   s.add_development_dependency 'mocha'
-  s.add_development_dependency 'yard'
+  s.add_development_dependency 'yard', '>=0.9.20'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'minitest'
 end
