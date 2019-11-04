@@ -88,7 +88,7 @@ class CommandTest < HCl::TestCase
     )
     HCl::Task.expects(:find).with('456','123').returns(task)
     task.expects(:start).with(http, starting_time:nil, note:'do stuff')
-    start *%w[ 456 123 do stuff ]
+    start(*%w[ 456 123 do stuff ])
   end
 
   def test_stop

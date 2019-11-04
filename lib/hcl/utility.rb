@@ -24,7 +24,7 @@ module HCl
     end
 
     def get_task args
-      Task.find *get_task_ids(get_ident(args), args)
+      Task.find(*get_task_ids(get_ident(args), args))
     end
 
     def get_starting_time args

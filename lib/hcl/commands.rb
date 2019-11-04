@@ -84,7 +84,7 @@ module HCl
     end
 
     def alias task_name, *value
-      task = Task.find *value
+      task = Task.find(*value)
       if task
         set "task.#{task_name}", *value
         "Added alias @#{task_name} for #{task}."
@@ -119,7 +119,7 @@ module HCl
 
     def log *args
       fail "There is already a timer running." if DayEntry.with_timer(http)
-      start *args
+      start(*args)
       stop
     end
 

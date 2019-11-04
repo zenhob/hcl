@@ -43,7 +43,7 @@ class AppTest < HCl::TestCase
     app.expects(:show).raises(Faraday::Error)
     app.expects(:exit).with(1)
     app.process_args('show').run
-    assert_match /connection failed/i, error_output
+    assert_match(/connection failed/i, error_output)
   end
 
   def test_configure_on_auth_failure
@@ -54,7 +54,7 @@ class AppTest < HCl::TestCase
     app.expects(:write_config).then(configured.is(true))
     app.expects(:show).when(configured.is(true))
     app.process_args('show').run
-    assert_match /unable to authenticate/i, error_output
+    assert_match(/unable to authenticate/i, error_output)
   end
 
   def test_api_failure
@@ -62,7 +62,7 @@ class AppTest < HCl::TestCase
     app.expects(:show).raises(HCl::HarvestMiddleware::Failure)
     app.expects(:exit).with(1)
     app.process_args('show').run
-    assert_match /API failure/i, error_output
+    assert_match(/API failure/i, error_output)
   end
 
 end
