@@ -1,8 +1,4 @@
 matrix:
   include:
-    - rvm: 2.0.0
-      gemfile: Gemfile
-    - rvm: 2.1.6
-      gemfile: Gemfile
-    - rvm: 2.2.2
+    - rvm: 2.6.5
       gemfile: Gemfile
