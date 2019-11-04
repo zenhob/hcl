@@ -4,7 +4,7 @@ Gem::Tasks.new
 # I am dumb and keep forgetting to update the bundle before releasing
 task :update_bundle do
   system("bundle")
-  system("git ci -am 'update gemfile.lock'")
+  system("git commit -am 'update gemfile.lock'")
 end
 task :release => [:update_bundle]
 
