@@ -6,10 +6,10 @@ HCl is a command-line tool for interacting with Harvest time sheets using the
 [View this documentation online][rdoc].
 
 [![Build Status](https://travis-ci.org/zenhob/hcl.png?branch=master)](https://travis-ci.org/zenhob/hcl)
-[![Gem Version](https://badge.fury.io/rb/hcl.png)](http://badge.fury.io/rb/hcl)
+[![Gem Version](https://badge.fury.io/rb/hcl.png)](https://badge.fury.io/rb/hcl)
 
-[htt]: http://www.getharvest.com/api/time_tracking
-[rdoc]: http://www.rubydoc.info/github/zenhob/hcl/master
+[htt]: https://www.getharvest.com/api/time_tracking
+[rdoc]: https://www.rubydoc.info/github/zenhob/hcl/master
 
 ## GETTING STARTED
 
@@ -190,7 +190,7 @@ commands show the time sheet for the specified day:
     hcl show 2 days ago
     hcl show 1 week ago
 
-[cd]: http://chronic.rubyforge.org/
+[cd]:https://github.com/mojombo/chronic
 
 ### Harvest service status
 
@@ -198,7 +198,7 @@ Harvest provides a [status API], which you can query using the
 `hcl status` command. This will tell you whether Harvest itself is up,
 along with a timestamp of when it was last tested.
 
-[status API]: http://harveststatus.com
+[status API]: https://harveststatus.com
 
 ## AUTHOR
 
@@ -210,10 +210,10 @@ HCl was designed and implemented by [Zack Hobson][zgh].
 
 See LICENSE for copyright details.
 
-[zgh]: http://github.com/zenhob
-[mbleigh]: http://github.com/mbleigh
-[bricooke]: http://github.com/bricooke
-[scharfie]: http://github.com/scharfie
+[zgh]: https://github.com/zenhob
+[mbleigh]: https://github.com/mbleigh
+[bricooke]: https://github.com/bricooke
+[scharfie]: https://github.com/scharfie
 
 
 
