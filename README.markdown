@@ -198,7 +198,7 @@ Harvest provides a [status API], which you can query using the
 `hcl status` command. This will tell you whether Harvest itself is up,
 along with a timestamp of when it was last tested.
 
-[status API]: https://harveststatus.com
+[status API]: https://www.harveststatus.com
 
 ## AUTHOR
 
