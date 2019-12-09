@@ -108,19 +108,26 @@ class CommandTest < HCl::TestCase
     stop 'all done next day'
   end
 
-  def test_resume
-    entry = stub
+  def test_toggle_running
+    entry = stub(:running? => true)
     HCl::DayEntry.expects(:last).returns(entry)
     entry.expects(:toggle)
-    resume
+    toggle
   end
 
-  def test_resume_with_task_alias
-    entry = stub
+  def test_toggle_stopped
+    entry = stub(:running? => false)
+    HCl::DayEntry.expects(:last).returns(entry)
+    entry.expects(:toggle)
+    toggle
+  end
+
+  def test_toggle_with_task_alias
+    entry = stub(:running? => false)
     expects(:get_task_ids).with('mytask',[]).returns(%w[ 456 789 ])
     HCl::DayEntry.expects(:last_by_task).with(http, '456', '789').returns(entry)
     entry.expects(:toggle).with(http)
-    resume 'mytask'
+    toggle 'mytask'
   end
 
   def test_cancel

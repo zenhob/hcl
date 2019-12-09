@@ -104,13 +104,13 @@ well:
 
     hcl stop All done doing things
 
-### Resuming a Timer
+### Toggling a Timer
 
-You can resume a stopped timer. Specify a task to resume the last timer
-for that task:
+Toggle the most recently stopped or running timer. Specify a task to toggle the
+last timer for that specific task:
 
-    hcl resume
-    hcl resume @xdev
+    hcl toggle
+    hcl toggle @xdev
 
 ### Canceling a Timer
 

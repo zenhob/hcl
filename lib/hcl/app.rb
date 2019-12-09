@@ -115,8 +115,8 @@ Commands:
     # log a task and time without leaving a timer running
     hcl log @<task_alias> [+<time>] [<message>]
 
-    # resume the last stopped timer or a specific task
-    hcl resume [@<task_alias>]
+    # toggle the current or last running timer, or a specific task
+    hcl toggle [@<task_alias>]
 
     # delete the current or last running timer
     hcl (cancel | oops | nvm)
@@ -135,7 +135,7 @@ Examples:
     hcl @mytask +:15 Doing a thing that I started 15 minutes ago.
     hcl note Adding a note to my running task.
     hcl stop That's enough for now.
-    hcl resume
+    hcl toggle
     hcl show yesterday
     hcl show last tuesday
 

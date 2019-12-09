@@ -5,6 +5,15 @@ module HCl
   module Commands
     class Error < StandardError; end
 
+    def self.deprecate command, explanation
+      private_command = :"_deprecated_#{command}"
+      alias_method private_command, command
+      define_method command do |*args|
+        $stderr.puts "warning: #{command} command is deprecated, #{explanation}"
+        send(private_command, *args)
+      end
+    end
+
     # Display a sanitized view of your auth credentials.
     def config
       http.config_hash.merge(password:'***').map {|k,v| "#{k}: #{v}" }.join("\n")
@@ -123,6 +132,26 @@ module HCl
       stop
     end
 
+    def toggle *args
+      ident = get_ident args
+      entry = if ident
+          task_ids = get_task_ids ident, args
+          DayEntry.last_by_task http, *task_ids
+        else
+          DayEntry.last(http)
+        end
+      if entry
+        if entry.running?
+          "Stopping #{entry} (at #{current_time})"
+        else
+          "Starting #{entry} (at #{current_time})"
+        end
+        entry.toggle http
+      else
+        fail "No timer found."
+      end
+    end
+
     def stop *args
       entry = DayEntry.with_timer(http) || DayEntry.with_timer(http, Date.today - 1)
       if entry
@@ -176,6 +205,7 @@ module HCl
         fail "No matching timer found."
       end
     end
+    deprecate :resume, 'use toggle instead'
 
   end
 end
