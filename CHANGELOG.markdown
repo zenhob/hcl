@@ -1,5 +1,16 @@
 # Recent Changes in HCl
 
+## next release
+
+* add new `toggle` command
+* deprecate `resume` command in favor of `toggle`
+
+## v0.4.20 2019-11-05
+
+* improvements to subdomain entry to avoid a common error, closes #91
+* fix `status` command, closes #93
+* upgrade dependencies (addresses upstream security issues)
+
 ## v0.4.16 2017-02-12
 
 * improved bash completion (from chet0xhenry)
