@@ -65,4 +65,17 @@ class AppTest < HCl::TestCase
     assert_match(/API failure/i, error_output)
   end
 
+  def test_save_password_allows_passwords_with_quotes
+    app = HCl::App.new
+    app.expects(:system).with("security add-internet-password -U -l hcl -a 'taco@example.com' -s 'acme.harvestapp.com' -w pass\\ with\\ \\'\\ quote")
+
+    config = {
+      'login' => 'taco@example.com',
+      'subdomain' => 'acme',
+      'password' => "pass with ' quote",
+    }
+
+    app.send :save_password, config
+  end
+
 end

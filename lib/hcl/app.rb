@@ -1,5 +1,6 @@
 require 'yaml'
 require 'fileutils'
+require 'shellwords'
 
 require 'trollop'
 require 'highline/import'
@@ -227,10 +228,10 @@ EOM
     end
 
     def save_password config
-      if system("security add-internet-password -U -l hcl -a '%s' -s '%s.harvestapp.com' -w '%s'" % [
+      if system("security add-internet-password -U -l hcl -a '%s' -s '%s.harvestapp.com' -w %s" % [
         config['login'],
         config['subdomain'],
-        config['password'],
+        Shellwords.escape(config['password']),
       ]) then config.delete('password') end
     end
   end
