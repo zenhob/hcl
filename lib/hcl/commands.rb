@@ -1,5 +1,6 @@
 require 'chronic'
 require 'highline'
+require 'tempfile'
 
 module HCl
   module Commands
@@ -120,9 +121,24 @@ module HCl
       if task.nil?
         fail "Unknown task alias, try one of the following: ", aliases.join(', ')
       end
+      note = args.join(' ')
+      if note == ''
+        m = Tempfile.new("message_temp")
+        m.write(args.join(' '))
+        m.close
+        if ENV['EDITOR'] == ''
+          ENV['EDITOR'] = 'touch'
+        end
+        system("$EDITOR #{m.path}")
+        m.open
+        m.rewind
+        note = m.read
+        m.close
+        m.unlink
+      end
       timer = task.start http,
         :starting_time => starting_time,
-        :note => args.join(' ')
+        :note => note
       "Started timer for #{timer} (at #{current_time})"
     end
 
@@ -155,7 +171,28 @@ module HCl
     def stop *args
       entry = DayEntry.with_timer(http) || DayEntry.with_timer(http, Date.today - 1)
       if entry
-        entry.append_note(http, args.join(' ')) if args.any?
+        note = args.join(' ')
+        set_note = ''
+        if note == ''
+          set_note = entry.notes
+          m = Tempfile.new("message_temp")
+          m.write(set_note)
+          m.close
+          if ENV['EDITOR'] == ''
+            ENV['EDITOR'] = 'touch'
+          end
+          system("$EDITOR #{m.path}")
+          m.open
+          m.rewind
+          set_note = m.read
+          m.close
+          m.unlink
+        end
+        if set_note != ''
+          entry.set_note(http, set_note)
+        elsif note != ''
+          entry.append_note(http, note)
+        end
         entry.toggle http
         "Stopped #{entry} (at #{current_time})"
       else
@@ -169,7 +206,24 @@ module HCl
         if args.empty?
           return entry.notes
         else
-          entry.append_note http, args.join(' ')
+          note = args.join(' ')
+          if note == ''
+            m = Tempfile.new("message_temp")
+            m.write(args.join(' '))
+            m.close
+            m.rewind
+            if ENV['EDITOR'] == ''
+              ENV['EDITOR'] = 'touch'
+            end
+            system("$EDITOR #{m.path}")
+            m.open
+            note = m.read
+            m.close
+            m.unlink
+          end
+          if note != ''
+            entry.append_note(http, note)
+          end
           "Added note to #{entry}."
         end
       else

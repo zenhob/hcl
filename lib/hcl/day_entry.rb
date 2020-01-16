@@ -35,6 +35,13 @@ module HCl
       (self.notes << "\n#{new_notes}").lstrip!
       http.post "daily/update/#{id}", notes:notes, hours:hours
     end
+    
+    def set_note http, new_notes
+      # If I don't include hours it gets reset.
+      # This doens't appear to be the case for task and project.
+      @data[:notes] = new_notes
+      http.post "daily/update/#{id}", notes:notes, hours:hours
+    end
 
     def self.with_timer http, date=nil
       daily(http, date).detect {|t| t.running? }

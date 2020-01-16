@@ -52,6 +52,13 @@ class DayEntryTest < HCl::TestCase
     entry.append_note(http, 'hi world')
     assert_equal "yourmom.\nhi world", entry.notes
   end
+  
+  def test_set_note
+    entry = HCl::DayEntry.new(:id => '1', :notes => 'yourmom.', :hours => '1.0')
+    http.stubs(:post)
+    entry.set_note(http, 'hi world')
+    assert_equal "hi world", entry.notes
+  end
 
   def test_append_note_to_empty
     entry = HCl::DayEntry.new(:id => '1', :notes => nil, :hours => '1.0')
